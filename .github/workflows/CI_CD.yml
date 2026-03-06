@@ -1,0 +1,173 @@
+#  GitHub Action Secret:
+#  UNITY_LICENSE: Unity license file content
+#  UNITY_EMAIL: Unity account email
+#  UNITY_PASSWORD: Unity account password
+# STEAM_USERNAME: Steam account username
+# STEAM_CONFIG_VDF: Steam config file content
+
+#  Github Action Variables:
+#  UNITY_VERSION: Unity version (e.g. 2023.2.9f1)
+#  STEAM_APP_ID: Steam app ID (e.g. 123456)
+
+
+
+name: CI/CD
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+    # Build on Windows
+  build-Windows:
+    name: Build Windows 
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' 
+    strategy:
+      matrix:
+        targetPlatform: [StandaloneWindows64]
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Git LFS
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+      # Cache
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.targetPlatform }}
+      # Build
+      - name: Build project 
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: ${{ vars.UNITY_VERSION }}
+
+      # Output
+      - name: Upload the file to Github Action
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}  
+
+  # Build on multiple platforms 
+  build-multiple-platforms:
+    needs: [build-Windows]
+    name: Build on Linux/Macos
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' 
+    strategy:
+      matrix: 
+        targetPlatform: [StandaloneLinux64, StandaloneOSX]
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Git LFS
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+      # Cache
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.targetPlatform }}
+      # Build
+      - name: Build project 
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: ${{ vars.UNITY_VERSION }}
+        # Output
+      - name: Upload the file to Github Action
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
+  # Deploy to Steam
+  deploy:
+    needs: [build-multiple-platforms]
+    name: Deploy to Steam
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-StandaloneWindows64
+          path: build/StandaloneWindows64
+
+      - name: Download Linux build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-StandaloneLinux64
+          path: build/StandaloneLinux64
+
+      - name: Download macOS build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-StandaloneOSX
+          path: build/StandaloneOSX
+
+      - name: Deploy to Steam
+        uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          configVdf: ${{ secrets.STEAM_CONFIG_VDF }}
+          appId: ${{ vars.STEAM_APP_ID }}
+          buildDescription: ${{ github.event.head_commit.message }}
+          rootPath: build
+          depot1Path: StandaloneWindows64
+          depot2Path: StandaloneLinux64
+          depot3Path: StandaloneOSX

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TeamSlobodorum.Entities.Spells
+namespace TeamSlobodorum.Particles
 {
     [RequireComponent(typeof(ParticleSystem))]
     public class OneShotParticle : MonoBehaviour

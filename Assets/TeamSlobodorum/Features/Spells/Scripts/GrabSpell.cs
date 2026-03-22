@@ -1,7 +1,7 @@
 using System;
 using TeamSlobodorum.Entities;
 using TeamSlobodorum.Entities.Player;
-using TeamSlobodorum.Entities.Spells;
+using TeamSlobodorum.Particles;
 using UnityEngine;
 
 namespace TeamSlobodorum.Spells
@@ -9,7 +9,7 @@ namespace TeamSlobodorum.Spells
     public class GrabSpell : Spell
     {
         [Header("References")]
-        [SerializeField] private LinkEffect linkEffect;
+        [SerializeField] private LinkEffect linkEffectPrefab;
         [SerializeField] private GameObject projectilePrefab;
         
         [Header("Settings")]
@@ -19,6 +19,7 @@ namespace TeamSlobodorum.Spells
 
         private Camera _mainCamera;
         private Spellcaster _spellcaster;
+        private LinkEffect _linkEffect;
         private Entity _grabbed;
         private float _grabDistance;
         private bool _useGravity;
@@ -35,7 +36,9 @@ namespace TeamSlobodorum.Spells
         private void Start()
         {
             _mainCamera = Camera.main;
-            linkEffect.gameObject.SetActive(false);
+            
+            _linkEffect = Instantiate(linkEffectPrefab, _spellcaster.hand);
+            _linkEffect.gameObject.SetActive(false);
         }
 
         private void FixedUpdate()
@@ -57,8 +60,8 @@ namespace TeamSlobodorum.Spells
                 _grabbed = entity;
                 _grabDistance =
                     Vector3.Distance(_mainCamera.transform.position, entity.transform.position);
-                linkEffect.endPoint = entity.transform;
-                linkEffect.gameObject.SetActive(true);
+                _linkEffect.endPoint = entity.transform;
+                _linkEffect.gameObject.SetActive(true);
 
                 _useGravity = _grabbed.Rigidbody.useGravity;
                 _grabbed.Rigidbody.useGravity = false;
@@ -100,7 +103,7 @@ namespace TeamSlobodorum.Spells
                 }
 
                 _grabbed = null;
-                linkEffect.gameObject.SetActive(false);
+                _linkEffect.gameObject.SetActive(false);
             }
         }
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
-namespace TeamSlobodorum.Entities.Spells
+namespace TeamSlobodorum.Particles
 {
     public class LinkEffect : MonoBehaviour
     {

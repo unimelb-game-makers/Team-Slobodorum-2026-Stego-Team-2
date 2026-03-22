@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8118980507989582423}
   - component: {fileID: 8088731869946285836}
   - component: {fileID: 4807791858906425073}
+  - component: {fileID: -5137846950911751890}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -180,90 +181,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e585744678e4e02b76bf4998b67a810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.GrabSpell
-  linkEffect: {fileID: 693396333774522136}
+  linkEffectPrefab: {fileID: 4379669221819503135, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
   projectilePrefab: {fileID: 3621764393785143092, guid: 3a688ccb0af6341cba98dab5eba63099, type: 3}
   maxDistance: 20
   projectileSpeed: 20
   raycastLayers:
     serializedVersion: 2
-    m_Bits: 0
---- !u!1001 &3844039681854608647
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5039537926510174486}
-    m_Modifications:
-    - target: {fileID: 2523980035347789701, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215804633966870612, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_Name
-      value: Link Effect
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215804633966870612, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
---- !u!4 &468041224901412805 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3685656138391474882, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-  m_PrefabInstance: {fileID: 3844039681854608647}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &693396333774522136 stripped
+    m_Bits: 1
+--- !u!114 &-5137846950911751890
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4379669221819503135, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-  m_PrefabInstance: {fileID: 3844039681854608647}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5267825618391358840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29064ef8016ce49b7aa88299d84de862, type: 3}
+  m_Script: {fileID: 11500000, guid: b628f25ef57a428f92bdd7dde1d54bd1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Playground.MagicalLink
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.FireSpell
+  projectilePrefab: {fileID: 3918960099676045501, guid: 0e54fcf9e9e38408d80480e5599b10cd, type: 3}
+  maxDistance: 20
+  projectileSpeed: 20
+  raycastLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &6648902675055550174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -291,10 +233,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 468041224901412805}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}
 --- !u!4 &5039537926510174486 stripped

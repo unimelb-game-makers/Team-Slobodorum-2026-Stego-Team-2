@@ -1,7 +1,8 @@
+using TeamSlobodorum.Entities;
 using TeamSlobodorum.Spells;
 using UnityEngine;
 
-namespace TeamSlobodorum.Entities.Spells
+namespace TeamSlobodorum.Particles
 {
     public class GrabProjectile : MonoBehaviour
     {

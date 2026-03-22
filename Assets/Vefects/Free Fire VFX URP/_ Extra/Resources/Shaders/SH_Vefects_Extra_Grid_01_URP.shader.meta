@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f5359265e7c260446ab00cd48110be54
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 266226
+  packageName: Free Fire VFX - URP
+  packageVersion: 1.0.2023.1
+  assetPath: Assets/Vefects/Free Fire VFX URP/_ Extra/Resources/Shaders/SH_Vefects_Extra_Grid_01_URP.shader
+  uploadId: 732705

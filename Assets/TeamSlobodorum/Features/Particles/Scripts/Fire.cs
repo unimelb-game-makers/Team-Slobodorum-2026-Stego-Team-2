@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TeamSlobodorum.Entities;
+using TeamSlobodorum.Entities.Flammable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

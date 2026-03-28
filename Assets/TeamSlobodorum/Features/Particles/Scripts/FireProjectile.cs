@@ -1,4 +1,5 @@
 using TeamSlobodorum.Entities;
+using TeamSlobodorum.Entities.Flammable;
 using UnityEngine;
 
 namespace TeamSlobodorum.Particles

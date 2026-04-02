@@ -31,7 +31,7 @@ namespace TeamSlobodorum.Entities.Flammable
 
     public class Flammable : MonoBehaviour
     {
-        [SerializeField] private float voxelSize = 1f;
+        [SerializeField] private Vector3 voxelSize = new(1, 1, 1);
         [SerializeField] private float resistance = 10f;
         [SerializeField] private float burningTime = 120f;
         [SerializeField] private float spreadSpeed = 200f;
@@ -98,9 +98,9 @@ namespace TeamSlobodorum.Entities.Flammable
                             {
                                 var localPos = GridCoordToLocal(neighbor.GridCoord);
                                 var worldPos = transform.TransformPoint(localPos);
-                                var x = Random.Range(worldPos.x - voxelSize / 2, worldPos.x + voxelSize / 2);
-                                var y = Random.Range(worldPos.y - voxelSize / 2, worldPos.y + voxelSize / 2);
-                                var z = Random.Range(worldPos.z - voxelSize / 2, worldPos.z + voxelSize / 2);
+                                var x = Random.Range(worldPos.x - voxelSize.x / 2, worldPos.x + voxelSize.x / 2);
+                                var y = Random.Range(worldPos.y - voxelSize.y / 2, worldPos.y + voxelSize.y / 2);
+                                var z = Random.Range(worldPos.z - voxelSize.z / 2, worldPos.z + voxelSize.z / 2);
                                 neighbor.Fire = SpawnFire(new Vector3(x, y, z));
                                 neighbor.BurnMarkIndex = AddBurnPoint(localPos);
                             }
@@ -114,7 +114,7 @@ namespace TeamSlobodorum.Entities.Flammable
                         if (voxelData.BurnMarkIndex > 0)
                         {
                             var progress = 1 - voxelData.BurningTime / burningTime;
-                            var radius = voxelSize * 1.5f * progress;
+                            var radius = voxelSize.magnitude * 1.5f * progress;
                             _burnMarkPoints[voxelData.BurnMarkIndex].w = radius;
                         }
 
@@ -138,15 +138,15 @@ namespace TeamSlobodorum.Entities.Flammable
             _voxelMap.Clear();
             var bounds = _meshFilter.mesh.bounds;
 
-            for (var x = bounds.min.x; x < bounds.max.x; x += voxelSize)
+            for (var x = bounds.min.x; x < bounds.max.x; x += voxelSize.x)
             {
-                for (var y = bounds.min.y; y < bounds.max.y; y += voxelSize)
+                for (var y = bounds.min.y; y < bounds.max.y; y += voxelSize.y)
                 {
-                    for (var z = bounds.min.z; z < bounds.max.z; z += voxelSize)
+                    for (var z = bounds.min.z; z < bounds.max.z; z += voxelSize.z)
                     {
-                        var center = new Vector3(x + voxelSize / 2, y + voxelSize / 2, z + voxelSize / 2);
+                        var center = new Vector3(x + voxelSize.x / 2, y + voxelSize.y / 2, z + voxelSize.z / 2);
                         var globalPos = transform.TransformPoint(center);
-                        if (Physics.CheckBox(globalPos, Vector3.one * (voxelSize / 2)))
+                        if (Physics.CheckBox(globalPos, voxelSize / 2))
                         {
                             // Convert Local Position to Grid Integer Coordinate
                             var gridCoord = LocalToGridCoord(center);
@@ -162,18 +162,18 @@ namespace TeamSlobodorum.Entities.Flammable
         private Vector3Int LocalToGridCoord(Vector3 localPos)
         {
             return new Vector3Int(
-                Mathf.FloorToInt(localPos.x / voxelSize),
-                Mathf.FloorToInt(localPos.y / voxelSize),
-                Mathf.FloorToInt(localPos.z / voxelSize)
+                Mathf.FloorToInt(localPos.x / voxelSize.x),
+                Mathf.FloorToInt(localPos.y / voxelSize.y),
+                Mathf.FloorToInt(localPos.z / voxelSize.z)
             );
         }
 
         private Vector3 GridCoordToLocal(Vector3Int gridCoord)
         {
             return new Vector3(
-                gridCoord.x * voxelSize,
-                gridCoord.y * voxelSize,
-                gridCoord.z * voxelSize
+                gridCoord.x * voxelSize.x,
+                gridCoord.y * voxelSize.y,
+                gridCoord.z * voxelSize.z
             );
         }
 

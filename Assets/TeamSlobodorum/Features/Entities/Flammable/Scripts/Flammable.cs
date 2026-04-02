@@ -36,7 +36,10 @@ namespace TeamSlobodorum.Entities.Flammable
         [SerializeField] private float burningTime = 120f;
         [SerializeField] private float spreadSpeed = 200f;
         [SerializeField] private float spreadInterval = 1f;
-        [SerializeField] private Color emberColor = new(1, 0.3f, 0, 1);
+
+        [SerializeField] private Color burnMarkColor = new (0.05f, 0.05f, 0.05f, 1f);
+        [SerializeField] [ColorUsage(true, true)]
+        private Color emberColor = new Color(5.992157f, 1.805856f, 0f, 1f) * 3;
 
         private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
@@ -47,6 +50,7 @@ namespace TeamSlobodorum.Entities.Flammable
 
         private static readonly int BurnCenters = Shader.PropertyToID("_BurnCenters");
         private static readonly int BurnCount = Shader.PropertyToID("_BurnCount");
+        private static readonly int BurnColor = Shader.PropertyToID("_BurnColor");
         private static readonly int EmberColor = Shader.PropertyToID("_EmberColor");
         private const int MaxBurnMarkCount = 20;
         private readonly Vector4[] _burnMarkPoints = new Vector4[MaxBurnMarkCount];
@@ -66,6 +70,8 @@ namespace TeamSlobodorum.Entities.Flammable
             _materialInstance = new Material(PrefabManager.Instance.burnMarkMaterial);
             var materialsList = new List<Material>(_meshRenderer.materials) { _materialInstance };
             _meshRenderer.materials = materialsList.ToArray();
+            
+            _materialInstance.SetColor(BurnColor, burnMarkColor);
         }
 
         private void Update()

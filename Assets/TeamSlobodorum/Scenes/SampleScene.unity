@@ -154,13 +154,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f8395e420584f339bb7c6219ebcba9a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable.Flammable
   voxelSize: {x: 1, y: 1, z: 1}
   resistance: 10
   burningTime: 120
   spreadSpeed: 200
   spreadInterval: 1
-  emberColor: {r: 1, g: 0.3, b: 0, a: 1}
+  burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+  emberColor: {r: 17.97647, g: 5.417568, b: 0, a: 3}
 --- !u!114 &27458706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,7 +947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149596565}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19014606, y: 0.012454277, z: -0.0024123455, w: 0.9816739}
+  m_LocalRotation: {x: 0.19014601, y: 0.012454226, z: -0.0024123315, w: 0.9816739}
   m_LocalPosition: {x: 10.9368, y: 2.25, z: -1.60608}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1588,7 +1589,8 @@ MonoBehaviour:
   burningTime: 120
   spreadSpeed: 200
   spreadInterval: 1
-  emberColor: {r: 1, g: 0.5993526, b: 0.4292453, a: 1}
+  burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+  emberColor: {r: 5.9921575, g: 1.805856, b: 0, a: 1}
 --- !u!64 &987644702
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2730,13 +2732,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f8395e420584f339bb7c6219ebcba9a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable.Flammable
   voxelSize: {x: 1, y: 1, z: 1}
   resistance: 10
   burningTime: 120
   spreadSpeed: 200
   spreadInterval: 1
-  emberColor: {r: 1, g: 0.3, b: 0, a: 1}
+  burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+  emberColor: {r: 17.97647, g: 5.417568, b: 0, a: 3}
 --- !u!43 &1485420352
 Mesh:
   m_ObjectHideFlags: 0
@@ -3224,7 +3227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617807369}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19014607, y: 0.012454277, z: -0.0024123406, w: 0.98167384}
+  m_LocalRotation: {x: 0.19014598, y: 0.012454225, z: -0.00241233, w: 0.9816739}
   m_LocalPosition: {x: 10.9368, y: 2.25, z: -1.60608}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

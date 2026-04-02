@@ -3,7 +3,7 @@ Shader "URP/BurnMarkShader"
     Properties
     {
         _BurnColor("Burn Color", Color) = (0.05, 0.05, 0.05, 1)
-        _EmberColor("Ember Color", Color) = (1, 0.3, 0, 1)
+        [HDR] _EmberColor("Ember Color", Color) = (1, 0.3, 0, 1)
         _Smoothness("Edge Smoothness", Range(0.01, 0.5)) = 0.1
         _NoiseScale("Noise Scale", Range(1, 50)) = 20.0
     }

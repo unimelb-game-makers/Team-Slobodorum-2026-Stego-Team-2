@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8088731869946285836}
   - component: {fileID: 4807791858906425073}
   - component: {fileID: -5137846950911751890}
+  - component: {fileID: -8201437311473510630}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -206,6 +207,33 @@ MonoBehaviour:
   raycastLayers:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &-8201437311473510630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267825618391358840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8395e420584f339bb7c6219ebcba9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Flammable.Flammable
+  useBoundsFromMeshFilter: 0
+  bounds:
+    m_Center: {x: 0, y: 0.9, z: 0}
+    m_Extent: {x: 0.25, y: 0.9, z: 0.25}
+  useVoxel: 0
+  voxelSize: {x: 1, y: 1, z: 1}
+  resistance: 3
+  spreadSpeed: 10
+  burningTime: 30
+  spreadInterval: 1
+  useBurnMark: 0
+  burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+  emberColor: {r: 6, g: 0.3, b: 0, a: 1}
+  breakWhenBurnOut: 0
+  spawnWhenBreak: {fileID: 0}
 --- !u!1001 &6648902675055550174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,6 +257,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}
       propertyPath: m_Name
       value: X Bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148737315974723067, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: 13bd7ea2afd9145119e75e5d5ab0d230, type: 3}

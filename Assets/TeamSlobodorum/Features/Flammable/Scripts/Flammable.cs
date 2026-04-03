@@ -37,8 +37,6 @@ namespace TeamSlobodorum.Flammable
         public event Action StopBurning;
         public event Action BurnOut;
 
-        [SerializeField] private Vector3 voxelSize = new(1, 1, 1);
-
         [Header("Material Properties")]
         [SerializeField,
          Tooltip(
@@ -60,8 +58,17 @@ namespace TeamSlobodorum.Flammable
 
         [SerializeField, Tooltip("The time interval for calculating fire propagation.")]
         private float spreadInterval = 1f;
+        
+        [Header("Voxel and Bounds")]
+        [SerializeField] public bool useBoundsFromMeshFilter = true;
 
-        [Header("Appearance")]
+        [SerializeField] public Bounds bounds;
+        [SerializeField] public bool useVoxel;
+        [SerializeField] public Vector3 voxelSize = new(1, 1, 1);
+
+        [Header("Burn Mark")]
+        [SerializeField] private bool useBurnMark = true;
+
         [SerializeField] private Color burnMarkColor = new(0.05f, 0.05f, 0.05f, 1f);
 
         [SerializeField] [ColorUsage(true, true)]
@@ -72,11 +79,9 @@ namespace TeamSlobodorum.Flammable
 
         [SerializeField] public GameObject spawnWhenBreak;
 
-        private MeshFilter _meshFilter;
-        private MeshRenderer _meshRenderer;
-        private Material _materialInstance;
+        [CanBeNull] private Material _materialInstance;
 
-        private readonly Dictionary<Vector3Int, VoxelData> _voxelMap = new();
+        private Dictionary<Vector3Int, VoxelData> _voxelMap;
 
         private bool _isBurning;
 
@@ -110,9 +115,6 @@ namespace TeamSlobodorum.Flammable
 
         private void Awake()
         {
-            _meshFilter = GetComponent<MeshFilter>();
-            _meshRenderer = GetComponent<MeshRenderer>();
-
             StartBurning += OnStartBurning;
             StopBurning += OnStopBurning;
             if (breakWhenBurnOut)
@@ -124,13 +126,16 @@ namespace TeamSlobodorum.Flammable
         private void Start()
         {
             GenerateVoxelMap();
-            print(_voxelMap.Count);
 
-            _materialInstance = new Material(PrefabManager.Instance.burnMarkMaterial);
-            var materialsList = new List<Material>(_meshRenderer.materials) { _materialInstance };
-            _meshRenderer.materials = materialsList.ToArray();
+            if (useBurnMark)
+            {
+                _materialInstance = new Material(PrefabManager.Instance.burnMarkMaterial);
+                var meshRenderer = GetComponent<MeshRenderer>();
+                var materialsList = new List<Material>(meshRenderer.materials) { _materialInstance };
+                meshRenderer.materials = materialsList.ToArray();
 
-            _materialInstance.SetColor(BurnColor, burnMarkColor);
+                _materialInstance.SetColor(BurnColor, burnMarkColor);
+            }
         }
 
         private void Update()
@@ -157,16 +162,19 @@ namespace TeamSlobodorum.Flammable
                 if (voxelData.Fire)
                 {
                     hasFire = true;
-                    foreach (var neighbor in GetNeighbors(gridCoord))
+                    if (useVoxel)
                     {
-                        SpreadToVoxel(neighbor, spreadSpeed * spreadInterval);
+                        foreach (var neighbor in GetNeighbors(gridCoord))
+                        {
+                            SpreadToVoxel(neighbor, spreadSpeed * spreadInterval);
+                        }
                     }
 
                     if (voxelData.BurningTime > 0)
                     {
                         voxelData.BurningTime -= spreadInterval;
 
-                        if (voxelData.BurnMarkIndex > 0)
+                        if (voxelData.BurnMarkIndex >= 0)
                         {
                             var progress = 1 - voxelData.BurningTime / burningTime;
                             var radius = voxelSize.magnitude * 1.5f * progress;
@@ -183,19 +191,29 @@ namespace TeamSlobodorum.Flammable
                 yield return null;
             }
 
-            _materialInstance.SetVectorArray(BurnCenters, _burnMarkPoints);
-            _materialInstance.SetInt(BurnCount, _currentBurnMarkCount);
+            if (_materialInstance)
+            {
+                _materialInstance.SetVectorArray(BurnCenters, _burnMarkPoints);
+                _materialInstance.SetInt(BurnCount, _currentBurnMarkCount);
+            }
             IsBurning = hasFire;
         }
 
         private void OnStartBurning()
         {
-            _materialInstance.SetColor(EmberColor, emberColor);
+            if (_materialInstance)
+            {
+                _materialInstance.SetColor(EmberColor, emberColor);
+            }
         }
 
         private void OnStopBurning()
         {
-            _materialInstance.SetColor(EmberColor, new Color(0, 0, 0, 0));
+            if (_materialInstance)
+            {
+                _materialInstance.SetColor(EmberColor, new Color(0, 0, 0, 0));
+            }
+            
             if (_voxelMap.All((x) => x.Value.BurningTime <= 0))
             {
                 BurnOut?.Invoke();
@@ -214,27 +232,37 @@ namespace TeamSlobodorum.Flammable
 
         public void GenerateVoxelMap()
         {
-            _voxelMap.Clear();
-            var bounds = _meshFilter.mesh.bounds;
+            _voxelMap = new Dictionary<Vector3Int, VoxelData>();
+            var meshBounds = useBoundsFromMeshFilter ? GetComponent<MeshFilter>().mesh.bounds : bounds;
 
-            for (var x = bounds.min.x; x < bounds.max.x; x += voxelSize.x)
+            if (useVoxel)
             {
-                for (var y = bounds.min.y; y < bounds.max.y; y += voxelSize.y)
+                for (var x = meshBounds.min.x; x < meshBounds.max.x; x += voxelSize.x)
                 {
-                    for (var z = bounds.min.z; z < bounds.max.z; z += voxelSize.z)
+                    for (var y = meshBounds.min.y; y < meshBounds.max.y; y += voxelSize.y)
                     {
-                        var center = new Vector3(x + voxelSize.x / 2, y + voxelSize.y / 2, z + voxelSize.z / 2);
-                        var globalPos = transform.TransformPoint(center);
-                        if (Physics.CheckBox(globalPos, voxelSize / 2))
+                        for (var z = meshBounds.min.z; z < meshBounds.max.z; z += voxelSize.z)
                         {
-                            // Convert Local Position to Grid Integer Coordinate
-                            var gridCoord = LocalToGridCoord(center);
+                            var center = new Vector3(x + voxelSize.x / 2, y + voxelSize.y / 2, z + voxelSize.z / 2);
+                            var globalPos = transform.TransformPoint(center);
+                            if (Physics.CheckBox(globalPos, voxelSize / 2))
+                            {
+                                // Convert Local Position to Grid Integer Coordinate
+                                var gridCoord = LocalToGridCoord(center);
 
-                            var data = new VoxelData(gridCoord, resistance, burningTime);
-                            _voxelMap[gridCoord] = data;
+                                var data = new VoxelData(gridCoord, resistance, burningTime);
+                                _voxelMap[gridCoord] = data;
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                voxelSize = meshBounds.size;
+                Vector3Int gridCoord = default;
+                var data = new VoxelData(gridCoord, resistance, burningTime);
+                _voxelMap[gridCoord] = data;
             }
         }
 
@@ -281,11 +309,19 @@ namespace TeamSlobodorum.Flammable
 
         public void SpreadAtPoint(Vector3 position, float damage)
         {
-            var localPos = transform.InverseTransformPoint(position);
-            var gridCoord = LocalToGridCoord(localPos);
+            Vector3Int gridCoord;
+            if (useVoxel)
+            {
+                var localPos = transform.InverseTransformPoint(position);
+                gridCoord = LocalToGridCoord(localPos);
+            }
+            else
+            {
+                gridCoord = default;
+            }
+
             if (_voxelMap.TryGetValue(gridCoord, out var data))
             {
-                print(data);
                 SpreadToVoxel(data, damage);
             }
             else
@@ -320,7 +356,9 @@ namespace TeamSlobodorum.Flammable
 
         private Fire SpawnFire(Vector3 worldPos)
         {
-            return Instantiate(PrefabManager.Instance.firePrefab, worldPos, Quaternion.identity, transform);
+            var fire = Instantiate(PrefabManager.Instance.firePrefab, worldPos, Quaternion.identity, transform);
+            fire.spreadRadius = voxelSize.magnitude * 0.5f;
+            return fire;
         }
 
         private int AddBurnPoint(Vector3 localPos)

@@ -6,11 +6,11 @@ namespace TeamSlobodorum.Particles
 {
     public class Fire : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> firePrefabs;
-        [SerializeField] private float disappearSpeed = 5f;
-        [SerializeField] private float spreadSpeed = 10f;
-        [SerializeField] private float spreadRadius = 0.5f;
-        [SerializeField] private float spreadInterval = 1f;
+        [SerializeField] public List<GameObject> firePrefabs;
+        [SerializeField] public float disappearSpeed = 5f;
+        [SerializeField] public float spreadSpeed = 10f;
+        [SerializeField] public float spreadRadius = 0.5f;
+        [SerializeField] public float spreadInterval = 1f;
 
         private float _currentTime;
         private float _currentScale;
@@ -50,21 +50,6 @@ namespace TeamSlobodorum.Particles
                 Destroy(gameObject);
             }
         }
-        //
-        // private void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.TryGetComponent<Flammable.Flammable>(out var flammable))
-        //     {
-        //         if (Physics.Raycast(transform.position, (other.transform.position - transform.position).normalized,
-        //                 out var hit))
-        //         {
-        //             if (hit.collider == other)
-        //             {
-        //                 flammable.SpreadAtPoint(hit.point, float.PositiveInfinity);
-        //             }
-        //         }
-        //     }
-        // }
 
         private void HandleSpread()
         {

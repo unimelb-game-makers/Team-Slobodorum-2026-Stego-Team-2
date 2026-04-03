@@ -1,5 +1,3 @@
-using TeamSlobodorum.Entities;
-using TeamSlobodorum.Entities.Flammable;
 using UnityEngine;
 
 namespace TeamSlobodorum.Particles
@@ -48,11 +46,11 @@ namespace TeamSlobodorum.Particles
         
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.TryGetComponent<Flammable>(out var flammable))
+            if (collision.gameObject.TryGetComponent<Flammable.Flammable>(out var flammable))
             {
                 foreach (var contact in collision.contacts)
                 {
-                    flammable.Ignite(contact.point);
+                    flammable.SpreadAtPoint(contact.point, float.PositiveInfinity);
                 }
             }
         }

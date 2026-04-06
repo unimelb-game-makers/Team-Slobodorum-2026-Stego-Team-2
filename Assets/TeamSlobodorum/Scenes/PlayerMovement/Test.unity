@@ -3034,6 +3034,50 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1872899365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1872899367}
+  - component: {fileID: 1872899366}
+  m_Layer: 0
+  m_Name: SpellManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1872899366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872899365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e968119d82463346afde41a732ccecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.SpellCoordinator
+--- !u!4 &1872899367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872899365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.17652, y: 0.97638, z: 0.32297}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1890279865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,13 +3539,7 @@ PrefabInstance:
       addedObject: {fileID: 7242683768505733110}
     - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7242683768505733117}
-    - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7242683768505733116}
-    - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7242683768505733115}
+      addedObject: {fileID: 7242683768505733112}
   m_SourcePrefab: {fileID: 100100000, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
 --- !u!1 &7242683768505733107 stripped
 GameObject:
@@ -3646,8 +3684,8 @@ MonoBehaviour:
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.1
-        DecelTime: 0.1
+        AccelTime: 0.2
+        DecelTime: 0.2
     - Name: Vertical Look
       Owner: {fileID: 247499270}
       Enabled: 1
@@ -3657,8 +3695,8 @@ MonoBehaviour:
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.1
-        DecelTime: 0.1
+        AccelTime: 0.2
+        DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
 --- !u!114 &7242683768505733110
@@ -3682,7 +3720,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2261247438917318289, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
   m_PrefabInstance: {fileID: 7242683768505733106}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7242683768505733115
+--- !u!114 &7242683768505733112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3691,47 +3729,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7242683768505733107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b628f25ef57a428f92bdd7dde1d54bd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 85faaa694dd1eae408f44196d639301b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.FireSpell
-  projectilePrefab: {fileID: 3918960099676045501, guid: 0e54fcf9e9e38408d80480e5599b10cd, type: 3}
-  maxDistance: 20
-  projectileSpeed: 20
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 1
---- !u!114 &7242683768505733116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7242683768505733107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e585744678e4e02b76bf4998b67a810, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.GrabSpell
-  linkEffectPrefab: {fileID: 4379669221819503135, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-  projectilePrefab: {fileID: 3621764393785143092, guid: 3a688ccb0af6341cba98dab5eba63099, type: 3}
-  maxDistance: 20
-  projectileSpeed: 20
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 1
---- !u!114 &7242683768505733117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7242683768505733107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c34afae8bb9b446e914193f23b7098a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.Spellcaster
-  hand: {fileID: 1722105886}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpellCaster
+  fireballDefinition: {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
+  castOrigin: {fileID: 1722105886}
+  castAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3748,3 +3751,4 @@ SceneRoots:
   - {fileID: 638860300}
   - {fileID: 1890279868}
   - {fileID: 840203277}
+  - {fileID: 1872899367}

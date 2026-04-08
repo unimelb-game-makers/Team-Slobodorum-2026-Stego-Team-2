@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4807791858906425073}
   - component: {fileID: -5137846950911751890}
   - component: {fileID: -8201437311473510630}
+  - component: {fileID: -2337077578565956568}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -219,21 +220,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8395e420584f339bb7c6219ebcba9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Flammable.Flammable
+  resistance: 3
+  spreadSpeed: 10
+  burningTime: 30
+  spreadInterval: 1
   useBoundsFromMeshFilter: 0
   bounds:
     m_Center: {x: 0, y: 0.9, z: 0}
     m_Extent: {x: 0.25, y: 0.9, z: 0.25}
   useVoxel: 0
   voxelSize: {x: 1, y: 1, z: 1}
-  resistance: 3
-  spreadSpeed: 10
-  burningTime: 30
-  spreadInterval: 1
   useBurnMark: 0
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
   breakWhenBurnOut: 0
   spawnWhenBreak: {fileID: 0}
+--- !u!114 &-2337077578565956568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267825618391358840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23e457925354d5e97a3124a7cc53dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerEntity
+  maxHitPoints: 100
 --- !u!1001 &6648902675055550174
 PrefabInstance:
   m_ObjectHideFlags: 0

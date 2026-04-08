@@ -18,7 +18,7 @@ namespace TeamSlobodorum.Entities.Player
         private Spell[] _spells;
         private int _currentSpellIndex;
 
-        [CanBeNull] private Spell CurrentSpell => _currentSpellIndex >= 0 && _currentSpellIndex < _spells.Length
+        [CanBeNull] public Spell CurrentSpell => _currentSpellIndex >= 0 && _currentSpellIndex < _spells.Length
             ? _spells[_currentSpellIndex]
             : null;
 

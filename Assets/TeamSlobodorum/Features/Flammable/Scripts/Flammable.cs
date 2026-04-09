@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using TeamSlobodorum.Core;
-using TeamSlobodorum.Particles;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -58,7 +57,9 @@ namespace TeamSlobodorum.Flammable
 
         [SerializeField, Tooltip("The time interval for calculating fire propagation.")]
         private float spreadInterval = 1f;
-        
+
+        [SerializeField] private bool produceSmoke;
+
         [Header("Voxel and Bounds")]
         [SerializeField] public bool useBoundsFromMeshFilter = true;
 
@@ -166,7 +167,8 @@ namespace TeamSlobodorum.Flammable
                     {
                         foreach (var neighbor in GetNeighbors(gridCoord))
                         {
-                            SpreadToVoxel(neighbor, spreadSpeed * spreadInterval);
+                            SpreadToVoxel(neighbor,
+                                spreadSpeed * spreadInterval * voxelData.Fire.CurrentFlameAge.spreadMultiplier);
                         }
                     }
 
@@ -177,7 +179,8 @@ namespace TeamSlobodorum.Flammable
                         if (voxelData.BurnMarkIndex >= 0)
                         {
                             var progress = 1 - voxelData.BurningTime / burningTime;
-                            var radius = voxelSize.magnitude * 1.5f * progress;
+                            // Use Math.Pow to make the radius initially grow slowly
+                            var radius = voxelSize.magnitude * Mathf.Pow(progress, 3f);
                             _burnMarkPoints[voxelData.BurnMarkIndex].w = radius;
                         }
 
@@ -196,6 +199,7 @@ namespace TeamSlobodorum.Flammable
                 _materialInstance.SetVectorArray(BurnCenters, _burnMarkPoints);
                 _materialInstance.SetInt(BurnCount, _currentBurnMarkCount);
             }
+
             IsBurning = hasFire;
         }
 
@@ -213,7 +217,7 @@ namespace TeamSlobodorum.Flammable
             {
                 _materialInstance.SetColor(EmberColor, new Color(0, 0, 0, 0));
             }
-            
+
             if (_voxelMap.All((x) => x.Value.BurningTime <= 0))
             {
                 BurnOut?.Invoke();
@@ -307,7 +311,7 @@ namespace TeamSlobodorum.Flammable
             return neighbors;
         }
 
-        public void SpreadAtPoint(Vector3 position, float damage)
+        public void SpreadAtPoint(Vector3 position, float power)
         {
             Vector3Int gridCoord;
             if (useVoxel)
@@ -322,7 +326,7 @@ namespace TeamSlobodorum.Flammable
 
             if (_voxelMap.TryGetValue(gridCoord, out var data))
             {
-                SpreadToVoxel(data, damage);
+                SpreadToVoxel(data, power);
             }
             else
             {
@@ -330,16 +334,16 @@ namespace TeamSlobodorum.Flammable
                 if (neighbors.Count > 0)
                 {
                     data = neighbors[0];
-                    SpreadToVoxel(data, damage);
+                    SpreadToVoxel(data, power);
                 }
             }
         }
 
-        private void SpreadToVoxel(VoxelData voxelData, float damage)
+        private void SpreadToVoxel(VoxelData voxelData, float power)
         {
             if (voxelData.Resistance > 0)
             {
-                voxelData.Resistance -= damage * spreadInterval;
+                voxelData.Resistance -= power * spreadInterval;
                 if (voxelData.Resistance <= 0 && voxelData.BurningTime > 0 && !voxelData.Fire)
                 {
                     var localPos = GridCoordToLocal(voxelData.GridCoord);
@@ -356,9 +360,10 @@ namespace TeamSlobodorum.Flammable
 
         private Fire SpawnFire(Vector3 worldPos)
         {
-            var fire = Instantiate(PrefabManager.Instance.firePrefab, worldPos, Quaternion.identity, transform);
-            fire.spreadRadius = voxelSize.magnitude * 0.5f;
-            return fire;
+            return Instantiate(
+                produceSmoke ? PrefabManager.Instance.smokedFirePrefab : PrefabManager.Instance.firePrefab,
+                worldPos,
+                Quaternion.identity, transform);
         }
 
         private int AddBurnPoint(Vector3 localPos)

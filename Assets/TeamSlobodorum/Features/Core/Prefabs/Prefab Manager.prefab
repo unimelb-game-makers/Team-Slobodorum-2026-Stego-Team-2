@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Core.PrefabManager
   firePrefab: {fileID: -1138032299551642302, guid: 9714b7bb691a94b5bb6e6f8c9f0f7d75, type: 3}
+  smokedFirePrefab: {fileID: -1138032299551642302, guid: 25790521c7d514f42ab37d2b566f01bb, type: 3}
   burnMarkMaterial: {fileID: 2100000, guid: 7410c270512d44525bc9bf760d9fad50, type: 2}

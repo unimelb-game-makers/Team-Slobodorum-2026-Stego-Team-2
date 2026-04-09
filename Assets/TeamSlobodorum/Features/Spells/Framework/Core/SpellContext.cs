@@ -6,8 +6,9 @@ namespace TeamSlobodorum.Spells.Core
     {
         public GameObject Caster { get; }
         public Transform CastOrigin { get; }
-        public Vector3 AimOrigin { get; }
+        public Transform AimOrigin { get; }
         public Vector3 AimDirection { get; }
+        public Transform PlayerOrigin { get; }
 
         public ISpellCoordinator Coordinator { get; }
         public ITargetingService Targeting { get; }
@@ -17,8 +18,9 @@ namespace TeamSlobodorum.Spells.Core
         public SpellContext(
             GameObject caster,
             Transform castOrigin,
-            Vector3 aimOrigin,
+            Transform aimOrigin,
             Vector3 aimDirection,
+            Transform playerOrigin,
             ISpellCoordinator coordinator,
             ITargetingService targeting,
             IMovementInfluenceService movement,
@@ -28,6 +30,7 @@ namespace TeamSlobodorum.Spells.Core
             CastOrigin = castOrigin;
             AimOrigin = aimOrigin;
             AimDirection = aimDirection;
+            PlayerOrigin = playerOrigin;
             Coordinator = coordinator;
             Targeting = targeting;
             Movement = movement;

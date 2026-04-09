@@ -11,6 +11,7 @@ namespace TeamSlobodorum.Spells
         [SerializeField] private
 
         SpellFactory _factory;
+        AimTargetingService _targetingService = new();
         private readonly Dictionary<int, ISpellRuntime> _activeSpells = new();
         private int _nextHandle = 1;
 
@@ -37,8 +38,9 @@ namespace TeamSlobodorum.Spells
                 request.CastOrigin,
                 request.AimOrigin,
                 request.AimDirection,
+                request.PlayerOrigin,
                 this,
-                null,
+                _targetingService,
                 null,
                 null
             );

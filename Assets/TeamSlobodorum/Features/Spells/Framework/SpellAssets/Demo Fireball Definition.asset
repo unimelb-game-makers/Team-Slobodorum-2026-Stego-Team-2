@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballDefinition
   Id:
     Value: 
-  DisplayName: DemoSpell
+  DisplayName: DemoFireballSpell
   Category: 1
-  Tags: 8
+  Tags: 0
   CastTime: 0
   Cooldown: 1
   RecoveryTime: 0
   OccupiedChannels: 4
   ProjectilePrefab: {fileID: 3918960099676045501, guid: 0e54fcf9e9e38408d80480e5599b10cd, type: 3}
   SpeedRate: 1
-  Lifetime: 1
+  Lifetime: 15

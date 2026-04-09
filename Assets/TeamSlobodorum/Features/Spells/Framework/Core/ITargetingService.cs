@@ -1,11 +1,19 @@
+using TeamSlobodorum.Entities;
 using UnityEngine;
 
 namespace TeamSlobodorum.Spells.Core
 {
     public interface ITargetingService
     {
-        bool Raycast(Vector3 origin, Vector3 direction, float distance, LayerMask mask, out RaycastHit hit);
+        bool TryResolveEntity(
+            Vector3 aimPoint,
+            out Entity entity);
 
+        bool TryResolveEntity(
+            Vector3 aimPoint,
+            float radius,
+            LayerMask mask,
+            out Entity entity);
 
     }
 }

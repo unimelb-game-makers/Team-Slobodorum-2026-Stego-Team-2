@@ -159,6 +159,7 @@ MonoBehaviour:
   spreadSpeed: 10
   burningTime: 30
   spreadInterval: 1
+  produceSmoke: 1
   useBoundsFromMeshFilter: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -1773,8 +1774,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable.Flammable
   resistance: 50
   spreadSpeed: 10
-  burningTime: 10
+  burningTime: 30
   spreadInterval: 1
+  produceSmoke: 0
   useBoundsFromMeshFilter: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -2740,6 +2742,7 @@ MonoBehaviour:
   spreadSpeed: 10
   burningTime: 30
   spreadInterval: 1
+  produceSmoke: 0
   useBoundsFromMeshFilter: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -3165,6 +3168,7 @@ MonoBehaviour:
   spreadSpeed: 10
   burningTime: 30
   spreadInterval: 1
+  produceSmoke: 0
   useBoundsFromMeshFilter: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -3597,8 +3601,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Flammable.Flammable
   resistance: 50
   spreadSpeed: 10
-  burningTime: 10
+  burningTime: 30
   spreadInterval: 1
+  produceSmoke: 0
   useBoundsFromMeshFilter: 1
   bounds:
     m_Center: {x: 0, y: 0, z: 0}

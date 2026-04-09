@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5008383015412242682}
   - component: {fileID: -1138032299551642302}
   m_Layer: 0
-  m_Name: Fire
+  m_Name: Smoked Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b9ca88d8507d49968a3ab256df660fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Particles.Fire
-  firePrefabs:
-  - {fileID: 1781949194303238870, guid: e92a0207ed6f749459a3646c2aaf3cd9, type: 3}
-  - {fileID: 8295591563862043295, guid: e01f2e62cf41a3449be2dade3b2c2d79, type: 3}
-  - {fileID: 8829451551789304542, guid: 8206b722d11501a449d6a278cca2adfa, type: 3}
+  flameAges:
+  - time: 0
+    prefab: {fileID: 1781949194303238870, guid: e92a0207ed6f749459a3646c2aaf3cd9, type: 3}
+    radius: 0.1
+    spreadMultiplier: 0.1
+  - time: 5
+    prefab: {fileID: 8295591563862043295, guid: e01f2e62cf41a3449be2dade3b2c2d79, type: 3}
+    radius: 0.5
+    spreadMultiplier: 0.5
+  - time: 15
+    prefab: {fileID: 8829451551789304542, guid: 8206b722d11501a449d6a278cca2adfa, type: 3}
+    radius: 1
+    spreadMultiplier: 1
   disappearSpeed: 5
   spreadSpeed: 1000
-  spreadRadius: 0.5
   spreadInterval: 1

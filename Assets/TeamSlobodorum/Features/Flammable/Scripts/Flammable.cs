@@ -80,6 +80,7 @@ namespace TeamSlobodorum.Flammable
 
         [SerializeField] public GameObject spawnWhenBreak;
 
+        private MeshRenderer _meshRenderer;
         [CanBeNull] private Material _materialInstance;
 
         private Dictionary<Vector3Int, VoxelData> _voxelMap;
@@ -116,6 +117,8 @@ namespace TeamSlobodorum.Flammable
 
         private void Awake()
         {
+            _meshRenderer = GetComponent<MeshRenderer>();
+            
             StartBurning += OnStartBurning;
             StopBurning += OnStopBurning;
             if (breakWhenBurnOut)
@@ -127,16 +130,6 @@ namespace TeamSlobodorum.Flammable
         private void Start()
         {
             GenerateVoxelMap();
-
-            if (useBurnMark)
-            {
-                _materialInstance = new Material(PrefabManager.Instance.burnMarkMaterial);
-                var meshRenderer = GetComponent<MeshRenderer>();
-                var materialsList = new List<Material>(meshRenderer.materials) { _materialInstance };
-                meshRenderer.materials = materialsList.ToArray();
-
-                _materialInstance.SetColor(BurnColor, burnMarkColor);
-            }
         }
 
         private void Update()
@@ -205,6 +198,15 @@ namespace TeamSlobodorum.Flammable
 
         private void OnStartBurning()
         {
+            if (useBurnMark && !_materialInstance)
+            {
+                _materialInstance = new Material(PrefabManager.Instance.burnMarkMaterial);
+                var materialsList = new List<Material>(_meshRenderer.materials) { _materialInstance };
+                _meshRenderer.materials = materialsList.ToArray();
+
+                _materialInstance.SetColor(BurnColor, burnMarkColor);
+            }
+            
             if (_materialInstance)
             {
                 _materialInstance.SetColor(EmberColor, emberColor);

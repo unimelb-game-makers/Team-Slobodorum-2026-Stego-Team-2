@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using TeamSlobodorum.Core;
+using TeamSlobodorum.Damage;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -59,6 +60,10 @@ namespace TeamSlobodorum.Flammable
         private float spreadInterval = 1f;
 
         [SerializeField] private bool produceSmoke;
+        
+        [Header("Damage")]
+        [SerializeField, Tooltip("The damage caused per second. Only work if the object is damageable.")]
+        private float damage;
 
         [Header("Voxel and Bounds")]
         [SerializeField] public bool useBoundsFromMeshFilter = true;
@@ -76,7 +81,9 @@ namespace TeamSlobodorum.Flammable
         private Color emberColor = new(6f, 0.3f, 0f, 1f);
 
         private MeshRenderer _meshRenderer;
+        private MeshFilter _meshFilter;
         [CanBeNull] private Material _materialInstance;
+        private IDamageable _damageable;
 
         private Dictionary<Vector3Int, VoxelData> _voxelMap;
 
@@ -100,7 +107,7 @@ namespace TeamSlobodorum.Flammable
             }
         }
 
-        private float _currentTime;
+        private float _spreadCounter;
 
         private static readonly int BurnCenters = Shader.PropertyToID("_BurnCenters");
         private static readonly int BurnCount = Shader.PropertyToID("_BurnCount");
@@ -112,7 +119,9 @@ namespace TeamSlobodorum.Flammable
 
         private void Awake()
         {
-            _meshRenderer = GetComponent<MeshRenderer>();
+            TryGetComponent(out _meshRenderer);
+            TryGetComponent(out _meshFilter);
+            TryGetComponent(out _damageable);
             
             StartBurning += OnStartBurning;
             StopBurning += OnStopBurning;
@@ -127,15 +136,17 @@ namespace TeamSlobodorum.Flammable
         {
             if (IsBurning)
             {
-                if (_currentTime > 0)
+                if (_spreadCounter > 0)
                 {
-                    _currentTime -= Time.deltaTime;
+                    _spreadCounter -= Time.deltaTime;
                 }
                 else
                 {
                     StartCoroutine(HandleSpread());
-                    _currentTime = spreadInterval;
+                    _spreadCounter = spreadInterval;
                 }
+                
+                _damageable?.TakeDamage(damage * Time.deltaTime);
             }
         }
 
@@ -217,10 +228,22 @@ namespace TeamSlobodorum.Flammable
             }
         }
 
-        public void GenerateVoxelMap()
+        public void ResetStates()
+        {
+            foreach (var (_, voxelData) in _voxelMap)
+            {
+                if (voxelData.Fire)
+                {
+                    Destroy(voxelData.Fire.gameObject);
+                }
+            }
+            GenerateVoxelMap();
+        }
+
+        private void GenerateVoxelMap()
         {
             _voxelMap = new Dictionary<Vector3Int, VoxelData>();
-            var meshBounds = useBoundsFromMeshFilter ? GetComponent<MeshFilter>().mesh.bounds : bounds;
+            var meshBounds = useBoundsFromMeshFilter ? _meshFilter.mesh.bounds : bounds;
 
             if (useVoxel)
             {

@@ -1,4 +1,4 @@
-using TeamSlobodorum.Entities.Player;
+using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Particles;
 using UnityEngine;
 
@@ -16,14 +16,14 @@ namespace TeamSlobodorum.Spells
         [SerializeField] private LayerMask raycastLayers;
 
         private Camera _mainCamera;
-        private Spellcaster _spellcaster;
+        private Humanoid _humanoid;
 
         public override string SpellName => "Fire";
         public override bool Active => false;
 
         private void Awake()
         {
-            _spellcaster = GetComponent<Spellcaster>();
+            _humanoid = GetComponent<Humanoid>();
         }
 
         private void Start()
@@ -33,14 +33,14 @@ namespace TeamSlobodorum.Spells
 
         public override void Use()
         {
-            var projectileObject = Instantiate(projectilePrefab, _spellcaster.hand.transform.position,
+            var projectileObject = Instantiate(projectilePrefab, _humanoid.rightHand.position,
                 Quaternion.LookRotation(_mainCamera.transform.forward));
             var projectile = projectileObject.GetComponent<FireProjectile>();
 
             if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out var hit,
                     maxDistance, raycastLayers))
             {
-                var direction = (hit.point - _spellcaster.hand.transform.position).normalized;
+                var direction = (hit.point - _humanoid.rightHand.position).normalized;
                 projectile.transform.rotation = Quaternion.LookRotation(direction);
                 projectile.Rigidbody.AddForce(direction * projectileSpeed, ForceMode.Impulse);
             }

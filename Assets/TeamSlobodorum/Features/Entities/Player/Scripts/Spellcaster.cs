@@ -10,9 +10,6 @@ namespace TeamSlobodorum.Entities.Player
     {
         public event Action<Spell> CurrentSpellChanged;
 
-        [Header("References")]
-        [SerializeField] public Transform hand;
-
         private InputAction _attackAction;
 
         private Spell[] _spells;

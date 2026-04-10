@@ -169,8 +169,6 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
-  breakWhenBurnOut: 0
-  spawnWhenBreak: {fileID: 0}
 --- !u!114 &27458706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1786,8 +1784,6 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
-  breakWhenBurnOut: 1
-  spawnWhenBreak: {fileID: 3314833671030057520, guid: 56c78dee256364c0296e02d32eabbf6e, type: 3}
 --- !u!64 &987644702
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2752,8 +2748,6 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
-  breakWhenBurnOut: 0
-  spawnWhenBreak: {fileID: 0}
 --- !u!1 &1341525520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,8 +3172,6 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
-  breakWhenBurnOut: 0
-  spawnWhenBreak: {fileID: 0}
 --- !u!43 &1485420352
 Mesh:
   m_ObjectHideFlags: 0
@@ -3613,8 +3605,6 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 3}
-  breakWhenBurnOut: 1
-  spawnWhenBreak: {fileID: 3314833671030057520, guid: 56c78dee256364c0296e02d32eabbf6e, type: 3}
 --- !u!114 &1754133254
 MonoBehaviour:
   m_ObjectHideFlags: 0

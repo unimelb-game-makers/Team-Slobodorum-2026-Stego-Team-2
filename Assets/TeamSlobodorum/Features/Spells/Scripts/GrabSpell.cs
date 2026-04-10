@@ -47,6 +47,7 @@ namespace TeamSlobodorum.Spells
             {
                 var targetPos = _mainCamera.transform.position +
                                 _mainCamera.transform.forward * _grabDistance;
+                print(_grabbed.Rigidbody);
                 var direction = targetPos - _grabbed.Rigidbody.position;
                 var speed = Math.Min(direction.magnitude * 10f, 30f);
                 _grabbed.Rigidbody.linearVelocity = direction.normalized * speed;

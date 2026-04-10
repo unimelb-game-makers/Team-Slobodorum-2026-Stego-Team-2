@@ -10,10 +10,17 @@ namespace TeamSlobodorum.Entities
         public float MaxHitPoints { get; protected set; }
         public float HitPoints { get; protected set; }
         public virtual bool IsAlive => HitPoints > 0;
+        
+        private Flammable.Flammable _flammable;
 
         protected virtual void Start()
         {
             HitPoints = MaxHitPoints;
+            
+            if (TryGetComponent(out _flammable))
+            {
+                _flammable.StopBurning += OnStopBurning;
+            }
         }
 
         public void TakeDamage(float damage)
@@ -36,6 +43,11 @@ namespace TeamSlobodorum.Entities
         public void Kill()
         {
             HitPoints = 0;
+        }
+        
+        private void OnStopBurning()
+        {
+            _flammable.ResetStates();
         }
     }
 }

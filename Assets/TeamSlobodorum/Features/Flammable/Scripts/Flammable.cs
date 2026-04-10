@@ -75,11 +75,6 @@ namespace TeamSlobodorum.Flammable
         [SerializeField] [ColorUsage(true, true)]
         private Color emberColor = new(6f, 0.3f, 0f, 1f);
 
-        [Header("Break Behaviour")]
-        [SerializeField] public bool breakWhenBurnOut;
-
-        [SerializeField] public GameObject spawnWhenBreak;
-
         private MeshRenderer _meshRenderer;
         [CanBeNull] private Material _materialInstance;
 
@@ -121,10 +116,6 @@ namespace TeamSlobodorum.Flammable
             
             StartBurning += OnStartBurning;
             StopBurning += OnStopBurning;
-            if (breakWhenBurnOut)
-            {
-                BurnOut += HandleBreak;
-            }
         }
 
         private void Start()
@@ -224,16 +215,6 @@ namespace TeamSlobodorum.Flammable
             {
                 BurnOut?.Invoke();
             }
-        }
-
-        private void HandleBreak()
-        {
-            if (spawnWhenBreak)
-            {
-                Instantiate(spawnWhenBreak, transform.position, Quaternion.identity);
-            }
-
-            Destroy(gameObject);
         }
 
         public void GenerateVoxelMap()

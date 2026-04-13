@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 9.9368
       objectReference: {fileID: 0}
     - target: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.39392
       objectReference: {fileID: 0}
     - target: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -72,9 +72,6 @@ PrefabInstance:
       addedObject: {fileID: -6385882961550819254}
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7336778856672532034}
-    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -5565549092082846925}
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
@@ -82,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8435008456883300741}
+    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3140543441834770360}
   m_SourcePrefab: {fileID: 100100000, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
 --- !u!1 &2530656248567082791 stripped
 GameObject:
@@ -131,20 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerEntity
   maxHitPoints: 100
---- !u!114 &7336778856672532034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530656248567082791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f14cba1d50ad84ac88d1671f09de74c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerMovement
-  dampTime: 0.2
-  rotationSpeed: 5
 --- !u!114 &-5565549092082846925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,3 +180,22 @@ MonoBehaviour:
   raycastLayers:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &3140543441834770360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530656248567082791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af24e2234fd4ea489b9af10be110973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.NewPlayerMovement
+  normalSpeed: 2
+  sprintSpeed: 6
+  normalJumpForce: 350
+  sprintJumpForce: 380
+  damping: 0.5
+  maxSprintScale: 3
+  jumpBaseScale: 1

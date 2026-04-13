@@ -59,6 +59,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7176569002585877459}
+    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 666997876841868153}
   m_SourcePrefab: {fileID: 100100000, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
 --- !u!1 &9006287285427717715 stripped
 GameObject:
@@ -77,3 +80,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4dccc72746478d88b23a22baa0f67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.HostileRobot.HostileRobotEntity
+  maxHitPoints: 100
+--- !u!114 &666997876841868153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9006287285427717715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb6d7ad15354217b7f2f3599bfaaf59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Humanoid.HumanoidMovement
+  normalSpeed: 2
+  sprintSpeed: 4
+  normalJumpForce: 350
+  sprintJumpForce: 380
+  damping: 0.5
+  maxSprintScale: 3
+  jumpBaseScale: 1

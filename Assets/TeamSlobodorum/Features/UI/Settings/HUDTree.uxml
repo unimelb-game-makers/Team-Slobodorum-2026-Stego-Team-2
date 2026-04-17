@@ -1,8 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; justify-content: center;">
         <ui:VisualElement name="Debuginfo" style="flex-grow: 1;">
-            <ui:Label text="Grab" name="CurrentSpellLabel" style="font-size: 24px;"/>
+            <ui:Label text="HP:" name="HitPointsLabel"/>
+            <ui:Label text="CurrentSpell:" name="CurrentSpellLabel"/>
         </ui:VisualElement>
-        <ui:Image source="project://database/Assets/Playground/Models/UI/kenney_crosshair-pack/PNG/Outline%20Retina/crosshair190.png?fileID=2800000&amp;guid=cc0d0ee92aef14532b58b52282acaea8&amp;type=3#crosshair190" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
+        <ui:Image source="project://database/Assets/TeamSlobodorum/Features/UI/Textures/kenney_crosshair-pack/PNG/Outline%20Retina/crosshair190.png?fileID=2800000&amp;guid=cc0d0ee92aef14532b58b52282acaea8&amp;type=3#crosshair190" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -1,6 +1,6 @@
 using System;
 using TeamSlobodorum.Entities;
-using TeamSlobodorum.Entities.Player;
+using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Particles;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ namespace TeamSlobodorum.Spells
         [SerializeField] private LayerMask raycastLayers;
 
         private Camera _mainCamera;
-        private Spellcaster _spellcaster;
+        private Humanoid _humanoid;
         private LinkEffect _linkEffect;
         private Entity _grabbed;
         private float _grabDistance;
@@ -30,14 +30,14 @@ namespace TeamSlobodorum.Spells
 
         private void Awake()
         {
-            _spellcaster = GetComponent<Spellcaster>();
+            _humanoid = GetComponent<Humanoid>();
         }
 
         private void Start()
         {
             _mainCamera = Camera.main;
             
-            _linkEffect = Instantiate(linkEffectPrefab, _spellcaster.hand);
+            _linkEffect = Instantiate(linkEffectPrefab, _humanoid.rightHand);
             _linkEffect.gameObject.SetActive(false);
         }
 
@@ -47,6 +47,7 @@ namespace TeamSlobodorum.Spells
             {
                 var targetPos = _mainCamera.transform.position +
                                 _mainCamera.transform.forward * _grabDistance;
+                print(_grabbed.Rigidbody);
                 var direction = targetPos - _grabbed.Rigidbody.position;
                 var speed = Math.Min(direction.magnitude * 10f, 30f);
                 _grabbed.Rigidbody.linearVelocity = direction.normalized * speed;
@@ -75,7 +76,7 @@ namespace TeamSlobodorum.Spells
                 return;
             }
 
-            var projectileObject = Instantiate(projectilePrefab, _spellcaster.hand.transform.position,
+            var projectileObject = Instantiate(projectilePrefab, _humanoid.rightHand.position,
                 Quaternion.LookRotation(_mainCamera.transform.forward));
             var projectile = projectileObject.GetComponent<GrabProjectile>();
             projectile.Spell = this;
@@ -83,7 +84,7 @@ namespace TeamSlobodorum.Spells
             if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out var hit,
                     maxDistance, raycastLayers))
             {
-                var direction = (hit.point - _spellcaster.hand.transform.position).normalized;
+                var direction = (hit.point - _humanoid.rightHand.position).normalized;
                 projectile.transform.rotation = Quaternion.LookRotation(direction);
                 projectile.Rigidbody.AddForce(direction * projectileSpeed, ForceMode.Impulse);
             }

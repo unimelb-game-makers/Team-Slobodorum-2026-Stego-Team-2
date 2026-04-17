@@ -7,7 +7,7 @@ namespace TeamSlobodorum.Entities
     {
         public Rigidbody Rigidbody { get; private set; }
         
-        private void Awake()
+        protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
         }

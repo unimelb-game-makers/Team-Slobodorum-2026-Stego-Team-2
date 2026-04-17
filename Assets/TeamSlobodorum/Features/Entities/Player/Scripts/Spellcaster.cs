@@ -10,15 +10,12 @@ namespace TeamSlobodorum.Entities.Player
     {
         public event Action<Spell> CurrentSpellChanged;
 
-        [Header("References")]
-        [SerializeField] public Transform hand;
-
         private InputAction _attackAction;
 
         private Spell[] _spells;
         private int _currentSpellIndex;
 
-        [CanBeNull] private Spell CurrentSpell => _currentSpellIndex >= 0 && _currentSpellIndex < _spells.Length
+        [CanBeNull] public Spell CurrentSpell => _currentSpellIndex >= 0 && _currentSpellIndex < _spells.Length
             ? _spells[_currentSpellIndex]
             : null;
 

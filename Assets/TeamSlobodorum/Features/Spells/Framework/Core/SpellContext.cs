@@ -12,7 +12,7 @@ namespace TeamSlobodorum.Spells.Core
 
         public ISpellCoordinator Coordinator { get; }
         public ITargetingService Targeting { get; }
-        public IMovementInfluenceService Movement { get; }
+        public IMotionService Movement { get; }
         public ISpellEventBus EventBus { get; }
 
         public SpellContext(
@@ -23,7 +23,7 @@ namespace TeamSlobodorum.Spells.Core
             Transform playerOrigin,
             ISpellCoordinator coordinator,
             ITargetingService targeting,
-            IMovementInfluenceService movement,
+            IMotionService movement,
             ISpellEventBus eventBus)
         {
             Caster = caster;

@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using Unity.Cinemachine;
+using TeamSlobodorum.Spells.Motion;
 
 namespace TeamSlobodorum.Entities.Player
 {
@@ -145,11 +146,16 @@ namespace TeamSlobodorum.Entities.Player
         float m_TimeLastGrounded = 0;
 
         Vector3 m_CurrentVelocityXZ;
+        Vector3 m_LocomotionVelocityXZ; // For seperating player input movements and other sourced velocities
         Vector3 m_LastInput;
         float m_CurrentVelocityY;
         bool m_IsSprinting;
         bool m_IsJumping;
         UnityEngine.CharacterController m_Controller; // optional
+
+        // These are the components for resolving velocity submitted by spell effects
+        [SerializeField] private PlayerMotionService _movementService;
+
 
         // These are part of a strategy to combat input gimbal lock when controlling a player
         // that can move freely on surfaces that go upside-down relative to the camera.
@@ -171,11 +177,17 @@ namespace TeamSlobodorum.Entities.Player
         public bool IsGrounded() => GetDistanceFromGround(transform.position, UpDirection, 10) < 0.01f;
 
         // Note that m_Controller is an optional component: we'll use it if it's there.
-        void Start() => TryGetComponent(out m_Controller);
+        void Start()
+        {
+            TryGetComponent(out m_Controller);
+            if (_movementService == null)
+                _movementService = GetComponent<PlayerMotionService>();
+        }
 
         private void OnEnable()
         {
             m_CurrentVelocityY = 0;
+            m_LocomotionVelocityXZ = Vector3.zero;
             m_IsSprinting = false;
             m_IsJumping = false;
             m_TimeLastGrounded = Time.time;
@@ -187,6 +199,12 @@ namespace TeamSlobodorum.Entities.Player
 
             // Process Jump and gravity
             bool justLanded = ProcessJump();
+            Debug.Log(
+                $"After ProcessJump | grounded={IsGrounded()} jumpValue={Jump.Value:F3} " +
+                $"isJumping={m_IsJumping} currentY={m_CurrentVelocityY:F3} " +
+                $"jumpSpeed={JumpSpeed:F3} sprintJumpSpeed={SprintJumpSpeed:F3}");
+
+            float baseVelocityY = m_CurrentVelocityY;
 
             // Get the reference frame for the input
             var rawInput = new Vector3(MoveX.Value, 0, MoveZ.Value);
@@ -204,35 +222,52 @@ namespace TeamSlobodorum.Entities.Player
                 m_IsSprinting = Sprint.Value > 0.5f;
                 var desiredVelocity = m_LastInput * (m_IsSprinting ? SprintSpeed : Speed);
                 var damping = justLanded ? 0 : Damping;
-                if (Vector3.Angle(m_CurrentVelocityXZ, desiredVelocity) < 100)
-                    m_CurrentVelocityXZ = Vector3.Slerp(
-                        m_CurrentVelocityXZ, desiredVelocity,
+                if (Vector3.Angle(m_LocomotionVelocityXZ, desiredVelocity) < 100)
+                    m_LocomotionVelocityXZ = Vector3.Slerp(
+                        m_LocomotionVelocityXZ, desiredVelocity,
                         Damper.Damp(1, damping, Time.deltaTime));
                 else
-                    m_CurrentVelocityXZ += Damper.Damp(
-                        desiredVelocity - m_CurrentVelocityXZ, damping, Time.deltaTime);
+                    m_LocomotionVelocityXZ += Damper.Damp(
+                        desiredVelocity - m_LocomotionVelocityXZ, damping, Time.deltaTime);
+            }
+
+            // Determine external velocity changes (spell effects)
+            Vector3 finalVelocityXZ = m_LocomotionVelocityXZ;
+            float finalVelocityY = m_CurrentVelocityY;
+
+            if (_movementService != null)
+            {
+                var result = _movementService.Resolve(Time.deltaTime);
+
+                finalVelocityXZ += new Vector3(result.AdditiveVelocity.x, 0f, result.AdditiveVelocity.z);
+                finalVelocityY += result.AdditiveVelocity.y;
+
+                if (result.HasOverrideXZ)
+                    finalVelocityXZ = result.OverrideVelocityXZ;
+
+                if (result.HasOverrideY)
+                    finalVelocityY = result.OverrideVelocityY;
             }
 
             // Apply the position change
-            ApplyMotion();
+            ApplyMotion(finalVelocityXZ, finalVelocityY);
 
             // If not strafing, rotate the player to face movement direction
-            if (!Strafe && m_CurrentVelocityXZ.sqrMagnitude > 0.001f)
+            if (!Strafe && m_LocomotionVelocityXZ.sqrMagnitude > 0.001f)
             {
                 var fwd = inputFrame * Vector3.forward;
                 var qA = transform.rotation;
                 var qB = Quaternion.LookRotation(
-                    (InputForward == ForwardModes.Player && Vector3.Dot(fwd, m_CurrentVelocityXZ) < 0)
-                        ? -m_CurrentVelocityXZ : m_CurrentVelocityXZ, UpDirection);
+                    (InputForward == ForwardModes.Player && Vector3.Dot(fwd, m_LocomotionVelocityXZ) < 0)
+                        ? -m_LocomotionVelocityXZ : m_LocomotionVelocityXZ, UpDirection);
                 var damping = justLanded ? 0 : Damping;
                 transform.rotation = Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime));
             }
 
             if (PostUpdate != null)
             {
-                // Get local-space velocity
-                var vel = Quaternion.Inverse(transform.rotation) * m_CurrentVelocityXZ;
-                vel.y = m_CurrentVelocityY;
+                var vel = Quaternion.Inverse(transform.rotation) * finalVelocityXZ;
+                vel.y = finalVelocityY;
                 PostUpdate(vel, m_IsSprinting ? JumpSpeed / SprintJumpSpeed : 1);
             }
         }
@@ -352,32 +387,32 @@ namespace TeamSlobodorum.Entities.Player
             return justLanded;
         }
 
-        void ApplyMotion()
+        void ApplyMotion(Vector3 velocityXZ, float velocityY)
         {
             if (m_Controller != null)
-                m_Controller.Move((m_CurrentVelocityY * UpDirection + m_CurrentVelocityXZ) * Time.deltaTime);
+                m_Controller.Move((velocityY * UpDirection + velocityXZ) * Time.deltaTime);
             else
             {
-                var pos = transform.position + m_CurrentVelocityXZ * Time.deltaTime;
+                var pos = transform.position + velocityXZ * Time.deltaTime;
 
-                // Don't fall below ground
                 var up = UpDirection;
                 var altitude = GetDistanceFromGround(pos, up, 10);
-                if (altitude < 0 && m_CurrentVelocityY <= 0)
+                if (altitude < 0 && velocityY <= 0)
                 {
                     pos -= altitude * up;
-                    m_CurrentVelocityY = 0;
+                    velocityY = 0;
                 }
-                else if (m_CurrentVelocityY < 0)
+                else if (velocityY < 0)
                 {
-                    var dy = -m_CurrentVelocityY * Time.deltaTime;
+                    var dy = -velocityY * Time.deltaTime;
                     if (dy > altitude)
                     {
                         pos -= altitude * up;
-                        m_CurrentVelocityY = 0;
+                        velocityY = 0;
                     }
                 }
-                transform.position = pos + m_CurrentVelocityY * up * Time.deltaTime;
+
+                transform.position = pos + velocityY * up * Time.deltaTime;
             }
         }
 
@@ -398,6 +433,7 @@ namespace TeamSlobodorum.Entities.Player
             var rot = transform.rotation;
             var rotDelta = newRot * Quaternion.Inverse(rot);
             m_CurrentVelocityXZ = rotDelta * m_CurrentVelocityXZ;
+            m_LocomotionVelocityXZ = rotDelta * m_LocomotionVelocityXZ;
             transform.SetPositionAndRotation(newPos, newRot);
             if (m_Controller != null)
                 m_Controller.enabled = true;

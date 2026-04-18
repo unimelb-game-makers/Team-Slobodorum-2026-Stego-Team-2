@@ -1494,6 +1494,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f86c2826e1739146a853e769a639a57, type: 3}
+--- !u!1 &594436232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 594436234}
+  - component: {fileID: 594436233}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &594436233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594436232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7e144890aa4a64a9e3d5d5ffe42eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerMotionServiceTest
+  movementService: {fileID: 7242683768505733116}
+  submitOnStart: 0
+  triggerKey: 34
+  direction: {x: 0, y: 0, z: 1}
+  useLocalDirection: 1
+  normalizeDirection: 1
+  acceleration: 80
+  duration: 0.5
+  overrideXZ: 0
+  overrideY: 0
+--- !u!4 &594436234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594436232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.1139, y: 0.05458, z: -4.58705}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &634321972
 Mesh:
   m_ObjectHideFlags: 0
@@ -1729,6 +1783,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9714b7bb691a94b5bb6e6f8c9f0f7d75, type: 3}
+--- !u!1 &1186478352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1186478354}
+  - component: {fileID: 1186478355}
+  - component: {fileID: 1186478356}
+  m_Layer: 0
+  m_Name: CursorLockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1186478354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186478352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.1139, y: 0.05458, z: -4.58705}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1186478355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186478352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e208487d1ea82204eacaf5c1d62b4459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.TeamSlobodorum.Utility.CursorLockManager
+  CursorLock:
+    Value: 0
+    Center: 0
+    Range: {x: -1, y: 1}
+    Wrap: 0
+    Recentering:
+      Enabled: 0
+      Wait: 0
+      Time: 0
+    Restrictions: 6
+  OnCursorLocked:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCursorUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1186478356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186478352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab7f9ba878d753479c89a71ac16bc96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DummyCursorLocker
 --- !u!1 &1209590899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,6 +3171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1872899367}
   - component: {fileID: 1872899366}
+  - component: {fileID: 1872899368}
   m_Layer: 0
   m_Name: SpellManager
   m_TagString: Untagged
@@ -3078,6 +3206,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1872899368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872899365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bbe8a9281f49f9801ffc0203bee6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.Cinemachine.Samples.CursorLockManager
+  CursorLock:
+    Value: 0
+    Center: 0
+    Range: {x: -1, y: 1}
+    Wrap: 0
+    Recentering:
+      Enabled: 0
+      Wait: 0
+      Time: 0
+    Restrictions: 6
+  OnCursorLocked:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCursorUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1890279865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,6 +3696,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7242683768505733112}
+    - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7242683768505733116}
   m_SourcePrefab: {fileID: 100100000, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
 --- !u!1 &7242683768505733107 stripped
 GameObject:
@@ -3613,7 +3772,8 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  Gravity: 10
+  Gravity: 8
+  _movementService: {fileID: 7242683768505733116}
 --- !u!114 &7242683768505733109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3740,6 +3900,19 @@ MonoBehaviour:
   castOrigin: {fileID: 1722105886}
   playerOrigin: {fileID: 7242683768505733111}
   castAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
+--- !u!114 &7242683768505733116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242683768505733107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f9ff9e8cfaba834ca16fe147d5ff094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Motion.PlayerMotionService
+  externalDrag: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3757,3 +3930,5 @@ SceneRoots:
   - {fileID: 1890279868}
   - {fileID: 1872899367}
   - {fileID: 546674183}
+  - {fileID: 1186478354}
+  - {fileID: 594436234}

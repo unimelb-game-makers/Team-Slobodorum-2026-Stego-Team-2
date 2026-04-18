@@ -81,6 +81,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         public bool IsSprinting { get; set; }
         private bool _isMoving;
+        public bool LastMoveSucceeded { get; private set; } = true;
 
         public bool IsMoving
         {
@@ -144,8 +145,17 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void HandleNavigationMovement()
         {
-            if (NavMeshAgent.enabled)
+            if (NavMeshAgent.enabled && IsMoving)
             {
+                var pathFinished = !NavMeshAgent.pathPending &&
+                                   NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
+                if (NavMeshAgent.isStopped || pathFinished)
+                {
+                    LastMoveSucceeded = pathFinished;
+                    IsMoving = false;
+                    return;
+                }
+
                 if (!IsFalling && IsGrounded)
                 {
                     var targetPos = NavMeshAgent.nextPosition;
@@ -159,16 +169,10 @@ namespace TeamSlobodorum.Entities.Humanoid
 
                     if (desiredVelocity != Vector3.zero)
                     {
-                        IsMoving = true;
-
                         // Rotate the entity to face movement direction
                         var qA = Rigidbody.rotation;
                         var qB = Quaternion.LookRotation(desiredVelocity, UpDirection);
                         Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime)));
-                    }
-                    else
-                    {
-                        IsMoving = false;
                     }
                 }
 
@@ -255,6 +259,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         public void StartMoveTo(Vector3 destination)
         {
             NavMeshAgent.destination = destination;
+            IsMoving = true;
         }
 
         protected void OnCollisionEnter(Collision other)

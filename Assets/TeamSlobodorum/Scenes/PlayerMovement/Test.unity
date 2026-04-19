@@ -1526,7 +1526,7 @@ MonoBehaviour:
   movementService: {fileID: 7242683768505733116}
   submitOnStart: 0
   triggerKey: 34
-  direction: {x: 0, y: 0, z: 1}
+  direction: {x: 1, y: 1, z: 1}
   useLocalDirection: 1
   normalizeDirection: 1
   acceleration: 80
@@ -3895,11 +3895,11 @@ MonoBehaviour:
   spellDefinitions:
   - {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
   - {fileID: 11400000, guid: 5aa36f562954c1741b0d86de430dfb28, type: 2}
-  fireballIndex: 0
-  grabIndex: 1
   castOrigin: {fileID: 1722105886}
   playerOrigin: {fileID: 7242683768505733111}
   castAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  previousSpellAction: {fileID: -6229353402997687365, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  nextSpellAction: {fileID: -4495767730480715347, guid: 935e70e647d164207858a267f815bd01, type: 3}
 --- !u!114 &7242683768505733116
 MonoBehaviour:
   m_ObjectHideFlags: 0

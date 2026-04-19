@@ -21,6 +21,8 @@ namespace TeamSlobodorum.Spells.Core
         [Header("Resource Occupancy")]
         public SpellResourceChannel OccupiedChannels;
 
+        public virtual bool RetainHandleAfterCast => false;
+
         public abstract ISpellRuntime CreateRuntime();
     }
 }

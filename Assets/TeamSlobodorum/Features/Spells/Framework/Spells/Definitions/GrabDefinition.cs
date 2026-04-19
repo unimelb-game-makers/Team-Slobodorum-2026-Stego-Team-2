@@ -13,6 +13,7 @@ public class GrabDefinition : SpellDefinition
     public float pullGain = 10f;
     public float maxSpeed = 30f;
     public LinkEffect linkEffectPrefab;
+    public override bool RetainHandleAfterCast => true;
 
     public override ISpellRuntime CreateRuntime()
     {

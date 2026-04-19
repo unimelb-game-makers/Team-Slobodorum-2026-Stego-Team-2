@@ -27,8 +27,10 @@ namespace TeamSlobodorum.Entities
                 }
             }
         }
+        public virtual bool CanMove => !PreventMovement;
         public bool LastMoveSucceeded { get; protected set; }
         public bool IsSprinting { get; set; }
+        public bool PreventMovement { get; set; }
         
         public abstract void StartMoveTo(Vector3 destination);
     }

@@ -21,6 +21,7 @@ namespace TeamSlobodorum.Spells
         private Humanoid _humanoid;
         private LinkEffect _linkEffect;
         private Entity _grabbed;
+        private Movement _grabbedMovement;
         private float _grabDistance;
         private bool _useGravity;
 
@@ -47,7 +48,6 @@ namespace TeamSlobodorum.Spells
             {
                 var targetPos = _mainCamera.transform.position +
                                 _mainCamera.transform.forward * _grabDistance;
-                print(_grabbed.Rigidbody);
                 var direction = targetPos - _grabbed.Rigidbody.position;
                 var speed = Math.Min(direction.magnitude * 10f, 30f);
                 _grabbed.Rigidbody.linearVelocity = direction.normalized * speed;
@@ -66,6 +66,11 @@ namespace TeamSlobodorum.Spells
 
                 _useGravity = _grabbed.Rigidbody.useGravity;
                 _grabbed.Rigidbody.useGravity = false;
+
+                if (entity.TryGetComponent<Movement>(out _grabbedMovement))
+                {
+                    _grabbedMovement.PreventMovement = true;
+                }
             }
         }
 
@@ -105,6 +110,11 @@ namespace TeamSlobodorum.Spells
 
                 _grabbed = null;
                 _linkEffect.gameObject.SetActive(false);
+            }
+
+            if (_grabbedMovement)
+            {
+                _grabbedMovement.PreventMovement = false;
             }
         }
     }

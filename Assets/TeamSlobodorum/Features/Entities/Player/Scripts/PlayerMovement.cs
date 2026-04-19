@@ -90,12 +90,7 @@ namespace TeamSlobodorum.Entities.Player
         {
             Jump();
         }
-
-        private void OnAttack()
-        {
-            StartMeleeAttack();
-        }
-
+        
         // Get the reference frame for the input.
         // The idea is to map camera fwd/right to the entity's XZ plane. There is some complexity here to avoid
         // gimbal lock when the entity is tilted 180 degrees relative to the input frame.

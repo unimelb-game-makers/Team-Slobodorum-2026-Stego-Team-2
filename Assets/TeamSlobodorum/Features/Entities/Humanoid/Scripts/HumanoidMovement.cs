@@ -67,7 +67,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         public bool IsFalling { get; protected set; }
         public bool IsAttacking { get; set; }
-        public virtual bool CanMove => !IsAttacking && !IsFalling && IsGrounded;
+        public override bool CanMove => base.CanMove && !IsAttacking && !IsFalling && IsGrounded;
 
         private int _groundContacts;
         public bool IsGrounded => _groundContacts > 0;

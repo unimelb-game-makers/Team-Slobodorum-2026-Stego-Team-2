@@ -232,9 +232,10 @@ namespace TeamSlobodorum.Entities.Humanoid
             }
         }
 
-        public override void StartMoveTo(Vector3 destination)
+        public override void StartMovingTo(Vector3 destination, float stoppingDistance = 0)
         {
             NavMeshAgent.destination = destination;
+            NavMeshAgent.stoppingDistance = stoppingDistance;
             IsMoving = true;
         }
 

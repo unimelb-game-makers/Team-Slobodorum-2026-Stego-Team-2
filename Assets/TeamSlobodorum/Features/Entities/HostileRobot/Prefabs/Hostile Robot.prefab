@@ -87,8 +87,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4dccc72746478d88b23a22baa0f67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.HostileRobot.HostileRobotEntity
-  meleeAttackRange: 2
   maxHitPoints: 100
+  invincibleTime: 0
+  meleeAttackRange: 1
 --- !u!114 &666997876841868153
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ namespace TeamSlobodorum.Entities.HostileRobot
 {
     public class HostileRobotEntity : LivingEntity, IAttackable
     {
-        [SerializeField] private float meleeAttackRange = 2f;
+        [SerializeField] private float meleeAttackRange = 1f;
 
         private HumanoidMovement _movement;
         private readonly Collider[] _hitColliders = new Collider[5];
@@ -24,16 +24,16 @@ namespace TeamSlobodorum.Entities.HostileRobot
             Destroy(gameObject);
         }
 
-        public float MeleeAttackRange => meleeAttackRange;
+        public float AttackRange => meleeAttackRange;
 
-        public void Attack()
+        public void Attack(Entity target)
         {
             _movement.StartMeleeAttack();
         }
 
         private void CauseDamage()
         {
-            var size = Physics.OverlapSphereNonAlloc(transform.position, 1f, _hitColliders,
+            var size = Physics.OverlapSphereNonAlloc(transform.position, meleeAttackRange, _hitColliders,
                 LayerMask.GetMask("Player"));
             
             for (var i = 0; i < size; i++)

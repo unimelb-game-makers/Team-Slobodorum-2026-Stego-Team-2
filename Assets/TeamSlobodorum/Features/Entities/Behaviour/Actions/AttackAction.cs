@@ -7,17 +7,18 @@ using Action = Unity.Behavior.Action;
 namespace TeamSlobodorum.Entities.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Melee Attack", story: "[Entity] melee attack", category: "Action/Entity",
+    [NodeDescription(name: "Attack", story: "[Entity] attacks [TargetEntity]", category: "Action/Entity",
         id: "4ac011ffb2e44071894f37691399f44a")]
-    public partial class MeleeAttackAction : Action
+    public partial class AttackAction : Action
     {
         [SerializeReference] public BlackboardVariable<Entity> entity;
+        [SerializeReference] public BlackboardVariable<Entity> targetEntity;
 
         protected override Status OnStart()
         {
             if (entity.Value is IAttackable attackable)
             {
-                attackable.Attack();
+                attackable.Attack(targetEntity.Value);
                 return Status.Success;
             }
 

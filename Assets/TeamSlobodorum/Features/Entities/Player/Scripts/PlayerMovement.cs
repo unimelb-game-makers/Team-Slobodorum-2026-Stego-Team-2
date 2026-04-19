@@ -51,7 +51,7 @@ namespace TeamSlobodorum.Entities.Player
 
             IsSprinting = _sprintAction.IsPressed();
 
-            if (!IsFalling && IsGrounded)
+            if (CanMove)
             {
                 if (moveInput != Vector2.zero)
                 {
@@ -66,8 +66,8 @@ namespace TeamSlobodorum.Entities.Player
                     if (rotationNeeded)
                     {
                         var qA = Rigidbody.rotation;
-                        var qB = Quaternion.LookRotation(targetDirection, UpDirection);
-                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime)));
+                        var qB = Quaternion.LookRotation(targetDirection, Vector3.up);
+                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.fixedDeltaTime)));
                     }
 
                     var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
@@ -91,6 +91,11 @@ namespace TeamSlobodorum.Entities.Player
             Jump();
         }
 
+        private void OnAttack()
+        {
+            StartMeleeAttack();
+        }
+
         // Get the reference frame for the input.
         // The idea is to map camera fwd/right to the entity's XZ plane. There is some complexity here to avoid
         // gimbal lock when the entity is tilted 180 degrees relative to the input frame.
@@ -105,7 +110,7 @@ namespace TeamSlobodorum.Entities.Player
 
             // Is the entity in the top or bottom hemisphere?  This is needed to avoid gimbal lock,
             // but only when the entity is upside-down relative to the input frame.
-            _timeInHemisphere += Time.deltaTime;
+            _timeInHemisphere += Time.fixedDeltaTime;
             var inTopHemisphere = Vector3.Dot(up, entityUp) >= 0;
             if (inTopHemisphere != _inTopHemisphere)
             {

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 namespace TeamSlobodorum.Entities.Humanoid
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class HumanoidMovement : MonoBehaviour
+    public class HumanoidMovement : Movement
     {
         [Header("Movement")]
         [Tooltip("Ground speed when walking")]
@@ -31,22 +31,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         [Tooltip("Scale factor for the overall speed of the jump animation")]
         public float jumpBaseScale = 1f;
 
-        public event Action StartMoving;
-        public event Action StopMoving;
         public event Action Landed;
-
-        public enum UpModes
-        {
-            Entity,
-            World
-        }
-
-        /// <summary>
-        /// <para>Up direction for computing motion:</para>
-        /// <b>Entity</b>: Move in the Entity's local XZ plane.<br/>
-        /// <b>World</b>: Move in global XZ plane.
-        /// </summary>
-        protected UpModes UpMode = UpModes.World;
 
         protected struct AnimationParams
         {
@@ -58,13 +43,14 @@ namespace TeamSlobodorum.Entities.Humanoid
             public static readonly int JumpKey = Animator.StringToHash("Jump");
             public static readonly int FallKey = Animator.StringToHash("Fall");
             public static readonly int LandKey = Animator.StringToHash("Land");
+            public static readonly int MeleeKey = Animator.StringToHash("Melee");
 
             public bool IsRunning;
             public bool JumpTriggered;
             public bool FallTriggered;
             public bool LandTriggered;
+            public bool MeleeTriggered;
             public Vector3 Direction; // normalized direction of motion
-            public Vector3 DirectionVelocity;
             public float MotionScale; // scale factor for the animation speed
             public float JumpScale; // scale factor for the jump animation
         }
@@ -79,30 +65,9 @@ namespace TeamSlobodorum.Entities.Humanoid
         const float DelayBeforeInferringFall = 0.3f;
         private float _timeLastGrounded;
 
-        public bool IsSprinting { get; set; }
-        private bool _isMoving;
-        public bool LastMoveSucceeded { get; private set; } = true;
-
-        public bool IsMoving
-        {
-            get => _isMoving;
-            protected set
-            {
-                var prev = _isMoving;
-                _isMoving = value;
-
-                if (prev && !value)
-                {
-                    StopMoving?.Invoke();
-                }
-                else if (!prev && value)
-                {
-                    StartMoving?.Invoke();
-                }
-            }
-        }
-
         public bool IsFalling { get; protected set; }
+        public bool IsAttacking { get; protected set; }
+        public virtual bool CanMove => !IsAttacking && !IsFalling && IsGrounded;
 
         private int _groundContacts;
         public bool IsGrounded => _groundContacts > 0;
@@ -119,11 +84,12 @@ namespace TeamSlobodorum.Entities.Humanoid
             Landed += OnLanded;
 
             NavMeshAgent.updatePosition = false;
+            NavMeshAgent.updateRotation = false;
         }
 
         protected virtual void Update()
         {
-            HandleNavigationMovement();
+            // HandleNavigationMovement();
         }
 
         protected virtual void FixedUpdate()
@@ -140,7 +106,13 @@ namespace TeamSlobodorum.Entities.Humanoid
                 _animationParams.FallTriggered = true;
             }
 
+            HandleNavigationMovement();
             UpdateAnimationState();
+
+            if (IsAttacking)
+            {
+                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
+            }
         }
 
         private void HandleNavigationMovement()
@@ -156,32 +128,27 @@ namespace TeamSlobodorum.Entities.Humanoid
                     return;
                 }
 
-                if (!IsFalling && IsGrounded)
+                if (CanMove)
                 {
-                    var targetPos = NavMeshAgent.nextPosition;
-                    var targetDirection = targetPos - Rigidbody.position;
-                    targetDirection.y = 0;
-                    targetDirection = targetDirection.normalized;
-
-                    var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
-                    Rigidbody.linearVelocity =
-                        new Vector3(desiredVelocity.x, Rigidbody.linearVelocity.y, desiredVelocity.z);
-
-                    if (desiredVelocity != Vector3.zero)
+                    var desiredVelocity = NavMeshAgent.desiredVelocity;
+                    desiredVelocity.y = 0;
+                    
+                    if (desiredVelocity.sqrMagnitude > 0.01f)
                     {
+                        var moveVelocity = desiredVelocity.normalized * (IsSprinting ? sprintSpeed : normalSpeed);
+                        Rigidbody.linearVelocity = moveVelocity;
+
                         // Rotate the entity to face movement direction
                         var qA = Rigidbody.rotation;
-                        var qB = Quaternion.LookRotation(desiredVelocity, UpDirection);
-                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.deltaTime)));
+                        var qB = Quaternion.LookRotation(moveVelocity, Vector3.up);
+                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.fixedDeltaTime)));
                     }
                 }
 
                 // Sync the agent's internal position back to the object to prevent drifting
-                NavMeshAgent.nextPosition = transform.position;
+                NavMeshAgent.nextPosition = Rigidbody.position;
             }
         }
-
-        public Vector3 UpDirection => UpMode == UpModes.World ? Vector3.up : transform.up;
 
         private void OnLanded()
         {
@@ -190,12 +157,20 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         public void Jump()
         {
-            if (!IsFalling && IsGrounded)
+            if (CanMove)
             {
                 _animationParams.JumpTriggered = true;
                 IsFalling = true;
-                Rigidbody.AddForce(UpDirection * (IsSprinting ? sprintJumpForce : normalJumpForce),
+                Rigidbody.AddForce(transform.up * (IsSprinting ? sprintJumpForce : normalJumpForce),
                     ForceMode.Impulse);
+            }
+        }
+
+        public void StartMeleeAttack()
+        {
+            if (CanMove)
+            {
+                _animationParams.MeleeTriggered = true;
             }
         }
 
@@ -212,7 +187,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             // Set the normalized direction of motion and scale the animation speed to match motion speed
             var targetDirection = speed > IdleThreshold ? forwardVelocity / normalSpeed : Vector3.zero;
             _animationParams.Direction = Vector3.Slerp(_animationParams.Direction, targetDirection,
-                Damper.Damp(1, damping, Time.deltaTime));
+                Damper.Damp(1, damping, Time.fixedDeltaTime));
             _animationParams.MotionScale = IsMoving ? speed / (IsSprinting ? sprintSpeed : normalSpeed) : 1;
             _animationParams.JumpScale = jumpBaseScale * (IsSprinting ? normalJumpForce / sprintJumpForce : 1);
 
@@ -227,9 +202,8 @@ namespace TeamSlobodorum.Entities.Humanoid
 
             UpdateAnimation();
 
-            _animationParams.JumpTriggered = false;
-            _animationParams.FallTriggered = false;
-            _animationParams.LandTriggered = false;
+            var stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+            IsAttacking = stateInfo.shortNameHash == AnimationParams.MeleeKey;
         }
 
         private void UpdateAnimation()
@@ -243,20 +217,29 @@ namespace TeamSlobodorum.Entities.Humanoid
             if (_animationParams.JumpTriggered)
             {
                 Animator.SetTrigger(AnimationParams.JumpKey);
+                _animationParams.JumpTriggered = false;
             }
 
             if (_animationParams.FallTriggered)
             {
                 Animator.SetTrigger(AnimationParams.FallKey);
+                _animationParams.FallTriggered = false;
             }
 
             if (_animationParams.LandTriggered)
             {
                 Animator.SetTrigger(AnimationParams.LandKey);
+                _animationParams.LandTriggered = false;
+            }
+
+            if (_animationParams.MeleeTriggered)
+            {
+                Animator.SetTrigger(AnimationParams.MeleeKey);
+                _animationParams.MeleeTriggered = false;
             }
         }
 
-        public void StartMoveTo(Vector3 destination)
+        public override void StartMoveTo(Vector3 destination)
         {
             NavMeshAgent.destination = destination;
             IsMoving = true;

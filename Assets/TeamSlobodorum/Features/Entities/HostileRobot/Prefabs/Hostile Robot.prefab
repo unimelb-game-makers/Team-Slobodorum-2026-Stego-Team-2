@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2512106994745045194, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 5ede15c53971941ba991688edd9a9aa9, type: 2}
     - target: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -83,6 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4dccc72746478d88b23a22baa0f67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.HostileRobot.HostileRobotEntity
+  meleeAttackRange: 2
   maxHitPoints: 100
 --- !u!114 &666997876841868153
 MonoBehaviour:
@@ -115,11 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
-  m_Graph: {fileID: 3265791096727747387, guid: 617f6b36d43f643f2b4a50d3719ebb60, type: 2}
+  m_Graph: {fileID: -5233566641077421908, guid: 617f6b36d43f643f2b4a50d3719ebb60, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 4462400204010160324
-  - rid: 4462400204010160559
-  m_OriginalGraph: {fileID: 3265791096727747387, guid: 617f6b36d43f643f2b4a50d3719ebb60, type: 2}
+  m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -133,11 +137,3 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 9006287285427717715}
-    - rid: 4462400204010160559
-      type: {class: 'BlackboardVariable`1[[TeamSlobodorum.Entities.Humanoid.HumanoidMovement, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 8763860945014818743
-          m_Value1: 2961907609312651250
-        Name: Humanoid Movement
-        m_Value: {fileID: 666997876841868153}

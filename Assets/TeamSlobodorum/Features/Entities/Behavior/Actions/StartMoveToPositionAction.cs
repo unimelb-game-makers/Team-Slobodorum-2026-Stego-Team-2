@@ -4,26 +4,26 @@ using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 
-namespace TeamSlobodorum.Entities.Humanoid.Behaviour.Actions
+namespace TeamSlobodorum.Entities.Behavior.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Start Move to Position", story: "[humanoidMovement] starts move to [position]",
+    [NodeDescription(name: "Start Move to Position", story: "[Movement] starts move to [Position]",
         category: "Action/Movement", id: "f92438c088984e4c28462d2d320baea1")]
     public partial class StartMoveToPositionAction : Action
     {
-        [SerializeReference] public BlackboardVariable<HumanoidMovement> humanoidMovement;
+        [SerializeReference] public BlackboardVariable<Movement> movement;
         [SerializeReference] public BlackboardVariable<Vector3> position;
 
         protected override Status OnStart()
         {
-            humanoidMovement.Value.StartMoveTo(position.Value);
+            movement.Value.StartMoveTo(position.Value);
             return Status.Running;
         }
 
         protected override Status OnUpdate()
         {
-            return humanoidMovement.Value.IsMoving ? Status.Running :
-                humanoidMovement.Value.LastMoveSucceeded ? Status.Success : Status.Failure;
+            return movement.Value.IsMoving ? Status.Running :
+                movement.Value.LastMoveSucceeded ? Status.Success : Status.Failure;
         }
 
         protected override void OnEnd()

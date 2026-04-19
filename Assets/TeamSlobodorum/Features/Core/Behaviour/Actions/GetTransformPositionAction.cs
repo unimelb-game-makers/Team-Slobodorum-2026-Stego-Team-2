@@ -7,11 +7,13 @@ using Action = Unity.Behavior.Action;
 namespace TeamSlobodorum.Core.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Get Transform Position", story: "Get [position] from [transform]",
+    [NodeDescription(name: "Get Transform Position", story: "Get [Position] from [Transform]",
         category: "Action/Transform", id: "b8069b7ca673d4975fb86f4d510e55d6")]
     public partial class GetTransformPositionAction : Action
     {
-        [SerializeReference] public BlackboardVariable<Vector3> position;
+        [SerializeReference, Tooltip("[Out Value] The field is assigned with the position of the transform.")]
+        public BlackboardVariable<Vector3> position;
+
         [SerializeReference] public BlackboardVariable<Transform> transform;
 
         protected override Status OnStart()

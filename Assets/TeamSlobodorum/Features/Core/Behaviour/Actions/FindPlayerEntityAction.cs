@@ -8,10 +8,12 @@ using Action = Unity.Behavior.Action;
 namespace TeamSlobodorum.Core.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Find Player Entity", story: "Find the [PlayerEntity] in the current scene", category: "Action/Find", id: "194a2bc9c4eed6feaf66cf34235b5ced")]
+    [NodeDescription(name: "Find Player Entity", story: "Find the [PlayerEntity] in the current scene",
+        category: "Action/Find", id: "194a2bc9c4eed6feaf66cf34235b5ced")]
     public partial class FindPlayerEntityAction : Action
     {
-        [SerializeReference] public BlackboardVariable<PlayerEntity> playerEntity;
+        [SerializeReference, Tooltip("[Out Value] If a player entity is found, the field is assigned with it.")]
+        public BlackboardVariable<PlayerEntity> playerEntity;
 
         protected override Status OnStart()
         {
@@ -35,4 +37,3 @@ namespace TeamSlobodorum.Core.Behaviour.Actions
         }
     }
 }
-

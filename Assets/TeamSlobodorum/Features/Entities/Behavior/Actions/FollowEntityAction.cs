@@ -4,14 +4,14 @@ using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 
-namespace TeamSlobodorum.Entities.Humanoid.Behaviour.Actions
+namespace TeamSlobodorum.Entities.Behavior.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Follow Entity", story: "[humanoidMovement] follows [entity] at intervals of [interval] seconds",
+    [NodeDescription(name: "Follow Entity", story: "[Movement] follows [Entity] at intervals of [Interval] seconds",
         category: "Action/Movement", id: "44bc1fce539f40f3a25fa4af42a25351")]
     public partial class FollowEntityAction : Action
     {
-        [SerializeReference] public BlackboardVariable<HumanoidMovement> humanoidMovement;
+        [SerializeReference] public BlackboardVariable<Movement> movement;
         [SerializeReference] public BlackboardVariable<Entity> entity;
         [SerializeReference] public BlackboardVariable<float> interval;
 
@@ -19,7 +19,7 @@ namespace TeamSlobodorum.Entities.Humanoid.Behaviour.Actions
 
         protected override Status OnStart()
         {
-            humanoidMovement.Value.StartMoveTo(entity.Value.transform.position);
+            movement.Value.StartMoveTo(entity.Value.transform.position);
             _counter = interval.Value;
             return Status.Running;
         }
@@ -28,17 +28,17 @@ namespace TeamSlobodorum.Entities.Humanoid.Behaviour.Actions
         {
             _counter -= Time.deltaTime;
             
-            if (humanoidMovement.Value.IsMoving)
+            if (movement.Value.IsMoving)
             {
                 if (_counter <= 0)
                 {
-                    humanoidMovement.Value.StartMoveTo(entity.Value.transform.position);
+                    movement.Value.StartMoveTo(entity.Value.transform.position);
                     _counter = interval.Value;
                 }
                 return Status.Running;
             }
             
-            return humanoidMovement.Value.LastMoveSucceeded ? Status.Success : Status.Failure;
+            return movement.Value.LastMoveSucceeded ? Status.Success : Status.Failure;
         }
 
         protected override void OnEnd()

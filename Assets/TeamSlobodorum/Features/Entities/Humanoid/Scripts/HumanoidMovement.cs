@@ -66,7 +66,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         private float _timeLastGrounded;
 
         public bool IsFalling { get; protected set; }
-        public bool IsAttacking { get; protected set; }
+        public bool IsAttacking { get; set; }
         public virtual bool CanMove => !IsAttacking && !IsFalling && IsGrounded;
 
         private int _groundContacts;
@@ -87,11 +87,6 @@ namespace TeamSlobodorum.Entities.Humanoid
             NavMeshAgent.updateRotation = false;
         }
 
-        protected virtual void Update()
-        {
-            // HandleNavigationMovement();
-        }
-
         protected virtual void FixedUpdate()
         {
             var now = Time.time;
@@ -105,14 +100,14 @@ namespace TeamSlobodorum.Entities.Humanoid
                 IsFalling = true;
                 _animationParams.FallTriggered = true;
             }
-
-            HandleNavigationMovement();
-            UpdateAnimationState();
-
-            if (IsAttacking)
+            
+            if (_animationParams.MeleeTriggered)
             {
                 Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
             }
+
+            HandleNavigationMovement();
+            UpdateAnimationState();
         }
 
         private void HandleNavigationMovement()
@@ -170,6 +165,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         {
             if (CanMove)
             {
+                IsAttacking = true;
                 _animationParams.MeleeTriggered = true;
             }
         }
@@ -201,9 +197,6 @@ namespace TeamSlobodorum.Entities.Humanoid
             }
 
             UpdateAnimation();
-
-            var stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
-            IsAttacking = stateInfo.shortNameHash == AnimationParams.MeleeKey;
         }
 
         private void UpdateAnimation()

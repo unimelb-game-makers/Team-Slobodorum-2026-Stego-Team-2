@@ -31,7 +31,7 @@ namespace TeamSlobodorum.Entities.HostileRobot
             _movement.StartMeleeAttack();
         }
 
-        public void CauseDamage()
+        private void CauseDamage()
         {
             var size = Physics.OverlapSphereNonAlloc(transform.position, 1f, _hitColliders,
                 LayerMask.GetMask("Player"));

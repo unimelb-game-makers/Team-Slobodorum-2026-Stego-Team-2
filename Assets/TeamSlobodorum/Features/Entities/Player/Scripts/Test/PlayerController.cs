@@ -199,10 +199,7 @@ namespace TeamSlobodorum.Entities.Player
 
             // Process Jump and gravity
             bool justLanded = ProcessJump();
-            Debug.Log(
-                $"After ProcessJump | grounded={IsGrounded()} jumpValue={Jump.Value:F3} " +
-                $"isJumping={m_IsJumping} currentY={m_CurrentVelocityY:F3} " +
-                $"jumpSpeed={JumpSpeed:F3} sprintJumpSpeed={SprintJumpSpeed:F3}");
+
 
             float baseVelocityY = m_CurrentVelocityY;
 

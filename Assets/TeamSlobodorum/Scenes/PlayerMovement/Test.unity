@@ -3678,6 +3678,7 @@ PrefabInstance:
     - {fileID: 8088731869946285836, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
     - {fileID: 4807791858906425073, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
     - {fileID: -5137846950911751890, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
+    - {fileID: 7870183428418456229, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2261247438917318289, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
@@ -3699,6 +3700,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7242683768505733116}
+    - targetCorrespondingSourceObject: {fileID: 5267825618391358840, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7242683768505733123}
   m_SourcePrefab: {fileID: 100100000, guid: fee39a6e8be7045e692e11af592a1314, type: 3}
 --- !u!1 &7242683768505733107 stripped
 GameObject:
@@ -3719,8 +3723,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerController
   Speed: 2
   SprintSpeed: 6
-  JumpSpeed: 7
-  SprintJumpSpeed: 10
+  JumpSpeed: 6
+  SprintJumpSpeed: 6
   MoveX:
     Value: 0
     Center: 0
@@ -3772,7 +3776,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  Gravity: 8
+  Gravity: 10
   _movementService: {fileID: 7242683768505733116}
 --- !u!114 &7242683768505733109
 MonoBehaviour:
@@ -3913,6 +3917,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Motion.PlayerMotionService
   externalDrag: 2
+--- !u!54 &7242683768505733123
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242683768505733107}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

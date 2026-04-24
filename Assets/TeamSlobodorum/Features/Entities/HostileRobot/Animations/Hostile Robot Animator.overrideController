@@ -9,5 +9,19 @@ AnimatorOverrideController:
   m_Name: Hostile Robot Animator
   m_Controller: {fileID: 9100000, guid: 6da6568f7738043c78c0926e3675965d, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -203655887218126122, guid: 32ad23d86e8f9482a8066f4adcff1f9c, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: 0edf4a489955e4ba199309e8f14c2929, type: 2}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 21a1be462ddc54a51855ec54481077a2, type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: b88ec26a83b701044a543a7dad051099, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 8a0fb525f4c8d49bda43558e564c2812, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 8a0fb525f4c8d49bda43558e564c2812, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 2b965929e17dd4f51aead908c31710dc, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 2b965929e17dd4f51aead908c31710dc, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 22e9e82441dc94d6f8cfee105e262405, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 357c2b80ce8b14640a7a48135487b9a7, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: dcaa02605a941487cb7eb9026fc57252, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: dcaa02605a941487cb7eb9026fc57252, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: cf7a54f9315fb4d8482ef3f06705b612, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: cf7a54f9315fb4d8482ef3f06705b612, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: cf500690732624b6caa85e34346a6701, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: cf500690732624b6caa85e34346a6701, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 83c7736db760b451f98d9c18aa4ae226, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 83c7736db760b451f98d9c18aa4ae226, type: 3}

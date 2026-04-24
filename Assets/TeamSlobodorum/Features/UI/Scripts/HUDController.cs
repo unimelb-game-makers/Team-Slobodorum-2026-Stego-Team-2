@@ -32,13 +32,15 @@ namespace TeamSlobodorum.UI.Scripts
             _cancelAction = InputSystem.actions.FindAction("Cancel");
             
             var playerObject = GameObject.FindWithTag("Player");
-            _spellcaster = playerObject.GetComponent<Spellcaster>();
+            
+            // _spellcaster = playerObject.GetComponent<Spellcaster>();
+
             _playerEntity = playerObject.GetComponent<PlayerEntity>();
             
-            _spellcaster.CurrentSpellChanged += UpdateCurrentSpell;
+            // _spellcaster.CurrentSpellChanged += UpdateCurrentSpell;
             _playerEntity.Damaged += UpdateHitPoints;
             
-            UpdateCurrentSpell(_spellcaster.CurrentSpell);
+            // UpdateCurrentSpell(_spellcaster.CurrentSpell);
             UpdateHitPoints();
             
             Cursor.lockState = CursorLockMode.Locked;
@@ -57,10 +59,10 @@ namespace TeamSlobodorum.UI.Scripts
             }
         }
 
-        private void UpdateCurrentSpell(Spell spell)
-        {
-            _currentSpellLabel.text = $"CurrentSpell: {spell.SpellName}";
-        }
+        //private void UpdateCurrentSpell(Spell spell)
+        //{
+        //    _currentSpellLabel.text = $"CurrentSpell: {spell.SpellName}";
+        //}
 
         private void UpdateHitPoints()
         {

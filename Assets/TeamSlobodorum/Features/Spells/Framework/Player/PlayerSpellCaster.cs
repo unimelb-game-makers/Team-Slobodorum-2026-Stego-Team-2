@@ -20,6 +20,7 @@ public class PlayerSpellCaster : MonoBehaviour
     [SerializeField] private InputActionReference castAction;
     [SerializeField] private InputActionReference previousSpellAction;
     [SerializeField] private InputActionReference nextSpellAction;
+    [SerializeField] private InputActionReference aimAction;
 
     private SpellCoordinator _coordinator;
     private Transform _aimTarget;
@@ -191,7 +192,7 @@ public class PlayerSpellCaster : MonoBehaviour
 
     private bool TryBuildAim(out Transform aimOrigin, out Vector3 aimDirection)
     {
-        if (_aimTarget != null)
+        if (_aimTarget != null && aimAction.action.IsPressed())
         {
             aimOrigin = _aimTarget;
             aimDirection = (_aimTarget.position - castOrigin.position).normalized;

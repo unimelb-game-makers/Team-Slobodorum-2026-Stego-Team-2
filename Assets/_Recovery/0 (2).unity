@@ -1110,6 +1110,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2906337847185700253, guid: d1bee8bd54d98475b882e1e4e81077ac, type: 3}
   m_PrefabInstance: {fileID: 7242683768505733106}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &225462529 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6954516175522406505, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 6514646101341069726}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!4 &225462530 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 701811153743705051, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 6514646101341069726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &321718445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,6 +3464,68 @@ MonoBehaviour:
   useBurnMark: 1
   burnMarkColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
   emberColor: {r: 6, g: 0.3, b: 0, a: 1}
+--- !u!1 &1401727607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1401727608}
+  - component: {fileID: 1401727609}
+  m_Layer: 0
+  m_Name: SpellMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1401727608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401727607}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 18.06108, y: 2.30277, z: -2.37073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1713393540}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401727609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401727607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64a2a4fabd77a048aedd51990b026b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpellMenuController
+  menuDocument: {fileID: 225462529}
+--- !u!1 &1420814957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2530656248567082791, guid: d1bee8bd54d98475b882e1e4e81077ac, type: 3}
+  m_PrefabInstance: {fileID: 7242683768505733106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1420814968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420814957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ecec7fdd593824bb6461ffa32a3e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Player.PlayerSpellManagement
 --- !u!43 &1485420352
 Mesh:
   m_ObjectHideFlags: 0
@@ -3828,6 +3906,38 @@ Transform:
   - {fileID: 987644707}
   - {fileID: 1754133261}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1713393539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1713393540}
+  m_Layer: 0
+  m_Name: Controllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1713393540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713393539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1401727608}
+  m_Father: {fileID: 225462530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1754133252
 GameObject:
@@ -4972,10 +5082,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: openMenuAction
+      value: 
+      objectReference: {fileID: 1917325650917784589, guid: 935e70e647d164207858a267f815bd01, type: 3}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: closeMenuAction
+      value: 
+      objectReference: {fileID: 6623937118742607397, guid: 935e70e647d164207858a267f815bd01, type: 3}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: toggleMenuAction
+      value: 
+      objectReference: {fileID: 1917325650917784589, guid: 935e70e647d164207858a267f815bd01, type: 3}
+    - target: {fileID: 5458847662473859590, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232737213118995489, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 935e70e647d164207858a267f815bd01, type: 3}
     - target: {fileID: 6277431394095836015, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6523793065533338274, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: _attackAction
+      value: 
+      objectReference: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
     - target: {fileID: 7305102895496933570, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.80408
@@ -5018,7 +5152,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 701811153743705051, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1713393540}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
 --- !u!1001 &7242683768505733106
@@ -5080,7 +5217,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2530656248567082791, guid: d1bee8bd54d98475b882e1e4e81077ac, type: 3}
+      insertIndex: 10
+      addedObject: {fileID: 1420814968}
   m_SourcePrefab: {fileID: 100100000, guid: d1bee8bd54d98475b882e1e4e81077ac, type: 3}
 --- !u!4 &7242683768505733107 stripped
 Transform:

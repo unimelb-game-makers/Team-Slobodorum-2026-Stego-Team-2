@@ -1,17 +1,17 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
+
 namespace TeamSlobodorum.UI.Scripts
 {
-
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance { get; private set; }
 
         [Header("UI Input")]
-        public InputActionReference toggleMenuAction;
+        public InputActionReference openMenuAction;
+        public InputActionReference closeMenuAction;
 
         public UnityEvent OnMenuOpened;
         public UnityEvent OnMenuClosed;
@@ -29,49 +29,35 @@ namespace TeamSlobodorum.UI.Scripts
         }
 
         private void OnEnable()
-        {
-
-
-
-            if (toggleMenuAction != null)
-            {
-                toggleMenuAction.action.performed += HandleToggleInput;
-                toggleMenuAction.action.Enable();
-            }
+        {   
+            openMenuAction.action.performed+=OpenMenu;
+            closeMenuAction.action.performed+=CloseMenu;
         }
 
         private void OnDisable()
         {
-            if (toggleMenuAction != null)
+            openMenuAction.action.performed-=OpenMenu;
+            closeMenuAction.action.performed-=CloseMenu;
+
+            var playerMap = InputSystem.actions.FindActionMap("Player");
+            if (playerMap != null && !playerMap.enabled)
             {
-                toggleMenuAction.action.performed -= HandleToggleInput;
-                toggleMenuAction.action.Disable();
+                InputSystem.actions.FindActionMap("UI")?.Disable();
+                playerMap.Enable();
             }
         }
 
-        private void HandleToggleInput(InputAction.CallbackContext context)
-        {
-            ToggleMenu();
-        }
-
-
-        // --- PUBLIC API ---
-        public void ToggleMenu()
-        {
-            if (IsMenuOpen) CloseMenu();
-            else OpenMenu();
-        }
-
-        public void OpenMenu()
+        public void OpenMenu(InputAction.CallbackContext context)
         {
             if (IsMenuOpen) return;
 
             IsMenuOpen = true;
+            
 
             OnMenuOpened?.Invoke();
         }
 
-        public void CloseMenu()
+        public void CloseMenu(InputAction.CallbackContext context)
         {
             if (!IsMenuOpen) return;
 

@@ -8,6 +8,14 @@ namespace TeamSlobodorum.Spells.Core
         [Header("Identity")]
         public SpellId Id;
         public string DisplayName;
+        
+        [Header("UI & Presentation")]
+        [TextArea(3, 5)]
+        public string Description;
+        public Sprite Icon;
+
+        [Header("Costs")]
+        public int ManaCost = 0;
 
         [Header("Classification")]
         public SpellCategory Category;

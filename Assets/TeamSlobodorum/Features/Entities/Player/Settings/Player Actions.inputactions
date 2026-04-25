@@ -122,6 +122,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenManagementMenu",
+                    "type": "Button",
+                    "id": "906614b7-2a8e-4b87-967c-0fc05bd428a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -564,6 +573,17 @@
                     "action": "NextSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50d146ce-260a-49f0-b4ab-ce4ef6d755cb",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenManagementMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -572,9 +592,9 @@
             "id": "60062fd6-37f3-428a-8101-3b05f6f8bd75",
             "actions": [
                 {
-                    "name": "ToggleManagementMenu",
+                    "name": "CloseManagementMenu",
                     "type": "Button",
-                    "id": "75db87b5-581b-471d-b03f-e5aaf310c0c4",
+                    "id": "73619a93-d50d-4220-93e8-00abc4ceb4f9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -584,12 +604,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "9ff37fce-7837-476f-9a3e-75e719e91e51",
+                    "id": "ddecd7f8-7cea-45b2-8604-ebc6db09175a",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToggleManagementMenu",
+                    "action": "CloseManagementMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

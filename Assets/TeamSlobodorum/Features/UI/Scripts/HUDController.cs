@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using TeamSlobodorum.Entities.Player;
+using TeamSlobodorum.Spells.Core;
 using TeamSlobodorum.Spells.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,12 +14,18 @@ namespace TeamSlobodorum.UI.Scripts
         private UIDocument _uiDocument;
 
         private InputAction _cancelAction;
+        public InputActionReference _attackAction;
         private PlayerSpellCaster _spellcaster;
         private PlayerEntity _playerEntity;
-
+        private PlayerSpellManager _spellManager;
         private Label _hitPointsLabel;
         private Label _currentSpellLabel;
         private VisualElement root;
+        private List<Button> equippedSlotButtons;
+        private VisualElement _equippedSlotsContainer;
+        public Color activateColor;
+        public Color deactivateColor;
+
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -29,16 +37,24 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void Start()
         {
+            _equippedSlotsContainer = root.Q<VisualElement>("EquippedSlotsContainer");
+            equippedSlotButtons = _equippedSlotsContainer.Query<Button>().ToList();
+
             _cancelAction = InputSystem.actions.FindAction("Cancel");
 
             var playerObject = GameObject.FindWithTag("Player");
 
             _playerEntity = playerObject.GetComponent<PlayerEntity>();
             _spellcaster = playerObject.GetComponent<PlayerSpellCaster>();
-
+            _spellManager = playerObject.GetComponent<PlayerSpellManager>();
             _playerEntity.Damaged += UpdateHitPoints;
             _spellcaster.SelectedSpellChanged += UpdateSelectedSpell;
 
+            _spellManager.OnSpellEquipped += RefreshEquippedSlots;
+            _spellManager.OnSpellUnequipped += RefreshEquippedSlots;
+            _spellManager.OnSpellObtained += RefreshEquippedSlots;
+
+            RefreshEquippedSlots();
             UpdateHitPoints();
             UpdateSelectedSpell();
 
@@ -48,7 +64,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void Update()
         {
-            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            if (Mouse.current != null && _attackAction.action.WasPressedThisFrame())
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
@@ -62,6 +78,7 @@ namespace TeamSlobodorum.UI.Scripts
         private void UpdateSelectedSpell()
         {
             _currentSpellLabel.text = $"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}";
+            RefreshEquippedSlots();
         }
 
         private void UpdateHitPoints()
@@ -79,6 +96,51 @@ namespace TeamSlobodorum.UI.Scripts
         public void ShowHUD()
         {
             root.style.display = DisplayStyle.Flex;
+
+        }
+
+        private void RefreshEquippedSlots(SpellDefinition changedSpell = null)
+        {
+            // Loop through the 4 fixed slots
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < _spellManager.EquippedSpells.Count)
+                {
+                    // If the slot has a spell, display the icon
+                    equippedSlotButtons[i].iconImage = new Background(_spellManager.EquippedSpells[i].Icon.texture);
+                    if (_spellManager.EquippedSpells[i] == _spellcaster.SelectedSpell)
+                    {
+                        _equippedSlotsContainer[i].style.backgroundColor = activateColor;
+                    }
+                    else
+                    {
+                        _equippedSlotsContainer[i].style.backgroundColor = deactivateColor;
+
+                    }
+
+                }
+                else
+                {
+                    // If there is no spell, clear the icon (or set to a default placeholder)
+                    equippedSlotButtons[i].iconImage = null;
+                    _equippedSlotsContainer[i].style.backgroundColor = new Color(0, 0, 0, 0);
+                }
+            }
+        }
+        private void OnDestroy()
+        {
+            if (_spellManager != null)
+            {
+                _spellManager.OnSpellEquipped -= RefreshEquippedSlots;
+                _spellManager.OnSpellUnequipped -= RefreshEquippedSlots;
+                _spellManager.OnSpellObtained -= RefreshEquippedSlots;
+
+            } 
+            if (_spellcaster != null)
+            {
+                _spellcaster.SelectedSpellChanged -= UpdateSelectedSpell;
+            }
+
         }
     }
 

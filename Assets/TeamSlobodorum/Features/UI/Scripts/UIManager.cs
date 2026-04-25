@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.Events;
 namespace TeamSlobodorum.UI.Scripts
 {
 
@@ -12,8 +13,8 @@ namespace TeamSlobodorum.UI.Scripts
         [Header("UI Input")]
         public InputActionReference toggleMenuAction;
 
-        public event Action OnMenuOpened;
-        public event Action OnMenuClosed;
+        public UnityEvent OnMenuOpened;
+        public UnityEvent OnMenuClosed;
 
         public bool IsMenuOpen { get; private set; } = false;
 

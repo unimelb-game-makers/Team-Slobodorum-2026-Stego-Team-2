@@ -18,30 +18,12 @@ namespace TeamSlobodorum.UI.Scripts
 
         }
 
-        private void Start()
-        {
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.OnMenuOpened += ShowUI;
-                UIManager.Instance.OnMenuClosed += HideUI;
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.OnMenuOpened -= ShowUI;
-                UIManager.Instance.OnMenuClosed -= HideUI;
-            }
-        }
-
-        private void HideUI()
+        public void HideUI()
         {
             root.style.display = DisplayStyle.None;
         }
 
-        private void ShowUI()
+        public void ShowUI()
         {
             root.style.display = DisplayStyle.Flex;
         }

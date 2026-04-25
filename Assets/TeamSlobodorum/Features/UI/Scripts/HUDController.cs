@@ -1,5 +1,5 @@
 using TeamSlobodorum.Entities.Player;
-using TeamSlobodorum.Spells;
+using TeamSlobodorum.Spells.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -43,11 +43,7 @@ namespace TeamSlobodorum.UI.Scripts
             UpdateSelectedSpell();
 
             Cursor.lockState = CursorLockMode.Locked;
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.OnMenuOpened += HideHUD;
-                UIManager.Instance.OnMenuClosed += ShowHUD;
-            }
+
         }
 
         private void Update()
@@ -73,21 +69,14 @@ namespace TeamSlobodorum.UI.Scripts
             _hitPointsLabel.text = $"HP: {_playerEntity.HitPoints:F2}";
         }
 
-        private void OnDestroy()
-        {
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.OnMenuOpened -= HideHUD;
-                UIManager.Instance.OnMenuClosed -= ShowHUD;
-            }
-        }
 
-        private void HideHUD()
+
+        public void HideHUD()
         {
             root.style.display = DisplayStyle.None;
         }
 
-        private void ShowHUD()
+        public void ShowHUD()
         {
             root.style.display = DisplayStyle.Flex;
         }

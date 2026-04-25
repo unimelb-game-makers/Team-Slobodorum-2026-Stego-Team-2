@@ -1,55 +1,100 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using System;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("UI Toolkit Menu")]
-    public UIDocument uiDocument;
+    public static UIManager Instance { get; private set; }
+
+    [Header("UI Input")]
     public InputActionReference toggleMenuAction;
 
-    [Header("Team HUD Integration")]
-    [Tooltip("Drag your team's existing HUD GameObject here.")]
-    public GameObject teamHUD; // Add this line!
+    [Header("UI Documents")]
+    public UIDocument ManagementMenuUI;
+    public UIDocument HUD;
+
+    public event Action OnMenuOpened;
+    public event Action OnMenuClosed;
 
     private VisualElement menuContainer;
-    private bool isMenuOpen = false;
+    private VisualElement hudRoot;
+    
+    public bool IsMenuOpen { get; private set; } = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     private void OnEnable()
     {
-        var root = uiDocument.rootVisualElement;
-        menuContainer = root.Q<VisualElement>("MenuContainer");
-        menuContainer.style.display = DisplayStyle.None;
+        if (ManagementMenuUI != null && ManagementMenuUI.rootVisualElement != null)
+        {
+            menuContainer = ManagementMenuUI.rootVisualElement;
+            if (menuContainer != null) menuContainer.style.display = DisplayStyle.None;
+        }
 
-        toggleMenuAction.action.performed += OnToggleMenuPressed;
-        toggleMenuAction.action.Enable();
+        if (HUD != null && HUD.rootVisualElement != null)
+        {
+            hudRoot = HUD.rootVisualElement;
+        }
+
+        if (toggleMenuAction != null)
+        {
+            toggleMenuAction.action.performed += HandleToggleInput;
+            toggleMenuAction.action.Enable();
+        }
     }
 
     private void OnDisable()
     {
-        toggleMenuAction.action.performed -= OnToggleMenuPressed;
-        toggleMenuAction.action.Disable();
+        if (toggleMenuAction != null)
+        {
+            toggleMenuAction.action.performed -= HandleToggleInput;
+            toggleMenuAction.action.Disable();
+        }
     }
 
-    private void OnToggleMenuPressed(InputAction.CallbackContext context)
+    private void HandleToggleInput(InputAction.CallbackContext context)
     {
-        isMenuOpen = !isMenuOpen;
+        ToggleMenu();
+    }
 
-        if (isMenuOpen)
-        {
-            // Show your Management UI
-            menuContainer.style.display = DisplayStyle.Flex;
-            
-            // Hide the team's HUD
-            if (teamHUD != null) teamHUD.SetActive(false); 
-        }
-        else
-        {
-            // Hide your Management UI
-            menuContainer.style.display = DisplayStyle.None;
-            
-            // Bring the team's HUD back
-            if (teamHUD != null) teamHUD.SetActive(true); 
-        }
+
+    // --- PUBLIC API ---
+    public void ToggleMenu()
+    {
+        if (IsMenuOpen) CloseMenu();
+        else OpenMenu();
+    }
+
+    public void OpenMenu()
+    {
+        if (IsMenuOpen) return; 
+        
+        IsMenuOpen = true;
+
+        if (menuContainer != null) menuContainer.style.display = DisplayStyle.Flex;
+        if (hudRoot != null) hudRoot.style.display = DisplayStyle.None;
+
+        OnMenuOpened?.Invoke();
+    }
+
+    public void CloseMenu()
+    {
+        if (!IsMenuOpen) return; 
+        
+        IsMenuOpen = false;
+
+        if (menuContainer != null) menuContainer.style.display = DisplayStyle.None;
+        if (hudRoot != null) hudRoot.style.display = DisplayStyle.Flex;
+
+        OnMenuClosed?.Invoke();
     }
 }

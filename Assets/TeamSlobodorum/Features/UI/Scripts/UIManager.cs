@@ -2,99 +2,81 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using System;
-
-public class UIManager : MonoBehaviour
+namespace TeamSlobodorum.UI.Scripts
 {
-    public static UIManager Instance { get; private set; }
 
-    [Header("UI Input")]
-    public InputActionReference toggleMenuAction;
-
-    [Header("UI Documents")]
-    public UIDocument ManagementMenuUI;
-    public UIDocument HUD;
-
-    public event Action OnMenuOpened;
-    public event Action OnMenuClosed;
-
-    private VisualElement menuContainer;
-    private VisualElement hudRoot;
-    
-    public bool IsMenuOpen { get; private set; } = false;
-
-    private void Awake()
+    public class UIManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+        public static UIManager Instance { get; private set; }
 
-    private void OnEnable()
-    {
-        if (ManagementMenuUI != null && ManagementMenuUI.rootVisualElement != null)
+        [Header("UI Input")]
+        public InputActionReference toggleMenuAction;
+
+        public event Action OnMenuOpened;
+        public event Action OnMenuClosed;
+
+        public bool IsMenuOpen { get; private set; } = false;
+
+        private void Awake()
         {
-            menuContainer = ManagementMenuUI.rootVisualElement;
-            if (menuContainer != null) menuContainer.style.display = DisplayStyle.None;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
         }
 
-        if (HUD != null && HUD.rootVisualElement != null)
+        private void OnEnable()
         {
-            hudRoot = HUD.rootVisualElement;
+
+
+
+            if (toggleMenuAction != null)
+            {
+                toggleMenuAction.action.performed += HandleToggleInput;
+                toggleMenuAction.action.Enable();
+            }
         }
 
-        if (toggleMenuAction != null)
+        private void OnDisable()
         {
-            toggleMenuAction.action.performed += HandleToggleInput;
-            toggleMenuAction.action.Enable();
+            if (toggleMenuAction != null)
+            {
+                toggleMenuAction.action.performed -= HandleToggleInput;
+                toggleMenuAction.action.Disable();
+            }
         }
-    }
 
-    private void OnDisable()
-    {
-        if (toggleMenuAction != null)
+        private void HandleToggleInput(InputAction.CallbackContext context)
         {
-            toggleMenuAction.action.performed -= HandleToggleInput;
-            toggleMenuAction.action.Disable();
+            ToggleMenu();
         }
-    }
-
-    private void HandleToggleInput(InputAction.CallbackContext context)
-    {
-        ToggleMenu();
-    }
 
 
-    // --- PUBLIC API ---
-    public void ToggleMenu()
-    {
-        if (IsMenuOpen) CloseMenu();
-        else OpenMenu();
-    }
+        // --- PUBLIC API ---
+        public void ToggleMenu()
+        {
+            if (IsMenuOpen) CloseMenu();
+            else OpenMenu();
+        }
 
-    public void OpenMenu()
-    {
-        if (IsMenuOpen) return; 
-        
-        IsMenuOpen = true;
+        public void OpenMenu()
+        {
+            if (IsMenuOpen) return;
 
-        if (menuContainer != null) menuContainer.style.display = DisplayStyle.Flex;
-        if (hudRoot != null) hudRoot.style.display = DisplayStyle.None;
+            IsMenuOpen = true;
 
-        OnMenuOpened?.Invoke();
-    }
+            OnMenuOpened?.Invoke();
+        }
 
-    public void CloseMenu()
-    {
-        if (!IsMenuOpen) return; 
-        
-        IsMenuOpen = false;
+        public void CloseMenu()
+        {
+            if (!IsMenuOpen) return;
 
-        if (menuContainer != null) menuContainer.style.display = DisplayStyle.None;
-        if (hudRoot != null) hudRoot.style.display = DisplayStyle.Flex;
+            IsMenuOpen = false;
 
-        OnMenuClosed?.Invoke();
+            OnMenuClosed?.Invoke();
+        }
     }
 }

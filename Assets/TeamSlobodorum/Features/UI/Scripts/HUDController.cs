@@ -17,12 +17,12 @@ namespace TeamSlobodorum.UI.Scripts
 
         private Label _hitPointsLabel;
         private Label _currentSpellLabel;
-
+        private VisualElement root;
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
 
-            var root = _uiDocument.rootVisualElement;
+            root = _uiDocument.rootVisualElement;
             _hitPointsLabel = root.Q<Label>("HitPointsLabel");
             _currentSpellLabel = root.Q<Label>("CurrentSpellLabel");
         }
@@ -43,6 +43,11 @@ namespace TeamSlobodorum.UI.Scripts
             UpdateSelectedSpell();
 
             Cursor.lockState = CursorLockMode.Locked;
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.OnMenuOpened += HideHUD;
+                UIManager.Instance.OnMenuClosed += ShowHUD;
+            }
         }
 
         private void Update()
@@ -67,5 +72,25 @@ namespace TeamSlobodorum.UI.Scripts
         {
             _hitPointsLabel.text = $"HP: {_playerEntity.HitPoints:F2}";
         }
+
+        private void OnDestroy()
+        {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.OnMenuOpened -= HideHUD;
+                UIManager.Instance.OnMenuClosed -= ShowHUD;
+            }
+        }
+
+        private void HideHUD()
+        {
+            root.style.display = DisplayStyle.None;
+        }
+
+        private void ShowHUD()
+        {
+            root.style.display = DisplayStyle.Flex;
+        }
     }
+
 }

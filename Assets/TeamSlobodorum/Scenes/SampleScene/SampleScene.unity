@@ -4632,6 +4632,17 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 8
+--- !u!114 &1928288324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3520830726184513329, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 6514646101341069726}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1001 &1934019176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5003,6 +5014,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 1928288324}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: ManagementMenuUI
+      value: 
+      objectReference: {fileID: 6514646101341069728}
     - target: {fileID: 3520830726184513329, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: m_ParentUI
       value: 
@@ -5054,8 +5073,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5458847662473859590, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6514646101341069729}
   m_SourcePrefab: {fileID: 100100000, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+--- !u!1 &6514646101341069727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5458847662473859590, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 6514646101341069726}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6514646101341069728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6954516175522406505, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 6514646101341069726}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514646101341069727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!114 &6514646101341069729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6514646101341069727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b55b8c410ef9b438a6a66c06f390ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.ManagementMenuController
 --- !u!1001 &7242683768505733106
 PrefabInstance:
   m_ObjectHideFlags: 0

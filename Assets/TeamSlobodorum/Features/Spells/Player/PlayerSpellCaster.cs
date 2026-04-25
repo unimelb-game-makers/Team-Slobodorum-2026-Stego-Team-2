@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TeamSlobodorum.Spells;
 using TeamSlobodorum.Spells.Core;
 using UnityEngine;
@@ -18,15 +20,22 @@ public class PlayerSpellCaster : MonoBehaviour
 
     [Header("Input")]
     [SerializeField] private InputActionReference castAction;
+
     [SerializeField] private InputActionReference previousSpellAction;
     [SerializeField] private InputActionReference nextSpellAction;
     [SerializeField] private InputActionReference aimAction;
+
+    public event Action SelectedSpellChanged;
 
     private SpellCoordinator _coordinator;
     private Transform _aimTarget;
     private Camera _mainCamera;
 
     private int _selectedSpellIndex = 0;
+    [CanBeNull]
+    public SpellDefinition SelectedSpell => _selectedSpellIndex < 0 || _selectedSpellIndex >= spellDefinitions.Count
+        ? null
+        : spellDefinitions[_selectedSpellIndex];
 
     // Only one tracked spell is allowed at a time.
     private SpellHandle _activeSpellHandle;
@@ -106,6 +115,7 @@ public class PlayerSpellCaster : MonoBehaviour
         if (_selectedSpellIndex < 0)
             _selectedSpellIndex = spellDefinitions.Count - 1;
 
+        SelectedSpellChanged?.Invoke();
         Debug.Log($"Selected spell: {GetSelectedSpellName()}");
     }
 
@@ -120,6 +130,7 @@ public class PlayerSpellCaster : MonoBehaviour
         if (_selectedSpellIndex >= spellDefinitions.Count)
             _selectedSpellIndex = 0;
 
+        SelectedSpellChanged?.Invoke();
         Debug.Log($"Selected spell: {GetSelectedSpellName()}");
     }
 

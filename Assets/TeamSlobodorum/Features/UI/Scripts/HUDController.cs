@@ -10,39 +10,38 @@ namespace TeamSlobodorum.UI.Scripts
     public class HUDController : MonoBehaviour
     {
         private UIDocument _uiDocument;
-        
+
         private InputAction _cancelAction;
-        private Spellcaster _spellcaster;
+        private PlayerSpellCaster _spellcaster;
         private PlayerEntity _playerEntity;
-        
+
         private Label _hitPointsLabel;
         private Label _currentSpellLabel;
 
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
-            
+
             var root = _uiDocument.rootVisualElement;
             _hitPointsLabel = root.Q<Label>("HitPointsLabel");
             _currentSpellLabel = root.Q<Label>("CurrentSpellLabel");
         }
-        
+
         private void Start()
         {
             _cancelAction = InputSystem.actions.FindAction("Cancel");
-            
+
             var playerObject = GameObject.FindWithTag("Player");
-            
-            // _spellcaster = playerObject.GetComponent<Spellcaster>();
 
             _playerEntity = playerObject.GetComponent<PlayerEntity>();
-            
-            // _spellcaster.CurrentSpellChanged += UpdateCurrentSpell;
+            _spellcaster = playerObject.GetComponent<PlayerSpellCaster>();
+
             _playerEntity.Damaged += UpdateHitPoints;
-            
-            // UpdateCurrentSpell(_spellcaster.CurrentSpell);
+            _spellcaster.SelectedSpellChanged += UpdateSelectedSpell;
+
             UpdateHitPoints();
-            
+            UpdateSelectedSpell();
+
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -52,17 +51,17 @@ namespace TeamSlobodorum.UI.Scripts
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
-            
+
             if (_cancelAction.WasPressedThisFrame())
             {
                 Cursor.lockState = CursorLockMode.None;
             }
         }
 
-        //private void UpdateCurrentSpell(Spell spell)
-        //{
-        //    _currentSpellLabel.text = $"CurrentSpell: {spell.SpellName}";
-        //}
+        private void UpdateSelectedSpell()
+        {
+            _currentSpellLabel.text = $"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}";
+        }
 
         private void UpdateHitPoints()
         {

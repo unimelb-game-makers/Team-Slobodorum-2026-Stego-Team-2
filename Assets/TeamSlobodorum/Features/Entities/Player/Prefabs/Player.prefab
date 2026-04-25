@@ -122,16 +122,10 @@ PrefabInstance:
       addedObject: {fileID: -6385882961550819254}
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5565549092082846925}
-    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8742868433166812614}
-    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8435008456883300741}
-    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3140543441834770360}
+    - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1267803777835302778}
   m_SourcePrefab: {fileID: 100100000, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
 --- !u!1 &2530656248567082791 stripped
 GameObject:
@@ -182,55 +176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerEntity
   maxHitPoints: 100
   invincibleTime: 0
---- !u!114 &-5565549092082846925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530656248567082791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c34afae8bb9b446e914193f23b7098a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.Spellcaster
---- !u!114 &8742868433166812614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530656248567082791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e585744678e4e02b76bf4998b67a810, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.GrabSpell
-  linkEffectPrefab: {fileID: 4379669221819503135, guid: ee6a47500a6c3400e83cccc336048a78, type: 3}
-  projectilePrefab: {fileID: 3621764393785143092, guid: 3a688ccb0af6341cba98dab5eba63099, type: 3}
-  maxDistance: 20
-  projectileSpeed: 20
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &8435008456883300741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530656248567082791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b628f25ef57a428f92bdd7dde1d54bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.FireSpell
-  projectilePrefab: {fileID: 3918960099676045501, guid: 0e54fcf9e9e38408d80480e5599b10cd, type: 3}
-  maxDistance: 20
-  projectileSpeed: 20
-  raycastLayers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &3140543441834770360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,8 +195,34 @@ MonoBehaviour:
   damping: 0.5
   maxSprintScale: 3
   jumpBaseScale: 1
+--- !u!114 &1267803777835302778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530656248567082791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85faaa694dd1eae408f44196d639301b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpellCaster
+  spellDefinitions:
+  - {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
+  - {fileID: 11400000, guid: 5aa36f562954c1741b0d86de430dfb28, type: 2}
+  castOrigin: {fileID: 8978595930010439027}
+  playerOrigin: {fileID: 2906337847185700253}
+  castAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  previousSpellAction: {fileID: -6229353402997687365, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  nextSpellAction: {fileID: -4495767730480715347, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  aimAction: {fileID: -639339415234809402, guid: 935e70e647d164207858a267f815bd01, type: 3}
 --- !u!4 &2906337847185700253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+  m_PrefabInstance: {fileID: 6658996510555266861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8978595930010439027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2374491459441922654, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
   m_PrefabInstance: {fileID: 6658996510555266861}
   m_PrefabAsset: {fileID: 0}

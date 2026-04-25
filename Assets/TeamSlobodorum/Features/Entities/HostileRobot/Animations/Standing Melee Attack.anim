@@ -62232,7 +62232,7 @@ AnimationClip:
   - time: 0.76666665
     functionName: CauseDamage
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 8c4dccc72746478d88b23a22baa0f67c, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

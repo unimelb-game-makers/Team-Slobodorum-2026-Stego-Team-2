@@ -158,12 +158,13 @@ namespace TeamSlobodorum.Entities.Humanoid
 
                 if (CanMove)
                 {
-                    var desiredVelocity = NavMeshAgent.desiredVelocity;
-                    desiredVelocity.y = 0;
-
-                    if (desiredVelocity.sqrMagnitude > 0.01f)
+                    var moveDirection = NavMeshAgent.desiredVelocity;
+                    moveDirection.y = 0;
+                    
+                    if (moveDirection.sqrMagnitude > 0.01f)
                     {
-                        var moveVelocity = desiredVelocity.normalized * (IsSprinting ? sprintSpeed : normalSpeed);
+                        moveDirection.Normalize();
+                        var moveVelocity = moveDirection * (IsSprinting ? sprintSpeed : normalSpeed);
                         Rigidbody.linearVelocity = moveVelocity;
 
                         // Rotate the entity to face movement direction
@@ -173,7 +174,10 @@ namespace TeamSlobodorum.Entities.Humanoid
                     }
                 }
 
-                // Sync the agent's internal position back to the object to prevent drifting
+                var distance = Vector3.Distance(NavMeshAgent.nextPosition, Rigidbody.position);
+                if (distance > 3.0f) { 
+                    NavMeshAgent.Warp(Rigidbody.position);
+                }
                 NavMeshAgent.nextPosition = Rigidbody.position;
             }
         }

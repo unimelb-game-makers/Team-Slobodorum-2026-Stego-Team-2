@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Behavior.Authoring::Unity.Behavior.BehaviorProjectSettings
   m_GraphOwnerName: Self
   m_AutoSaveLastSaveLocation: 1
-  m_SaveFolder: TeamSlobodorum/Features/Core/Behaviour/Actions
+  m_SaveFolder: TeamSlobodorum/Features/Entities/Behaviour/Modifiers
   m_UseSeparateSaveFolders: 0
   m_SaveFolderAction: 
   m_SaveFolderModifier: 

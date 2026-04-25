@@ -8,20 +8,21 @@ namespace TeamSlobodorum.Entities
     {
         public float maxHitPoints = 100.0f;
         public float invincibleTime;
-        
+
         public event Action Died;
         public event Action Damaged;
         public float HitPoints { get; protected set; }
         public virtual bool IsAlive => HitPoints > 0;
-        
+
         private Flammable.Flammable _flammable;
-        
+
         private float _invincibleCounter;
 
         protected virtual void Start()
         {
             HitPoints = maxHitPoints;
-            
+            Died += OnDied;
+
             if (TryGetComponent(out _flammable))
             {
                 _flammable.StopBurning += OnStopBurning;
@@ -39,7 +40,7 @@ namespace TeamSlobodorum.Entities
         public void TakeDamage(float damage)
         {
             if (!IsAlive || _invincibleCounter > 0) return;
-            
+
             HitPoints -= damage;
             if (HitPoints < 0)
             {
@@ -48,7 +49,7 @@ namespace TeamSlobodorum.Entities
 
             _invincibleCounter = invincibleTime;
             Damaged?.Invoke();
-            
+
             if (HitPoints == 0)
             {
                 Died?.Invoke();
@@ -59,7 +60,11 @@ namespace TeamSlobodorum.Entities
         {
             HitPoints = 0;
         }
-        
+
+        protected virtual void OnDied()
+        {
+        }
+
         private void OnStopBurning()
         {
             _flammable.ResetStates();

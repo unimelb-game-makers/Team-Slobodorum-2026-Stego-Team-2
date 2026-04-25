@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HUDController
   _attackAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  activateColor: {r: 0.95686275, g: 0.92941177, b: 0.81960785, a: 1}
+  deactivateColor: {r: 0.7058824, g: 0.6862745, b: 0.6039216, a: 1}
 --- !u!1 &5458847662473859590
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,3 +290,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpellMenuController
   menuDocument: {fileID: 6954516175522406505}
+  activateColor: {r: 0.95686275, g: 0.92941177, b: 0.81960785, a: 1}
+  deactivateColor: {r: 0.7058824, g: 0.6862745, b: 0.6039216, a: 1}

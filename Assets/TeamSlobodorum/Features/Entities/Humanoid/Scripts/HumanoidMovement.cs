@@ -55,7 +55,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             public float JumpScale; // scale factor for the jump animation
         }
 
-        protected Rigidbody Rigidbody { get; private set; }
+        public Rigidbody Rigidbody { get; private set; }
         protected Animator Animator { get; private set; }
         protected NavMeshAgent NavMeshAgent { get; private set; }
 

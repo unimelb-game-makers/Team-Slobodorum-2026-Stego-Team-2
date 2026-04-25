@@ -12,6 +12,8 @@ namespace TeamSlobodorum.Entities.Player
 
         private InputAction _moveAction;
         private InputAction _sprintAction;
+        
+        public bool IsStrafeMode { get; set; }
 
         // These are part of a strategy to combat input gimbal lock when controlling an entity
         // that can move freely on surfaces that go upside-down relative to the camera.
@@ -61,8 +63,9 @@ namespace TeamSlobodorum.Entities.Player
                     var targetDirection = inputFrame * new Vector3(moveInput.x, 0, moveInput.y);
 
                     var rotationNeeded =
-                        Math.Abs(moveInput.x) < 0.2 ||
-                        Vector3.Dot(targetDirection, transform.forward) < RotateThreshold;
+                        !IsStrafeMode &&
+                        (Math.Abs(moveInput.x) < 0.2 ||
+                         Vector3.Dot(targetDirection, transform.forward) < RotateThreshold);
                     if (rotationNeeded)
                     {
                         var qA = Rigidbody.rotation;

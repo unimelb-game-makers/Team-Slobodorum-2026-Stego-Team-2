@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using UnityEngine.Serialization;
 
 namespace TeamSlobodorum.Entities.Player
 {
@@ -13,16 +14,15 @@ namespace TeamSlobodorum.Entities.Player
     /// SimplePlayerAimController behaviour on one of its children, to decouple aiminag and
     /// player rotation.
     /// </summary>
-    [ExecuteAlways]
-    public class AimCameraRig : CinemachineCameraManagerBase, Unity.Cinemachine.IInputAxisOwner
+    public class AimCameraRig : CinemachineCameraManagerBase, IInputAxisOwner
     {
-        public InputAxis AimMode = InputAxis.DefaultMomentary;
+        public InputAxis aimMode = InputAxis.DefaultMomentary;
 
-        PlayerAimController AimController;
-        CinemachineVirtualCameraBase AimCamera;
-        CinemachineVirtualCameraBase FreeCamera;
+        private PlayerAimController _aimController;
+        private CinemachineVirtualCameraBase _aimCamera;
+        private CinemachineVirtualCameraBase _freeCamera;
 
-        bool IsAiming => AimMode.Value > 0.5f;
+        public bool IsAiming => aimMode.Value > 0.5f;
 
         /// Report the available input axes to the input axis controller.
         /// We use the Input Axis Controller because it works with both the Input package
@@ -30,10 +30,10 @@ namespace TeamSlobodorum.Entities.Player
         /// want it to work everywhere.
         void IInputAxisOwner.GetInputAxes(List<IInputAxisOwner.AxisDescriptor> axes)
         {
-            axes.Add(new() { DrivenAxis = () => ref AimMode, Name = "Aim" });
+            axes.Add(new() { DrivenAxis = () => ref aimMode, Name = "Aim" });
         }
 
-        void OnValidate() => AimMode.Validate();
+        void OnValidate() => aimMode.Validate();
 
         protected override void Start()
         {
@@ -47,38 +47,38 @@ namespace TeamSlobodorum.Entities.Player
                 var cam = ChildCameras[i];
                 if (!cam.isActiveAndEnabled)
                     continue;
-                if (AimCamera == null
+                if (_aimCamera == null
                     && cam.TryGetComponent<CinemachineThirdPersonAim>(out var aim)
                     && aim.NoiseCancellation)
                 {
-                    AimCamera = cam;
-                    var player = AimCamera.Follow;
-                    if (player != null)
-                        AimController = player.GetComponentInChildren<PlayerAimController>();
+                    _aimCamera = cam;
+                    var trackingTarget = _aimCamera.Follow;
+                    if (trackingTarget != null)
+                        _aimController = trackingTarget.GetComponent<PlayerAimController>();
                 }
-                else if (FreeCamera == null)
-                    FreeCamera = cam;
+                else if (_freeCamera == null)
+                    _freeCamera = cam;
             }
-            if (AimCamera == null)
+            if (_aimCamera == null)
                 Debug.LogError("AimCameraRig: no valid CinemachineThirdPersonAim camera found among children");
-            if (AimController == null)
+            if (_aimController == null)
                 Debug.LogError("AimCameraRig: no valid SimplePlayerAimController target found");
-            if (FreeCamera == null)
+            if (_freeCamera == null)
                 Debug.LogError("AimCameraRig: no valid non-aiming camera found among children");
         }
 
         protected override CinemachineVirtualCameraBase ChooseCurrentCamera(Vector3 worldUp, float deltaTime)
         {
             var oldCam = (CinemachineVirtualCameraBase)LiveChild;
-            var newCam = IsAiming ? AimCamera : FreeCamera;
-            if (AimController != null && oldCam != newCam)
+            var newCam = IsAiming ? _aimCamera : _freeCamera;
+            if (_aimController != null && oldCam != newCam)
             {
                 // Set the mode of the player aim controller.
-                // We want the player rotation to be copuled to the camera when aiming, otherwise not.
-                AimController.PlayerRotation = IsAiming
+                // We want the player rotation to be coupled to the camera when aiming, otherwise not.
+                _aimController.playerRotation = IsAiming
                     ? PlayerAimController.CouplingMode.Coupled
                     : PlayerAimController.CouplingMode.Decoupled;
-                AimController.RecenterPlayer();
+                _aimController.RecenterPlayer();
             }
             return newCam;
         }

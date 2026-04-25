@@ -3286,7 +3286,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
-  AimMode:
+  aimMode:
     Value: 0
     Center: 0
     Range: {x: -1, y: 1}

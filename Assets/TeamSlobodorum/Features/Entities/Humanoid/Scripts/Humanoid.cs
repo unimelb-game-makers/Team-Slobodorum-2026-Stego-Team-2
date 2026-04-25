@@ -6,5 +6,7 @@ namespace TeamSlobodorum.Entities.Humanoid
     {
         [Header("References")]
         [SerializeField] public Transform rightHand;
+        [SerializeField] public GameObject stepRayUpper;
+        [SerializeField] public GameObject stepRayLower;
     }
 }

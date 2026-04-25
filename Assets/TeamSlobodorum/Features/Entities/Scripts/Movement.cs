@@ -30,6 +30,8 @@ namespace TeamSlobodorum.Entities
         }
 
         public virtual bool CanMove => !PreventMovement;
+        public virtual bool CanPerformAction => CanMove;
+        
         public bool LastMoveSucceeded { get; protected set; }
         public bool IsSprinting { get; set; }
         public bool PreventMovement { get; set; }

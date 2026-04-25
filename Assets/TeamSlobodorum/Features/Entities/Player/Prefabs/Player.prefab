@@ -193,6 +193,9 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
+  distanceToGround: 0.08
+  stepAmount: 2
+  ikSmooth: 15
   maxSprintScale: 3
   jumpBaseScale: 1
 --- !u!114 &1267803777835302778

@@ -26,7 +26,7 @@ public class PlayerSpellCaster : MonoBehaviour
     [SerializeField] private InputActionReference aimAction;
 
     public event Action SelectedSpellChanged;
-
+    
     private SpellCoordinator _coordinator;
     private Transform _aimTarget;
     private Camera _mainCamera;

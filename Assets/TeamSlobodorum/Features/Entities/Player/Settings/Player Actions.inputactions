@@ -566,6 +566,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "60062fd6-37f3-428a-8101-3b05f6f8bd75",
+            "actions": [
+                {
+                    "name": "ToggleManagementMenu",
+                    "type": "Button",
+                    "id": "75db87b5-581b-471d-b03f-e5aaf310c0c4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9ff37fce-7837-476f-9a3e-75e719e91e51",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleManagementMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

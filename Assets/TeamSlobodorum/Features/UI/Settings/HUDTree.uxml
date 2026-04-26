@@ -1,10 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/hud.uss?fileID=7433441132597879392&amp;guid=2b87f580097f8d5498323833970fd3b4&amp;type=3#hud"/>
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; justify-content: center; height: 80%;">
         <ui:Image source="" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
         <ui:VisualElement name="Debuginfo" style="flex-grow: 1;">
-            <ui:Label text="HP:" name="HitPointsLabel"/>
-            <ui:Label text="CurrentSpell:" name="CurrentSpellLabel"/>
-            <ui:Label text="Mana:" name="ManaLabel"/>
+            <ui:ProgressBar value="0.5" title="20/100" name="HealthBar" high-value="1" class="health_bar" style="margin-top: 3%; margin-right: 5%; margin-bottom: 1%; margin-left: 5%; width: 30%;"/>
+            <ui:ProgressBar value="0.5" title="100/100" name="ManaBar" high-value="1" class="mana_bar" style="margin-top: 1%; margin-right: 5%; margin-bottom: 2%; margin-left: 5%; width: 20%;"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="EquippedSlotsContainer" style="flex-grow: 1; height: 20%; flex-direction: row; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-self: auto; align-content: auto;">

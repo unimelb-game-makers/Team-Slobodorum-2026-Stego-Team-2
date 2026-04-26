@@ -18,16 +18,22 @@ namespace TeamSlobodorum.Entities
         
         private float _invincibleCounter;
 
-        protected virtual void Start()
-        {
+        protected virtual void Awake()
+        {   
+            base.Awake();
+            //put in awake to ensure it get initialised before call 
             HitPoints = maxHitPoints;
             
+
+        }
+        
+        protected virtual void Start()
+        {
             if (TryGetComponent(out _flammable))
             {
                 _flammable.StopBurning += OnStopBurning;
             }
         }
-
         protected virtual void Update()
         {
             if (_invincibleCounter > 0)

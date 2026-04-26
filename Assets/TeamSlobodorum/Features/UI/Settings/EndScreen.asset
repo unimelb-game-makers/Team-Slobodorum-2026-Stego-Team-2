@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ManagementMenu
+  m_Name: EndScreen
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.PanelSettings
   themeUss: {fileID: -4733365628477956816, guid: d86ec889a122e4c479e27e349c195454, type: 3}
   m_DisableNoThemeWarning: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   m_ReferenceResolution: {x: 1200, y: 800}
   m_ScreenMatchMode: 0
   m_Match: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_TargetDisplay: 0
   m_BindingLogLevel: 0
   m_ClearDepthStencil: 1

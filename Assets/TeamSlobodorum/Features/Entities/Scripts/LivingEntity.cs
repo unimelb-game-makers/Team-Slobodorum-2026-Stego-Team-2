@@ -17,6 +17,7 @@ namespace TeamSlobodorum.Entities
         private Flammable.Flammable _flammable;
         
         private float _invincibleCounter;
+        [SerializeField] private float fallThreshold = -500f;
 
         protected override void Awake()
         {   
@@ -39,6 +40,14 @@ namespace TeamSlobodorum.Entities
             if (_invincibleCounter > 0)
             {
                 _invincibleCounter -= Time.deltaTime;
+            }
+
+            //Void Fall
+            if (transform.position.y < fallThreshold && IsAlive)
+            {
+                HitPoints = 0;
+                Damaged?.Invoke();
+                Died?.Invoke();
             }
         }
 

@@ -15,6 +15,8 @@ namespace TeamSlobodorum.UI.Scripts
 
         public UnityEvent OnMenuOpened;
         public UnityEvent OnMenuClosed;
+        public UnityEvent OnGameOver;
+        public UnityEvent OnGameWin;
 
         public bool IsMenuOpen { get; private set; } = false;
 

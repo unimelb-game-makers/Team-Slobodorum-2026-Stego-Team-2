@@ -1,0 +1,16 @@
+.spell-obtained-slot {
+    flex-grow: 0;
+    width: 23%;
+    height: 25%;
+    background-color: rgb(180, 175, 154);
+    margin-top: 4%;
+    margin-right: 4%;
+    margin-bottom: 4%;
+    margin-left: 4%;
+    aspect-ratio: 1;
+    max-width: none;
+    max-height: none;
+    min-width: 15%;
+    min-height: 15%;
+    flex-shrink: 0;
+}

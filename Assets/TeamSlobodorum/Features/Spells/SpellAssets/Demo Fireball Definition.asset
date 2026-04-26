@@ -15,7 +15,7 @@ MonoBehaviour:
   Id:
     Value: 
   DisplayName: DemoFireballSpell
-  Description: 'Shoot Fireball '
+  Description: Left click to shoot out fireballs
   Icon: {fileID: 21300000, guid: f1143e4d4332c3e4baf54d5ebe1de267, type: 3}
   ManaCost: 10
   Category: 1

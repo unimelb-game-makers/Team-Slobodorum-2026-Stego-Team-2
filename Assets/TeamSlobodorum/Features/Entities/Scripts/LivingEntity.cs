@@ -18,7 +18,7 @@ namespace TeamSlobodorum.Entities
         
         private float _invincibleCounter;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {   
             base.Awake();
             //put in awake to ensure it get initialised before call 

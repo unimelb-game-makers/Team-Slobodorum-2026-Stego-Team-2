@@ -18,6 +18,8 @@ namespace TeamSlobodorum.UI.Scripts
 
         public bool IsMenuOpen { get; private set; } = false;
 
+        public WorldSpaceUIController worldSpaceUIController;
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)

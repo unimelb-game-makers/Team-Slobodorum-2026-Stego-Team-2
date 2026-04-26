@@ -115,7 +115,7 @@ namespace TeamSlobodorum.UI.Scripts
                 if (i < _spellManager.EquippedSpells.Count)
                 {
                     // If the slot has a spell, display the icon
-                    equippedSlotButtons[i].iconImage = new Background(_spellManager.EquippedSpells[i].Icon.texture);
+                    equippedSlotButtons[i].iconImage = Background.FromTexture2D(_spellManager.EquippedSpells[i].Icon.texture);
                     if (_spellManager.EquippedSpells[i] == _spellcaster.SelectedSpell)
                     {
                         _equippedSlotsContainer[i].style.backgroundColor = activateColor;

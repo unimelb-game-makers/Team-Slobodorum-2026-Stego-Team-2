@@ -8,7 +8,7 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="flex-grow: 1; height: 60%;">
-        <ui:VisualElement name="Annoucement" style="flex-grow: 0; width: 20%; height: 20%; flex-shrink: 0; margin-right: 0%; margin-left: 5%; margin-top: 0%; margin-bottom: 0%; background-color: rgba(255, 250, 220, 0.75); transform-origin: center; translate: -125% 0;">
+        <ui:VisualElement name="Annoucement" style="flex-grow: 0; width: 20%; height: 20%; flex-shrink: 0; margin-right: 0%; margin-left: 5%; margin-top: 0%; margin-bottom: 0%; background-color: rgb(189, 185, 163); transform-origin: center; translate: -125% 0;">
             <ui:Label text="New spell collected" name="Label" style="font-size: 32px; margin-left: 5%; margin-top: 4%; color: rgb(46, 46, 46);"/>
             <ui:Label text="Press tab to open spell menu" style="margin-left: 5%; color: rgb(46, 46, 46);"/>
         </ui:VisualElement>

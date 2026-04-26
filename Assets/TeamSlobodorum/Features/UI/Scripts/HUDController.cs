@@ -20,6 +20,8 @@ namespace TeamSlobodorum.UI.Scripts
         private PlayerSpellManager _spellManager;
         private Label _hitPointsLabel;
         private Label _currentSpellLabel;
+        private Label _currentManaLabel;
+
         private VisualElement root;
         private List<Button> equippedSlotButtons;
         private VisualElement _equippedSlotsContainer;
@@ -33,6 +35,7 @@ namespace TeamSlobodorum.UI.Scripts
             root = _uiDocument.rootVisualElement;
             _hitPointsLabel = root.Q<Label>("HitPointsLabel");
             _currentSpellLabel = root.Q<Label>("CurrentSpellLabel");
+            _currentManaLabel = root.Q<Label>("ManaLabel");
         }
 
         private void Start()
@@ -73,6 +76,7 @@ namespace TeamSlobodorum.UI.Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+            _currentManaLabel.text = $"Mana: {_spellcaster.CurrentMana}";
         }
 
         private void UpdateSelectedSpell()

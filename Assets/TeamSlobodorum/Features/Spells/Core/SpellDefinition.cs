@@ -15,7 +15,7 @@ namespace TeamSlobodorum.Spells.Core
         public Sprite Icon;
 
         [Header("Costs")]
-        public int ManaCost = 0;
+        public int ManaCost = 10;
 
         [Header("Classification")]
         public SpellCategory Category;

@@ -25,8 +25,11 @@ namespace TeamSlobodorum.Spells.Player
         [SerializeField] private InputActionReference nextSpellAction;
         [SerializeField] private InputActionReference aimAction;
 
-
-
+        [Header("Mana")]
+        [SerializeField] private float manaRegen = 5;
+        [SerializeField] private float totalMana = 100;
+        private float currentMana;
+        public float CurrentMana => currentMana;
         public event Action SelectedSpellChanged;
 
         private SpellCoordinator _coordinator;
@@ -54,7 +57,7 @@ namespace TeamSlobodorum.Spells.Player
 
             if (castOrigin == null)
                 castOrigin = transform;
-
+            currentMana = totalMana;
             _aimTarget = GameObject.Find("Aim Target")?.transform;
 
             if (spellDefinitions.Count > 0)
@@ -76,7 +79,17 @@ namespace TeamSlobodorum.Spells.Player
             UnbindAction(previousSpellAction, OnPreviousSpellPerformed);
             UnbindAction(nextSpellAction, OnNextSpellPerformed);
         }
-
+        void Update()
+        {
+            if (currentMana < totalMana)
+            {
+                currentMana += manaRegen * Time.deltaTime;
+                if (currentMana > totalMana)
+                {
+                    currentMana = totalMana;
+                }
+            }
+        }
         private void BindAction(InputActionReference actionRef, System.Action<InputAction.CallbackContext> callback)
         {
             if (actionRef == null || actionRef.action == null)
@@ -160,7 +173,12 @@ namespace TeamSlobodorum.Spells.Player
                 Debug.LogWarning($"Spell definition at index {_selectedSpellIndex} is null.");
                 return;
             }
+            if (currentMana < SelectedSpell.ManaCost)
+            {
+                Debug.Log("Insufficient Mana");
+                return;
 
+            }
             // If this tracked spell is already active, clicking again cancels it.
             if (definition.RetainHandleAfterCast &&
                 _activeSpellHandle.Value != 0 &&
@@ -197,13 +215,13 @@ namespace TeamSlobodorum.Spells.Player
                 Debug.LogWarning($"Failed to cast spell '{GetSpellDisplayName(definition)}'.");
                 return;
             }
+            currentMana -= SelectedSpell.ManaCost;
 
             if (definition.RetainHandleAfterCast)
             {
                 _activeSpellHandle = handle;
                 _activeSpellIndex = _selectedSpellIndex;
             }
-
             Debug.Log($"Cast spell '{GetSpellDisplayName(definition)}'. Handle = {handle.Value}");
         }
 

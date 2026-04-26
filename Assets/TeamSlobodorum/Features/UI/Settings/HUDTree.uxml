@@ -1,10 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; justify-content: center; height: 80%;">
+        <ui:Image source="" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
         <ui:VisualElement name="Debuginfo" style="flex-grow: 1;">
             <ui:Label text="HP:" name="HitPointsLabel"/>
             <ui:Label text="CurrentSpell:" name="CurrentSpellLabel"/>
+            <ui:Label text="Mana:" name="ManaLabel"/>
         </ui:VisualElement>
-        <ui:Image source="" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
     </ui:VisualElement>
     <ui:VisualElement name="EquippedSlotsContainer" style="flex-grow: 1; height: 20%; flex-direction: row; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-self: auto; align-content: auto;">
         <ui:VisualElement name="VisualElement" picking-mode="Position" style="flex-grow: 0; background-size: 100% 100%; background-color: rgb(180, 175, 154); width: auto; height: 93%; aspect-ratio: 1; max-width: none; max-height: none; position: relative; rotate: 45deg; overflow: hidden; border-top-width: 0.1px; border-right-width: 0.1px; border-bottom-width: 0.1px; border-left-width: 0.1px; border-top-left-radius: 0.1px; border-top-right-radius: 0.1px; border-bottom-right-radius: 0.1px; border-bottom-left-radius: 0.1px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); transform-origin: center; left: auto; right: auto; margin-top: 2%; margin-bottom: 2%; align-items: center; opacity: 1; flex-shrink: 0; -unity-text-align: upper-left; flex-direction: row; margin-right: 3%; margin-left: 3%;">

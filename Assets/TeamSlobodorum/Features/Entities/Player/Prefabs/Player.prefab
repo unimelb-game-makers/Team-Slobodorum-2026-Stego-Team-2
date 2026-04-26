@@ -235,6 +235,8 @@ MonoBehaviour:
   previousSpellAction: {fileID: -6229353402997687365, guid: 935e70e647d164207858a267f815bd01, type: 3}
   nextSpellAction: {fileID: -4495767730480715347, guid: 935e70e647d164207858a267f815bd01, type: 3}
   aimAction: {fileID: -639339415234809402, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  manaRegen: 10
+  totalMana: 100
 --- !u!4 &2906337847185700253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8113421329992121150}
   - component: {fileID: 7922074810303694995}
   - component: {fileID: 2805901239273916618}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ashes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4855,7 +4855,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2226331634297139463}
   - component: {fileID: 2440111465613519443}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PickupIndication
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4893,7 +4893,7 @@ MonoBehaviour:
   target: {fileID: 2226331634297139463}
   offset: {x: 0, y: 0, z: 0}
   occlusion_check: 1
-  registerOnStart: 1
+  registerOnStart: 0
 --- !u!1 &1932411756463893127
 GameObject:
   m_ObjectHideFlags: 0
@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 4901680817597534069}
   - component: {fileID: 1487363125332878862}
   - component: {fileID: 2019321764275793166}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparkles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9808,7 +9808,7 @@ GameObject:
   - component: {fileID: 6878061148110902713}
   - component: {fileID: 6718912976635191824}
   - component: {fileID: 8881496226627209569}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparkles Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14741,7 +14741,7 @@ GameObject:
   - component: {fileID: 5493824400502517154}
   - component: {fileID: 6885904511452472541}
   - component: {fileID: 2962573861187644358}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Burning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19577,7 +19577,7 @@ GameObject:
   - component: {fileID: 7540335575268543949}
   - component: {fileID: 2981725133804311208}
   - component: {fileID: 7798318632142993275}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Flames Secondary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24422,7 +24422,7 @@ GameObject:
   - component: {fileID: 223905801622560477}
   - component: {fileID: 2574359226166999429}
   - component: {fileID: 5144334783417032061}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29258,7 +29258,7 @@ GameObject:
   - component: {fileID: 7106726015495838947}
   - component: {fileID: 8050590822842910338}
   - component: {fileID: 5455074406404852922}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34111,7 +34111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4229710942628072345}
   - component: {fileID: 1903655741706431757}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: SpellCollectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34161,7 +34161,7 @@ GameObject:
   - component: {fileID: 7431490019438778926}
   - component: {fileID: 1578675634062532811}
   - component: {fileID: 2965922383536858138}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Flames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39006,7 +39006,7 @@ GameObject:
   - component: {fileID: 8030139449697422594}
   - component: {fileID: 433678306415702068}
   - component: {fileID: 7658465273906389615}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Burning Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43851,7 +43851,7 @@ GameObject:
   - component: {fileID: 3467568052626044506}
   - component: {fileID: 2396481927733344832}
   - component: {fileID: 5547233220420644340}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Heat Distortion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48697,7 +48697,9 @@ GameObject:
   - component: {fileID: 8295591563862043289}
   - component: {fileID: 8295591563862043294}
   - component: {fileID: 6650829155750549547}
-  m_Layer: 0
+  - component: {fileID: 8636899239874337088}
+  - component: {fileID: 4546765777021333842}
+  m_Layer: 1
   m_Name: FireCollectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53639,3 +53641,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8636899239874337088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295591563862043295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6595b9b858cc548a11d9375a35bb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Collectibles.SpellCollectibles
+  trackers:
+  - {fileID: 2440111465613519443}
+  spellDefinition: {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
+--- !u!135 &4546765777021333842
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295591563862043295}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.27
+  m_Center: {x: 0, y: 0, z: 0}

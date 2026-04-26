@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/Spell.uss?fileID=7433441132597879392&amp;guid=d9961e5d1b3ab5148bc9d9676bfbc3c0&amp;type=3#Spell"/>
+    <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/hud.uss?fileID=7433441132597879392&amp;guid=2b87f580097f8d5498323833970fd3b4&amp;type=3#hud"/>
+    <ui:VisualElement name="VisualElement" class="widget-root" style="flex-grow: 0; translate: -50% -50%; background-image: none; aspect-ratio: 1; width: 64px; height: 64px; flex-shrink: 0;">
+        <ui:ProgressBar value="0.5" title="" high-value="1" name="HealthBar" class="health_bar" style="width: 300px;"/>
+    </ui:VisualElement>
+</ui:UXML>

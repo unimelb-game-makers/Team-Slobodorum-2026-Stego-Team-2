@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5159287895400660015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4074388178401655682}
+  - component: {fileID: 2230224817571539730}
+  - component: {fileID: 2730792593669923888}
+  m_Layer: 8
+  m_Name: HealthBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4074388178401655682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159287895400660015}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8626383664516242665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2230224817571539730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159287895400660015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c12d70b715b2f246ae484a5a5a65deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.WorldSpaceTracker
+  template: {fileID: 9197481963319205126, guid: c4bfe5928016053478555072d14f98c8, type: 3}
+  target: {fileID: 4074388178401655682}
+  offset: {x: 0, y: 2, z: 0}
+  occlusion_check: 1
+  registerOnStart: 1
+--- !u!114 &2730792593669923888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159287895400660015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669eef5251dc8bf4c853715c849d0d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HealthBarUI
+  entity: {fileID: -7176569002585877459}
 --- !u!1001 &255564886506583641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,7 +121,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4074388178401655682}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
       insertIndex: -1
@@ -70,6 +136,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -1418263187020993191}
   m_SourcePrefab: {fileID: 100100000, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+--- !u!4 &8626383664516242665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8375816608256404144, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
+  m_PrefabInstance: {fileID: 255564886506583641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9006287285427717715 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9184863259621126154, guid: 14d413a1f251046b7b84c4711435ecc4, type: 3}
@@ -107,6 +178,9 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
+  distanceToGround: 0.08
+  stepAmount: 2
+  ikSmooth: 15
   maxSprintScale: 3
   jumpBaseScale: 1
 --- !u!114 &-1418263187020993191

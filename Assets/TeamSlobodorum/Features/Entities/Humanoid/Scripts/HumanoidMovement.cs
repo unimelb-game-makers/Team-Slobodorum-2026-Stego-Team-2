@@ -72,13 +72,12 @@ namespace TeamSlobodorum.Entities.Humanoid
         private const float FallingTime = 1f;
         private const float AirControlTime = 0.5f;
         private float _timeLastGrounded;
-        private float _timeLastJump;
 
         public bool IsFalling { get; protected set; }
         public bool IsAttacking { get; set; }
 
         public override bool CanMove =>
-            base.CanMove && !IsAttacking && (!IsFalling || Time.time - _timeLastJump <= AirControlTime);
+            base.CanMove && !IsAttacking && (!IsFalling || Time.time - _timeLastGrounded <= AirControlTime);
 
         public override bool CanPerformAction => base.CanMove && !IsAttacking && !IsFalling && IsGrounded;
 
@@ -189,7 +188,6 @@ namespace TeamSlobodorum.Entities.Humanoid
         {
             if (CanPerformAction)
             {
-                _timeLastJump = Time.time;
                 _animationParams.FallTriggered = true;
                 IsFalling = true;
                 Rigidbody.AddForce(transform.up * (IsSprinting ? sprintJumpForce : normalJumpForce),

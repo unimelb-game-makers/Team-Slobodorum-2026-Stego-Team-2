@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Spells.Core;
 using TeamSlobodorum.Spells.Player;
@@ -26,7 +27,7 @@ namespace TeamSlobodorum.UI.Scripts
         private VisualElement _equippedSlotsContainer;
         public Color activateColor;
         public Color deactivateColor;
-
+        private VisualElement _announcementBox;
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -34,6 +35,7 @@ namespace TeamSlobodorum.UI.Scripts
             root = _uiDocument.rootVisualElement;
             _manaBar = root.Q<ProgressBar>("ManaBar");
             _healthBar = root.Q<ProgressBar>("HealthBar");
+            _announcementBox = root.Q<VisualElement>("Annoucement");
         }
 
         private void Start()
@@ -60,6 +62,8 @@ namespace TeamSlobodorum.UI.Scripts
             UpdateSelectedSpell();
 
             Cursor.lockState = CursorLockMode.Locked;
+
+            _spellManager.OnSpellObtained += ShowSpellAnnouncement;
 
         }
 
@@ -149,6 +153,33 @@ namespace TeamSlobodorum.UI.Scripts
                 _spellcaster.SelectedSpellChanged -= UpdateSelectedSpell;
             }
 
+        }
+
+        public void ShowSpellAnnouncement(SpellDefinition definition)
+        {
+            _announcementBox.style.display = DisplayStyle.Flex;
+
+            Sequence announcementSequence = DOTween.Sequence();
+
+            announcementSequence.Append(
+                DOTween.To(() => -125f, 
+                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
+                    0f, 0.6f)
+                .SetEase(Ease.OutBack)
+            );
+
+            announcementSequence.AppendInterval(5.0f);
+
+            announcementSequence.Append(
+                DOTween.To(() => 0f, 
+                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
+                    -125f, 0.6f)
+                .SetEase(Ease.InBack) 
+            );
+
+            announcementSequence.OnComplete(() => {
+                _announcementBox.style.display = DisplayStyle.None;
+            });
         }
     }
 

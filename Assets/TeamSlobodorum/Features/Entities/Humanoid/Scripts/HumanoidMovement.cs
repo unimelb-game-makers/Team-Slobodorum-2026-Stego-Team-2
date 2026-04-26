@@ -31,6 +31,8 @@ namespace TeamSlobodorum.Entities.Humanoid
         [SerializeField] private float ikSmooth = 15f;
 
         [Header("Animation")]
+        public Animator animator;
+
         [Tooltip("Never speed up the sprint animation more than this, to avoid absurdly fast movement")]
         public float maxSprintScale = 3f;
 
@@ -60,7 +62,6 @@ namespace TeamSlobodorum.Entities.Humanoid
         }
 
         public Rigidbody Rigidbody { get; private set; }
-        protected Animator Animator { get; private set; }
         protected NavMeshAgent NavMeshAgent { get; private set; }
         protected Humanoid Humanoid { get; private set; }
 
@@ -79,18 +80,13 @@ namespace TeamSlobodorum.Entities.Humanoid
         public override bool CanMove =>
             base.CanMove && !IsAttacking && (!IsFalling || Time.time - _timeLastJump <= AirControlTime);
 
-        public override bool CanPerformAction => base.CanMove && !IsAttacking && !IsFalling && IsGrounded();
+        public override bool CanPerformAction => base.CanMove && !IsAttacking && !IsFalling && IsGrounded;
 
-        public bool IsGrounded()
-        {
-            return Physics.SphereCast(Humanoid.stepRayUpper.transform.position, 0.25f, -Vector3.up, out _,
-                0.6f);
-        }
+        public bool IsGrounded { get; private set; }
 
         protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponent<Animator>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
         }
 
@@ -110,7 +106,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         protected virtual void FixedUpdate()
         {
             var now = Time.time;
-            if (IsGrounded() && now - _timeLastGrounded > DelayBeforeInferringFall)
+            if (IsGrounded && now - _timeLastGrounded > DelayBeforeInferringFall)
             {
                 _timeLastGrounded = now;
 
@@ -160,7 +156,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                 {
                     var moveDirection = NavMeshAgent.desiredVelocity;
                     moveDirection.y = 0;
-                    
+
                     if (moveDirection.sqrMagnitude > 0.01f)
                     {
                         moveDirection.Normalize();
@@ -175,9 +171,11 @@ namespace TeamSlobodorum.Entities.Humanoid
                 }
 
                 var distance = Vector3.Distance(NavMeshAgent.nextPosition, Rigidbody.position);
-                if (distance > 1.0f) { 
+                if (distance > 0.6f)
+                {
                     NavMeshAgent.Warp(Rigidbody.position);
                 }
+
                 NavMeshAgent.nextPosition = Rigidbody.position;
             }
         }
@@ -239,27 +237,27 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void UpdateAnimation()
         {
-            Animator.SetBool(AnimationParams.MovingKey, IsMoving);
-            Animator.SetFloat(AnimationParams.ForwardKey, _animationParams.Direction.z);
-            Animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
-            Animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
-            Animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
+            animator.SetBool(AnimationParams.MovingKey, IsMoving);
+            animator.SetFloat(AnimationParams.ForwardKey, _animationParams.Direction.z);
+            animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
+            animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
+            animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
 
             if (_animationParams.FallTriggered)
             {
-                Animator.SetTrigger(AnimationParams.FallKey);
+                animator.SetTrigger(AnimationParams.FallKey);
                 _animationParams.FallTriggered = false;
             }
 
             if (_animationParams.LandTriggered)
             {
-                Animator.SetTrigger(AnimationParams.LandKey);
+                animator.SetTrigger(AnimationParams.LandKey);
                 _animationParams.LandTriggered = false;
             }
 
             if (_animationParams.MeleeTriggered)
             {
-                Animator.SetTrigger(AnimationParams.MeleeKey);
+                animator.SetTrigger(AnimationParams.MeleeKey);
                 _animationParams.MeleeTriggered = false;
             }
         }
@@ -299,6 +297,24 @@ namespace TeamSlobodorum.Entities.Humanoid
             Gizmos.color = Color.red;
             Gizmos.DrawRay(Humanoid.stepRayLower.transform.position, direction * 0.4f);
             Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.4f);
+        }
+        
+        private void OnCollisionStay(Collision collision)
+        {
+            foreach (var contact in collision.contacts)
+            {
+                // Cos(70 degree) = 0.34
+                if (contact.normal.y > 0.34f)
+                {
+                    IsGrounded = true;
+                    break;
+                }
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            IsGrounded = false;
         }
     }
 }

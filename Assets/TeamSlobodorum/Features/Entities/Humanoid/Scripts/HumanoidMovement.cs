@@ -69,7 +69,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private const float DelayBeforeInferringFall = 0.3f;
         private const float FallingTime = 1f;
-        private const float AirControlTime = 1f;
+        private const float AirControlTime = 0.5f;
         private float _timeLastGrounded;
         private float _timeLastJump;
 
@@ -175,7 +175,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                 }
 
                 var distance = Vector3.Distance(NavMeshAgent.nextPosition, Rigidbody.position);
-                if (distance > 3.0f) { 
+                if (distance > 1.0f) { 
                     NavMeshAgent.Warp(Rigidbody.position);
                 }
                 NavMeshAgent.nextPosition = Rigidbody.position;

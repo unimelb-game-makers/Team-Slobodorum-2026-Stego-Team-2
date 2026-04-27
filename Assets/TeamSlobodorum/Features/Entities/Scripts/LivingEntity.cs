@@ -8,7 +8,7 @@ namespace TeamSlobodorum.Entities
     {
         public float maxHitPoints = 100.0f;
         public float invincibleTime;
-        [SerializeField] private float fallThreshold = -500f;
+        [SerializeField] private float voidThreshold = -500f;
 
         public event Action Died;
         public event Action Damaged;
@@ -43,15 +43,13 @@ namespace TeamSlobodorum.Entities
             }
 
             // Void Fall
-            if (transform.position.y < fallThreshold && IsAlive)
+            if (transform.position.y < voidThreshold && IsAlive)
             {
-                HitPoints = 0;
-                Damaged?.Invoke();
-                Died?.Invoke();
+                Kill();
             }
         }
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             if (!IsAlive || _invincibleCounter > 0) return;
 
@@ -70,9 +68,13 @@ namespace TeamSlobodorum.Entities
             }
         }
 
-        public void Kill()
+        public virtual void Kill()
         {
+            if (!IsAlive) return;
+
             HitPoints = 0;
+            Damaged?.Invoke();
+            Died?.Invoke();
         }
 
         protected virtual void OnDied()

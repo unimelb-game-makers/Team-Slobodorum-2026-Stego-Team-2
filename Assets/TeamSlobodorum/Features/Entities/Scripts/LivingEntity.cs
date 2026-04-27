@@ -8,6 +8,7 @@ namespace TeamSlobodorum.Entities
     {
         public float maxHitPoints = 100.0f;
         public float invincibleTime;
+        [SerializeField] private float fallThreshold = -500f;
 
         public event Action Died;
         public event Action Damaged;
@@ -18,11 +19,16 @@ namespace TeamSlobodorum.Entities
 
         private float _invincibleCounter;
 
-        protected virtual void Start()
-        {
+        protected override void Awake()
+        {   
+            base.Awake();
+            // put in awake to ensure it get initialised before call 
             HitPoints = maxHitPoints;
             Died += OnDied;
-
+        }
+        
+        protected virtual void Start()
+        {
             if (TryGetComponent(out _flammable))
             {
                 _flammable.StopBurning += OnStopBurning;
@@ -34,6 +40,14 @@ namespace TeamSlobodorum.Entities
             if (_invincibleCounter > 0)
             {
                 _invincibleCounter -= Time.deltaTime;
+            }
+
+            // Void Fall
+            if (transform.position.y < fallThreshold && IsAlive)
+            {
+                HitPoints = 0;
+                Damaged?.Invoke();
+                Died?.Invoke();
             }
         }
 

@@ -202,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerEntity
   maxHitPoints: 100
   invincibleTime: 0
+  fallThreshold: -500
 --- !u!114 &5752489115668645689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,13 +238,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2cf278fe7bb5a4a92d0d078815ac43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Player.PlayerSpellManager
-  _obtainedSpells:
-  - {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
-  - {fileID: 11400000, guid: 5aa36f562954c1741b0d86de430dfb28, type: 2}
-  _equippedSpells:
-  - {fileID: 11400000, guid: 04c6604eac5471b4494ff3dcfef66c7b, type: 2}
-  - {fileID: 11400000, guid: 5aa36f562954c1741b0d86de430dfb28, type: 2}
+  _obtainedSpells: []
+  _equippedSpells: []
   maxEquippedSpells: 4
+  pickupAction: {fileID: 3385720332682930555, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  collectible: {fileID: 0}
 --- !u!114 &8746095641988636031
 MonoBehaviour:
   m_ObjectHideFlags: 0

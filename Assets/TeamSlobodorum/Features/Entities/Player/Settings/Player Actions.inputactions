@@ -25,15 +25,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Cancel",
-                    "type": "Button",
-                    "id": "87245d03-63b5-4d3b-990c-40a04c63e4a0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
@@ -55,7 +46,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -73,7 +64,7 @@
                     "name": "Next",
                     "type": "Button",
                     "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -127,6 +118,15 @@
                     "name": "OpenManagementMenu",
                     "type": "Button",
                     "id": "906614b7-2a8e-4b87-967c-0fc05bd428a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PickupSpell",
+                    "type": "Button",
+                    "id": "4fbe7e94-ec2a-412a-8c93-6c8eafba2462",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -521,17 +521,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4d2b663a-cc00-43c2-b1a0-4ce3102377d8",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Cancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4a112d12-da3b-4217-955d-3b8a0f57dd88",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -582,6 +571,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenManagementMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49159861-dd6d-48d0-9c9e-ed0b81e26b05",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickupSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

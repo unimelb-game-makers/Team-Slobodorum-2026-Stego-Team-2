@@ -14,3 +14,13 @@
     min-height: 15%;
     flex-shrink: 0;
 }
+
+.widget-root {
+    translate: -50% -50%;
+    picking-mode: ignore;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0;
+    color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}

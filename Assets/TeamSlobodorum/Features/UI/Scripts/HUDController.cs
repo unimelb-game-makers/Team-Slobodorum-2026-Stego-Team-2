@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Spells.Core;
 using TeamSlobodorum.Spells.Player;
@@ -18,24 +19,23 @@ namespace TeamSlobodorum.UI.Scripts
         private PlayerSpellCaster _spellcaster;
         private PlayerEntity _playerEntity;
         private PlayerSpellManager _spellManager;
-        private Label _hitPointsLabel;
-        private Label _currentSpellLabel;
-        private Label _currentManaLabel;
+        private ProgressBar _manaBar;
+        private ProgressBar _healthBar;
 
         private VisualElement root;
         private List<Button> equippedSlotButtons;
         private VisualElement _equippedSlotsContainer;
         public Color activateColor;
         public Color deactivateColor;
-
+        private VisualElement _announcementBox;
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
 
             root = _uiDocument.rootVisualElement;
-            _hitPointsLabel = root.Q<Label>("HitPointsLabel");
-            _currentSpellLabel = root.Q<Label>("CurrentSpellLabel");
-            _currentManaLabel = root.Q<Label>("ManaLabel");
+            _manaBar = root.Q<ProgressBar>("ManaBar");
+            _healthBar = root.Q<ProgressBar>("HealthBar");
+            _announcementBox = root.Q<VisualElement>("Annoucement");
         }
 
         private void Start()
@@ -63,6 +63,8 @@ namespace TeamSlobodorum.UI.Scripts
 
             Cursor.lockState = CursorLockMode.Locked;
 
+            _spellManager.OnSpellObtained += ShowSpellAnnouncement;
+
         }
 
         private void Update()
@@ -76,21 +78,27 @@ namespace TeamSlobodorum.UI.Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
-            _currentManaLabel.text = $"Mana: {_spellcaster.CurrentMana}";
+            UpdateManaPoints();
         }
 
         private void UpdateSelectedSpell()
         {
-            _currentSpellLabel.text = $"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}";
+            Debug.Log($"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}") ;
             RefreshEquippedSlots();
         }
 
         private void UpdateHitPoints()
         {
-            _hitPointsLabel.text = $"HP: {_playerEntity.HitPoints:F2}";
+            _healthBar.title = $"{(int)_playerEntity.HitPoints} / {(int)_playerEntity.maxHitPoints}";
+            _healthBar.value = _playerEntity.HitPoints / _playerEntity.maxHitPoints;
         }
 
+        private void UpdateManaPoints()
+        {
+            _manaBar.title = $"{(int)_spellcaster.CurrentMana} / {(int)_spellcaster.TotalMana}";
+            _manaBar.value = _spellcaster.CurrentMana / _spellcaster.TotalMana;
 
+        }
 
         public void HideHUD()
         {
@@ -111,7 +119,7 @@ namespace TeamSlobodorum.UI.Scripts
                 if (i < _spellManager.EquippedSpells.Count)
                 {
                     // If the slot has a spell, display the icon
-                    equippedSlotButtons[i].iconImage = new Background(_spellManager.EquippedSpells[i].Icon.texture);
+                    equippedSlotButtons[i].iconImage = Background.FromTexture2D(_spellManager.EquippedSpells[i].Icon.texture);
                     if (_spellManager.EquippedSpells[i] == _spellcaster.SelectedSpell)
                     {
                         _equippedSlotsContainer[i].style.backgroundColor = activateColor;
@@ -145,6 +153,33 @@ namespace TeamSlobodorum.UI.Scripts
                 _spellcaster.SelectedSpellChanged -= UpdateSelectedSpell;
             }
 
+        }
+
+        public void ShowSpellAnnouncement(SpellDefinition definition)
+        {
+            _announcementBox.style.display = DisplayStyle.Flex;
+
+            Sequence announcementSequence = DOTween.Sequence();
+
+            announcementSequence.Append(
+                DOTween.To(() => -125f, 
+                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
+                    0f, 0.6f)
+                .SetEase(Ease.OutBack)
+            );
+
+            announcementSequence.AppendInterval(5.0f);
+
+            announcementSequence.Append(
+                DOTween.To(() => 0f, 
+                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
+                    -125f, 0.6f)
+                .SetEase(Ease.InBack) 
+            );
+
+            announcementSequence.OnComplete(() => {
+                _announcementBox.style.display = DisplayStyle.None;
+            });
         }
     }
 

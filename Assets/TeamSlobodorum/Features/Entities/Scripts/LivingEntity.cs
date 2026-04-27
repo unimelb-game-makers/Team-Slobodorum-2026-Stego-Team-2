@@ -17,22 +17,37 @@ namespace TeamSlobodorum.Entities
         private Flammable.Flammable _flammable;
         
         private float _invincibleCounter;
+        [SerializeField] private float fallThreshold = -500f;
 
-        protected virtual void Start()
-        {
+        protected override void Awake()
+        {   
+            base.Awake();
+            //put in awake to ensure it get initialised before call 
             HitPoints = maxHitPoints;
             
+
+        }
+        
+        protected virtual void Start()
+        {
             if (TryGetComponent(out _flammable))
             {
                 _flammable.StopBurning += OnStopBurning;
             }
         }
-
         protected virtual void Update()
         {
             if (_invincibleCounter > 0)
             {
                 _invincibleCounter -= Time.deltaTime;
+            }
+
+            //Void Fall
+            if (transform.position.y < fallThreshold && IsAlive)
+            {
+                HitPoints = 0;
+                Damaged?.Invoke();
+                Died?.Invoke();
             }
         }
 

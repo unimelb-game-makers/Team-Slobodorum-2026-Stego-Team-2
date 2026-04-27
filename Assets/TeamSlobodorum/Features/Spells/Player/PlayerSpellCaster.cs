@@ -30,6 +30,7 @@ namespace TeamSlobodorum.Spells.Player
         [SerializeField] private float totalMana = 100;
         private float currentMana;
         public float CurrentMana => currentMana;
+        public float TotalMana => totalMana;
         public event Action SelectedSpellChanged;
 
         private SpellCoordinator _coordinator;

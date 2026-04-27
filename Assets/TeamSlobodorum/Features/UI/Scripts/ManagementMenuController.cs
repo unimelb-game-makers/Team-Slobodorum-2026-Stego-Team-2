@@ -31,6 +31,8 @@ namespace TeamSlobodorum.UI.Scripts
             root.style.display = DisplayStyle.None;
             actions.FindActionMap("UI")?.Disable();
             actions.FindActionMap("Player")?.Enable();
+            Cursor.lockState = CursorLockMode.Locked;
+
 
         }
 

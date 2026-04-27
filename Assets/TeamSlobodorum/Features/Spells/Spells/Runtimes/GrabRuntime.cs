@@ -8,6 +8,7 @@ namespace TeamSlobodorum.Spells
     public sealed class GrabRuntime : SpellRuntimeBase
     {
         private Entity _targetEntity;
+        private Movement _targetMovement;
         private bool _useGravity;
         private float _grabDistance;
 
@@ -41,6 +42,11 @@ namespace TeamSlobodorum.Spells
             _grabDistance = def.preserveInitialDistance ? 
                 Vector3.Distance(_targetEntity.Rigidbody.transform.position, context.AimOrigin.position) : 
                 def.fixedHoldDistance;
+
+            if (_targetEntity.TryGetComponent(out _targetMovement))
+            {
+                _targetMovement.PreventMovement = true;
+            }
 
             if (def.linkEffectPrefab != null && context.CastOrigin != null)
             {
@@ -87,6 +93,11 @@ namespace TeamSlobodorum.Spells
             if (_targetEntity != null && _targetEntity.Rigidbody != null)
             {
                 _targetEntity.Rigidbody.useGravity = _useGravity;
+            }
+            
+            if (_targetMovement != null)
+            {
+                _targetMovement.PreventMovement = false;
             }
 
             if (_linkEffect != null)

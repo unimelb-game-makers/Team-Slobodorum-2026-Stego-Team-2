@@ -16,10 +16,9 @@ namespace TeamSlobodorum.Entities.HostileRobot
             base.Awake();
 
             _movement = GetComponent<HumanoidMovement>();
-            Died += OnDied;
         }
 
-        private void OnDied()
+        protected override void OnDied()
         {
             Destroy(gameObject);
         }
@@ -35,7 +34,7 @@ namespace TeamSlobodorum.Entities.HostileRobot
         {
             var size = Physics.OverlapSphereNonAlloc(transform.position, meleeAttackRange, _hitColliders,
                 LayerMask.GetMask("Player"));
-            
+
             for (var i = 0; i < size; i++)
             {
                 var hitCollider = _hitColliders[i];

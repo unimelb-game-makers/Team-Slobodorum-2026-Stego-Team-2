@@ -31,6 +31,8 @@ namespace TeamSlobodorum.Entities.Humanoid
         [SerializeField] private float ikSmooth = 15f;
 
         [Header("Animation")]
+        public Animator animator;
+
         [Tooltip("Never speed up the sprint animation more than this, to avoid absurdly fast movement")]
         public float maxSprintScale = 3f;
 
@@ -47,20 +49,22 @@ namespace TeamSlobodorum.Entities.Humanoid
             public static readonly int MotionScaleKey = Animator.StringToHash("MotionScale");
             public static readonly int JumpScaleKey = Animator.StringToHash("JumpScale");
             public static readonly int FallKey = Animator.StringToHash("Fall");
-            public static readonly int LandKey = Animator.StringToHash("Land");
             public static readonly int MeleeKey = Animator.StringToHash("Melee");
+            public static readonly int JumpKey = Animator.StringToHash("Jump");
+            public static readonly int ClimbKey = Animator.StringToHash("Climb");
+            public static readonly int GroundedKey = Animator.StringToHash("Grounded");
 
             public bool IsRunning;
             public bool FallTriggered;
-            public bool LandTriggered;
             public bool MeleeTriggered;
+            public bool JumpTriggered;
+            public bool ClimbTriggered;
             public Vector3 Direction; // normalized direction of motion
             public float MotionScale; // scale factor for the animation speed
             public float JumpScale; // scale factor for the jump animation
         }
 
         public Rigidbody Rigidbody { get; private set; }
-        protected Animator Animator { get; private set; }
         protected NavMeshAgent NavMeshAgent { get; private set; }
         protected Humanoid Humanoid { get; private set; }
 
@@ -68,29 +72,31 @@ namespace TeamSlobodorum.Entities.Humanoid
         private const float IdleThreshold = 0.2f;
 
         private const float DelayBeforeInferringFall = 0.3f;
-        private const float FallingTime = 1f;
-        private const float AirControlTime = 1f;
+        private const float DelayBeforeInferringMove = 0.3f;
+        private const float FallingTime = 1.5f;
+        private const float AirControlTime = 0.5f;
         private float _timeLastGrounded;
-        private float _timeLastJump;
+        private float _timeLastMoved;
+        private Vector3 _ledgePosition;
 
-        public bool IsFalling { get; protected set; }
+        public bool IsFalling { get; set; }
+        public bool IsJumping { get; set; }
         public bool IsAttacking { get; set; }
+        public bool IsClimbing { get; set; }
+        public bool IsForwardObstructed { get; private set; }
 
         public override bool CanMove =>
-            base.CanMove && !IsAttacking && (!IsFalling || Time.time - _timeLastJump <= AirControlTime);
+            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling &&
+            (!IsJumping || Time.fixedTime - _timeLastGrounded <= AirControlTime);
 
-        public override bool CanPerformAction => base.CanMove && !IsAttacking && !IsFalling && IsGrounded();
+        public override bool CanPerformAction =>
+            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling && !IsJumping && IsGrounded;
 
-        public bool IsGrounded()
-        {
-            return Physics.SphereCast(Humanoid.stepRayUpper.transform.position, 0.25f, -Vector3.up, out _,
-                0.6f);
-        }
+        public bool IsGrounded { get; private set; }
 
         protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            Animator = GetComponent<Animator>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
         }
 
@@ -101,39 +107,55 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         protected virtual void Start()
         {
-            Landed += OnLanded;
-
             NavMeshAgent.updatePosition = false;
             NavMeshAgent.updateRotation = false;
+            PreventMovementChanged += OnPreventMovementChanged;
+        }
+
+        protected virtual void Update()
+        {
+            if (IsClimbing)
+            {
+                var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                var progress = stateInfo.normalizedTime;
+                if (progress < 0.35f)
+                {
+                    var yDiff = Humanoid.rightHand.position.y - _ledgePosition.y;
+                    var targetPosition = transform.position - new Vector3(0, yDiff, 0);
+                    transform.position = Vector3.Slerp(transform.position, targetPosition,
+                        Damper.Damp(1, damping, Time.fixedDeltaTime));
+                }
+            }
         }
 
         protected virtual void FixedUpdate()
         {
-            var now = Time.time;
-            if (IsGrounded() && now - _timeLastGrounded > DelayBeforeInferringFall)
+            var now = Time.fixedTime;
+            if (IsGrounded && now - _timeLastGrounded > DelayBeforeInferringFall)
             {
                 _timeLastGrounded = now;
 
-                if (IsFalling)
+                if (IsFalling || IsJumping)
                 {
-                    IsFalling = false;
                     Landed?.Invoke();
                 }
             }
-
-            if (!IsFalling && now - _timeLastGrounded > FallingTime)
+            else if (!IsFalling && now - _timeLastGrounded > FallingTime)
             {
                 IsFalling = true;
                 _animationParams.FallTriggered = true;
             }
 
-            if (_animationParams.MeleeTriggered)
-            {
-                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
-            }
+            IsForwardObstructed = Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
+                out _, 0.5f);
 
             HandleNavigationMovement();
             UpdateAnimationState();
+
+            if (!CanMove && now - _timeLastMoved > DelayBeforeInferringMove)
+            {
+                IsMoving = false;
+            }
 
             if (IsMoving)
             {
@@ -145,7 +167,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void HandleNavigationMovement()
         {
-            if (NavMeshAgent.enabled && IsMoving)
+            if (NavMeshAgent.enabled && IsMoving && NavMeshAgent.isOnNavMesh)
             {
                 var pathFinished = !NavMeshAgent.pathPending &&
                                    NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
@@ -158,12 +180,14 @@ namespace TeamSlobodorum.Entities.Humanoid
 
                 if (CanMove)
                 {
-                    var desiredVelocity = NavMeshAgent.desiredVelocity;
-                    desiredVelocity.y = 0;
+                    var moveDirection = NavMeshAgent.desiredVelocity;
+                    moveDirection.y = 0;
 
-                    if (desiredVelocity.sqrMagnitude > 0.01f)
+                    if (moveDirection.sqrMagnitude > 0.01f)
                     {
-                        var moveVelocity = desiredVelocity.normalized * (IsSprinting ? sprintSpeed : normalSpeed);
+                        NotifyMovement();
+                        moveDirection.Normalize();
+                        var moveVelocity = moveDirection * (IsSprinting ? sprintSpeed : normalSpeed);
                         Rigidbody.linearVelocity = moveVelocity;
 
                         // Rotate the entity to face movement direction
@@ -173,26 +197,52 @@ namespace TeamSlobodorum.Entities.Humanoid
                     }
                 }
 
-                // Sync the agent's internal position back to the object to prevent drifting
                 NavMeshAgent.nextPosition = Rigidbody.position;
             }
         }
 
-        private void OnLanded()
+        private void OnPreventMovementChanged()
         {
-            _animationParams.LandTriggered = true;
+            if (!PreventMovement)
+            {
+                NavMeshAgent.Warp(Rigidbody.position);
+            }
         }
 
         public void Jump()
         {
+            if (!IsClimbing)
+            {
+                if ((Physics.Raycast(Humanoid.climbRayLower.transform.position, transform.forward,
+                         out _, 0.5f) ||
+                     Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
+                         out _, 0.5f)) &&
+                    !Physics.Raycast(Humanoid.climbRayUpper.transform.position, transform.forward,
+                        out _, 0.5f))
+                {
+                    var originDown = Humanoid.climbRayUpper.transform.position + transform.forward * 0.5f;
+                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f))
+                    {
+                        _ledgePosition = ledgeHit.point;
+                        IsClimbing = true;
+                        _animationParams.ClimbTriggered = true;
+                        return;
+                    }
+                }
+            }
+
             if (CanPerformAction)
             {
-                _timeLastJump = Time.time;
-                _animationParams.FallTriggered = true;
-                IsFalling = true;
+                IsJumping = true;
+                _animationParams.JumpTriggered = true;
                 Rigidbody.AddForce(transform.up * (IsSprinting ? sprintJumpForce : normalJumpForce),
                     ForceMode.Impulse);
             }
+        }
+
+        protected void NotifyMovement()
+        {
+            _timeLastMoved = Time.fixedTime;
         }
 
         public void StartMeleeAttack()
@@ -201,6 +251,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             {
                 IsAttacking = true;
                 _animationParams.MeleeTriggered = true;
+                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
             }
         }
 
@@ -235,28 +286,35 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void UpdateAnimation()
         {
-            Animator.SetBool(AnimationParams.MovingKey, IsMoving);
-            Animator.SetFloat(AnimationParams.ForwardKey, _animationParams.Direction.z);
-            Animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
-            Animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
-            Animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
+            animator.SetBool(AnimationParams.MovingKey, IsMoving);
+            animator.SetFloat(AnimationParams.ForwardKey, _animationParams.Direction.z);
+            animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
+            animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
+            animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
+            animator.SetBool(AnimationParams.GroundedKey, IsGrounded);
 
             if (_animationParams.FallTriggered)
             {
-                Animator.SetTrigger(AnimationParams.FallKey);
+                animator.SetTrigger(AnimationParams.FallKey);
                 _animationParams.FallTriggered = false;
-            }
-
-            if (_animationParams.LandTriggered)
-            {
-                Animator.SetTrigger(AnimationParams.LandKey);
-                _animationParams.LandTriggered = false;
             }
 
             if (_animationParams.MeleeTriggered)
             {
-                Animator.SetTrigger(AnimationParams.MeleeKey);
+                animator.SetTrigger(AnimationParams.MeleeKey);
                 _animationParams.MeleeTriggered = false;
+            }
+
+            if (_animationParams.JumpTriggered)
+            {
+                animator.SetTrigger(AnimationParams.JumpKey);
+                _animationParams.JumpTriggered = false;
+            }
+
+            if (_animationParams.ClimbTriggered)
+            {
+                animator.SetTrigger(AnimationParams.ClimbKey);
+                _animationParams.ClimbTriggered = false;
             }
         }
 
@@ -270,10 +328,10 @@ namespace TeamSlobodorum.Entities.Humanoid
         private bool TryStepUp(Vector3 direction)
         {
             if (Physics.Raycast(Humanoid.stepRayLower.transform.position, direction,
-                    out _, 0.4f))
+                    out _, 0.5f))
             {
                 if (!Physics.Raycast(Humanoid.stepRayUpper.transform.position, direction,
-                        out _, 0.4f))
+                        out _, 0.5f))
                 {
                     Rigidbody.position -= new Vector3(0f, -stepAmount * Time.deltaTime, 0f);
                     return true;
@@ -285,6 +343,9 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         protected virtual void OnDrawGizmosSelected()
         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(Humanoid.climbRayUpper.transform.position, transform.forward * 0.5f);
+            Gizmos.DrawRay(Humanoid.climbRayLower.transform.position, transform.forward * 0.5f);
             DrawStepUpRays(transform.forward);
             DrawStepUpRays(transform.TransformDirection(0.5f, 0, 1));
             DrawStepUpRays(transform.TransformDirection(-0.5f, 0, 1));
@@ -292,9 +353,27 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void DrawStepUpRays(Vector3 direction)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(Humanoid.stepRayLower.transform.position, direction * 0.4f);
-            Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.4f);
+            Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.5f);
+            Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.5f);
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            foreach (var contact in collision.contacts)
+            {
+                // Cos(70 degree) = 0.34
+                if (contact.normal.y > 0.34f)
+                {
+                    Debug.DrawLine(contact.point, contact.point + contact.normal, Color.purple);
+                    IsGrounded = true;
+                    break;
+                }
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            IsGrounded = false;
         }
     }
 }

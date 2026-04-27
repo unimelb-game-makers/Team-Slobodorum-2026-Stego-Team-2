@@ -7,6 +7,7 @@ namespace TeamSlobodorum.Entities
     {
         public event Action StartMoving;
         public event Action StopMoving;
+        public event Action PreventMovementChanged;
 
         private bool _isMoving;
 
@@ -34,7 +35,21 @@ namespace TeamSlobodorum.Entities
         
         public bool LastMoveSucceeded { get; protected set; }
         public bool IsSprinting { get; set; }
-        public bool PreventMovement { get; set; }
+        private bool _preventMovement;
+
+        public bool PreventMovement
+        {
+            get => _preventMovement;
+            set
+            {
+                var prev = _preventMovement;
+                _preventMovement = value;
+                if (prev != value)
+                {
+                    PreventMovementChanged?.Invoke();
+                }
+            }
+        }
 
         public abstract void StartMovingTo(Vector3 destination, float stoppingDistance = 0);
     }

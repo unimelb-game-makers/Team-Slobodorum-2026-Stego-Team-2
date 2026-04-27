@@ -109,6 +109,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         {
             NavMeshAgent.updatePosition = false;
             NavMeshAgent.updateRotation = false;
+            PreventMovementChanged += OnPreventMovementChanged;
         }
 
         protected virtual void Update()
@@ -166,7 +167,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void HandleNavigationMovement()
         {
-            if (NavMeshAgent.enabled && IsMoving)
+            if (NavMeshAgent.enabled && IsMoving && NavMeshAgent.isOnNavMesh)
             {
                 var pathFinished = !NavMeshAgent.pathPending &&
                                    NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
@@ -196,13 +197,15 @@ namespace TeamSlobodorum.Entities.Humanoid
                     }
                 }
 
-                var distance = Vector3.Distance(NavMeshAgent.nextPosition, Rigidbody.position);
-                if (distance > 0.6f)
-                {
-                    NavMeshAgent.Warp(Rigidbody.position);
-                }
-
                 NavMeshAgent.nextPosition = Rigidbody.position;
+            }
+        }
+
+        private void OnPreventMovementChanged()
+        {
+            if (!PreventMovement)
+            {
+                NavMeshAgent.Warp(Rigidbody.position);
             }
         }
 
@@ -211,9 +214,9 @@ namespace TeamSlobodorum.Entities.Humanoid
             if (!IsClimbing)
             {
                 if ((Physics.Raycast(Humanoid.climbRayLower.transform.position, transform.forward,
-                         out var hit1, 0.5f) ||
+                         out _, 0.5f) ||
                      Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
-                         out var hit2, 0.5f)) &&
+                         out _, 0.5f)) &&
                     !Physics.Raycast(Humanoid.climbRayUpper.transform.position, transform.forward,
                         out _, 0.5f))
                 {

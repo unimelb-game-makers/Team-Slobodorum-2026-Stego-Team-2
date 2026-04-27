@@ -49,14 +49,15 @@ namespace TeamSlobodorum.Entities.Humanoid
             public static readonly int MotionScaleKey = Animator.StringToHash("MotionScale");
             public static readonly int JumpScaleKey = Animator.StringToHash("JumpScale");
             public static readonly int FallKey = Animator.StringToHash("Fall");
-            public static readonly int LandKey = Animator.StringToHash("Land");
             public static readonly int MeleeKey = Animator.StringToHash("Melee");
+            public static readonly int JumpKey = Animator.StringToHash("Jump");
             public static readonly int ClimbKey = Animator.StringToHash("Climb");
+            public static readonly int GroundedKey = Animator.StringToHash("Grounded");
 
             public bool IsRunning;
             public bool FallTriggered;
-            public bool LandTriggered;
             public bool MeleeTriggered;
+            public bool JumpTriggered;
             public bool ClimbTriggered;
             public Vector3 Direction; // normalized direction of motion
             public float MotionScale; // scale factor for the animation speed
@@ -71,21 +72,25 @@ namespace TeamSlobodorum.Entities.Humanoid
         private const float IdleThreshold = 0.2f;
 
         private const float DelayBeforeInferringFall = 0.3f;
+        private const float DelayBeforeInferringMove = 0.3f;
         private const float FallingTime = 1.5f;
         private const float AirControlTime = 0.5f;
         private float _timeLastGrounded;
+        private float _timeLastMoved;
         private Vector3 _ledgePosition;
 
-        public bool IsFalling { get; protected set; }
+        public bool IsFalling { get; set; }
+        public bool IsJumping { get; set; }
         public bool IsAttacking { get; set; }
         public bool IsClimbing { get; set; }
+        public bool IsForwardObstructed { get; private set; }
 
         public override bool CanMove =>
-            base.CanMove && !IsAttacking && !IsClimbing &&
-            (!IsFalling || Time.time - _timeLastGrounded <= AirControlTime);
+            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling &&
+            (!IsJumping || Time.fixedTime - _timeLastGrounded <= AirControlTime);
 
         public override bool CanPerformAction =>
-            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling && IsGrounded;
+            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling && !IsJumping && IsGrounded;
 
         public bool IsGrounded { get; private set; }
 
@@ -102,55 +107,54 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         protected virtual void Start()
         {
-            Landed += OnLanded;
-
             NavMeshAgent.updatePosition = false;
             NavMeshAgent.updateRotation = false;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (IsClimbing)
             {
                 var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 var progress = stateInfo.normalizedTime;
-                if (progress < 0.4f)
+                if (progress < 0.35f)
                 {
                     var yDiff = Humanoid.rightHand.position.y - _ledgePosition.y;
-                    transform.position -= new Vector3(0, yDiff, 0);   
+                    var targetPosition = transform.position - new Vector3(0, yDiff, 0);
+                    transform.position = Vector3.Slerp(transform.position, targetPosition,
+                        Damper.Damp(1, damping, Time.fixedDeltaTime));
                 }
-            }
-            else if (animator.applyRootMotion)
-            {
-                animator.applyRootMotion = false;
             }
         }
 
         protected virtual void FixedUpdate()
         {
-            var now = Time.time;
+            var now = Time.fixedTime;
             if (IsGrounded && now - _timeLastGrounded > DelayBeforeInferringFall)
             {
                 _timeLastGrounded = now;
 
-                if (IsFalling)
+                if (IsFalling || IsJumping)
                 {
-                    IsFalling = false;
                     Landed?.Invoke();
                 }
-            } else if (!IsFalling && now - _timeLastGrounded > FallingTime)
+            }
+            else if (!IsFalling && now - _timeLastGrounded > FallingTime)
             {
                 IsFalling = true;
                 _animationParams.FallTriggered = true;
             }
 
-            if (_animationParams.MeleeTriggered)
-            {
-                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
-            }
+            IsForwardObstructed = Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
+                out _, 0.5f);
 
             HandleNavigationMovement();
             UpdateAnimationState();
+
+            if (!CanMove && now - _timeLastMoved > DelayBeforeInferringMove)
+            {
+                IsMoving = false;
+            }
 
             if (IsMoving)
             {
@@ -180,6 +184,7 @@ namespace TeamSlobodorum.Entities.Humanoid
 
                     if (moveDirection.sqrMagnitude > 0.01f)
                     {
+                        NotifyMovement();
                         moveDirection.Normalize();
                         var moveVelocity = moveDirection * (IsSprinting ? sprintSpeed : normalSpeed);
                         Rigidbody.linearVelocity = moveVelocity;
@@ -201,11 +206,6 @@ namespace TeamSlobodorum.Entities.Humanoid
             }
         }
 
-        private void OnLanded()
-        {
-            _animationParams.LandTriggered = true;
-        }
-
         public void Jump()
         {
             if (!IsClimbing)
@@ -218,24 +218,28 @@ namespace TeamSlobodorum.Entities.Humanoid
                         out _, 0.5f))
                 {
                     var originDown = Humanoid.climbRayUpper.transform.position + transform.forward * 0.5f;
-                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 0.5f))
+                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f))
                     {
                         _ledgePosition = ledgeHit.point;
                         IsClimbing = true;
-                        animator.applyRootMotion = true;
                         _animationParams.ClimbTriggered = true;
                         return;
                     }
-                }   
+                }
             }
 
             if (CanPerformAction)
             {
-                IsFalling = true;
-                _animationParams.FallTriggered = true;
+                IsJumping = true;
+                _animationParams.JumpTriggered = true;
                 Rigidbody.AddForce(transform.up * (IsSprinting ? sprintJumpForce : normalJumpForce),
                     ForceMode.Impulse);
             }
+        }
+
+        protected void NotifyMovement()
+        {
+            _timeLastMoved = Time.fixedTime;
         }
 
         public void StartMeleeAttack()
@@ -244,6 +248,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             {
                 IsAttacking = true;
                 _animationParams.MeleeTriggered = true;
+                Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
             }
         }
 
@@ -283,6 +288,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
             animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
             animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
+            animator.SetBool(AnimationParams.GroundedKey, IsGrounded);
 
             if (_animationParams.FallTriggered)
             {
@@ -290,16 +296,16 @@ namespace TeamSlobodorum.Entities.Humanoid
                 _animationParams.FallTriggered = false;
             }
 
-            if (_animationParams.LandTriggered)
-            {
-                animator.SetTrigger(AnimationParams.LandKey);
-                _animationParams.LandTriggered = false;
-            }
-
             if (_animationParams.MeleeTriggered)
             {
                 animator.SetTrigger(AnimationParams.MeleeKey);
                 _animationParams.MeleeTriggered = false;
+            }
+
+            if (_animationParams.JumpTriggered)
+            {
+                animator.SetTrigger(AnimationParams.JumpKey);
+                _animationParams.JumpTriggered = false;
             }
 
             if (_animationParams.ClimbTriggered)
@@ -355,6 +361,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                 // Cos(70 degree) = 0.34
                 if (contact.normal.y > 0.34f)
                 {
+                    Debug.DrawLine(contact.point, contact.point + contact.normal, Color.purple);
                     IsGrounded = true;
                     break;
                 }

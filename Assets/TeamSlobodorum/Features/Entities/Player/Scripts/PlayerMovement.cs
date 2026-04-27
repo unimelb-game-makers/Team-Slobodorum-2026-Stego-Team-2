@@ -12,7 +12,7 @@ namespace TeamSlobodorum.Entities.Player
 
         private InputAction _moveAction;
         private InputAction _sprintAction;
-        
+
         public bool IsStrafeMode { get; set; }
 
         // These are part of a strategy to combat input gimbal lock when controlling an entity
@@ -58,6 +58,7 @@ namespace TeamSlobodorum.Entities.Player
                 if (moveInput != Vector2.zero)
                 {
                     IsMoving = true;
+                    NotifyMovement();
 
                     var inputFrame = GetInputFrame(Vector2.Dot(moveInput, _lastRawInput) < 0.8f);
                     var targetDirection = inputFrame * new Vector3(moveInput.x, 0, moveInput.y);
@@ -66,7 +67,7 @@ namespace TeamSlobodorum.Entities.Player
                         !IsStrafeMode &&
                         (Math.Abs(moveInput.x) < 0.2 ||
                          Vector3.Dot(targetDirection, transform.forward) < RotateThreshold);
-                    if (rotationNeeded)
+                    if (rotationNeeded && targetDirection.sqrMagnitude > 0.01f)
                     {
                         var qA = Rigidbody.rotation;
                         var qB = Quaternion.LookRotation(targetDirection, Vector3.up);
@@ -74,6 +75,11 @@ namespace TeamSlobodorum.Entities.Player
                     }
 
                     var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
+                    if (IsForwardObstructed)
+                    {
+                        desiredVelocity -= Vector3.Project(desiredVelocity, transform.forward);
+                    }
+                    
                     Rigidbody.linearVelocity =
                         new Vector3(desiredVelocity.x, Rigidbody.linearVelocity.y, desiredVelocity.z);
                 }
@@ -83,7 +89,7 @@ namespace TeamSlobodorum.Entities.Player
                     Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
                 }
             }
-
+            
             _lastRawInput = moveInput;
 
             base.FixedUpdate();
@@ -93,7 +99,7 @@ namespace TeamSlobodorum.Entities.Player
         {
             Jump();
         }
-        
+
         // Get the reference frame for the input.
         // The idea is to map camera fwd/right to the entity's XZ plane. There is some complexity here to avoid
         // gimbal lock when the entity is tilted 180 degrees relative to the input frame.

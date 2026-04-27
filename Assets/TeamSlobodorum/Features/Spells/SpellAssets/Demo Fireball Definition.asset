@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballDefinition
   Id:
     Value: 
-  DisplayName: DemoFireballSpell
-  Description: Left click to shoot out fireballs
+  DisplayName: FireballSpell
+  Description: Fireball shoots from your palm. Upon impact, the fireball violently
+    ignites all nearby flammable items.
   Icon: {fileID: 21300000, guid: f1143e4d4332c3e4baf54d5ebe1de267, type: 3}
   ManaCost: 10
   Category: 1

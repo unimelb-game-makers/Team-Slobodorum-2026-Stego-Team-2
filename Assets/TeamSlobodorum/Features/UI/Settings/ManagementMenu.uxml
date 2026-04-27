@@ -25,9 +25,9 @@
                 </ui:VisualElement>
             </ui:ScrollView>
             <ui:VisualElement name="DetailsPanel" style="flex-grow: 1; width: 35%; margin-top: 2%; margin-right: 2%; margin-bottom: 2%; margin-left: 2%; background-color: rgb(43, 43, 43); padding-top: 2%; padding-right: 2%; padding-bottom: 2%; padding-left: 2%;">
-                <ui:Label text="Label" name="DetailName" style="height: 10%; color: rgb(244, 237, 209); font-size: 30%; -unity-text-align: middle-left;"/>
+                <ui:Label text="Label" name="DetailName" style="height: 10%; color: rgb(244, 237, 209); font-size: 45%; -unity-text-align: middle-left;"/>
                 <ui:VisualElement name="DetailIcon" style="flex-grow: 1; color: rgb(0, 0, 0); background-color: rgb(180, 175, 154); height: 100px; width: 100px; min-width: 50px; min-height: 50px; aspect-ratio: 1; background-image: url(&quot;project://database/Assets/TeamSlobodorum/Features/Spells/SpellAssets/grab.png?fileID=2800000&amp;guid=93f6f67fc0e4ec24bb0d6877d1d4d10d&amp;type=3#grab&quot;); -unity-background-image-tint-color: rgb(255, 255, 255);"/>
-                <ui:Label text="Label" name="DetailDescription" style="height: 60%; color: rgb(244, 237, 209); font-size: 30%;"/>
+                <ui:Label text="" name="DetailDescription" style="height: 60%; color: rgb(244, 237, 209); font-size: 30%; width: 100%; text-overflow: clip; white-space: pre-wrap;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

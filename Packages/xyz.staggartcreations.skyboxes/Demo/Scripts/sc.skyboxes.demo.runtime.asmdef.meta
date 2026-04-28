@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5a18c11b0039e404b904d7bfaea49137
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302248
+  packageName: Stylized Skyboxes | FREE
+  packageVersion: 1.0.0
+  assetPath: Packages/xyz.staggartcreations.skyboxes/Demo/Scripts/sc.skyboxes.demo.runtime.asmdef
+  uploadId: 888032

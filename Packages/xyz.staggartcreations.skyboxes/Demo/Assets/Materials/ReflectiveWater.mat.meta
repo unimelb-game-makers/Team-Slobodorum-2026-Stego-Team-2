@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 000269131b7cb1a4c9e1e39808492342
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302248
+  packageName: Stylized Skyboxes | FREE
+  packageVersion: 1.0.0
+  assetPath: Packages/xyz.staggartcreations.skyboxes/Demo/Assets/Materials/ReflectiveWater.mat
+  uploadId: 888032

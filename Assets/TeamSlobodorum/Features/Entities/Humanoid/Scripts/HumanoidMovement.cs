@@ -98,6 +98,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         {
             Rigidbody = GetComponent<Rigidbody>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
+            Humanoid = GetComponent<Humanoid>();
         }
 
         protected virtual void OnValidate()

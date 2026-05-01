@@ -6,7 +6,7 @@ namespace TeamSlobodorum.Entities
     public class Entity : MonoBehaviour
     {
         public Rigidbody Rigidbody { get; private set; }
-        
+
         protected virtual void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();

@@ -1,30 +1,21 @@
-using System;
-using TeamSlobodorum.Damage;
+using TeamSlobodorum.Health;
 using UnityEngine;
 
 namespace TeamSlobodorum.Entities
 {
-    public class LivingEntity : Entity, IDamageable
+    [RequireComponent(typeof(HealthManager))]
+    public class LivingEntity : Entity
     {
-        public float maxHitPoints = 100.0f;
-        public float invincibleTime;
         [SerializeField] private float voidThreshold = -500f;
 
-        public event Action Died;
-        public event Action Damaged;
-        public float HitPoints { get; protected set; }
-        public virtual bool IsAlive => HitPoints > 0;
-
+        public HealthManager HealthManager { get; private set; }
         private Flammable.Flammable _flammable;
-
-        private float _invincibleCounter;
 
         protected override void Awake()
         {   
             base.Awake();
-            // put in awake to ensure it get initialised before call 
-            HitPoints = maxHitPoints;
-            Died += OnDied;
+            // put in awake to ensure it get initialised before call
+            HealthManager = GetComponent<HealthManager>();
         }
         
         protected virtual void Start()
@@ -37,48 +28,11 @@ namespace TeamSlobodorum.Entities
 
         protected virtual void Update()
         {
-            if (_invincibleCounter > 0)
-            {
-                _invincibleCounter -= Time.deltaTime;
-            }
-
             // Void Fall
-            if (transform.position.y < voidThreshold && IsAlive)
+            if (transform.position.y < voidThreshold && HealthManager.IsAlive)
             {
-                Kill();
+                HealthManager.Kill();
             }
-        }
-
-        public virtual void TakeDamage(float damage)
-        {
-            if (!IsAlive || _invincibleCounter > 0) return;
-
-            HitPoints -= damage;
-            if (HitPoints < 0)
-            {
-                HitPoints = 0;
-            }
-
-            _invincibleCounter = invincibleTime;
-            Damaged?.Invoke();
-
-            if (HitPoints == 0)
-            {
-                Died?.Invoke();
-            }
-        }
-
-        public virtual void Kill()
-        {
-            if (!IsAlive) return;
-
-            HitPoints = 0;
-            Damaged?.Invoke();
-            Died?.Invoke();
-        }
-
-        protected virtual void OnDied()
-        {
         }
 
         private void OnStopBurning()

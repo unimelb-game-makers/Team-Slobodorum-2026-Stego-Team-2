@@ -1,5 +1,6 @@
 using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Entities.Player;
+using TeamSlobodorum.Health;
 using UnityEngine;
 
 namespace TeamSlobodorum.Entities.HostileRobot
@@ -16,9 +17,10 @@ namespace TeamSlobodorum.Entities.HostileRobot
             base.Awake();
 
             _movement = GetComponent<HumanoidMovement>();
+            HealthManager.Died += OnDied;
         }
 
-        protected override void OnDied()
+        private void OnDied()
         {
             Destroy(gameObject);
         }
@@ -44,7 +46,7 @@ namespace TeamSlobodorum.Entities.HostileRobot
                 if (Vector3.Dot(transform.forward, directionToObject) > 0)
                 {
                     var playerEntity = hitCollider.GetComponent<PlayerEntity>();
-                    playerEntity.TakeDamage(10);
+                    playerEntity.HealthManager.TakeDamage(10, DamageType.Physical);
                 }
             }
         }

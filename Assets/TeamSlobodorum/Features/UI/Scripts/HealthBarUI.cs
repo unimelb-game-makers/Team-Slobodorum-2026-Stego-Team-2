@@ -1,4 +1,3 @@
-using System;
 using TeamSlobodorum.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,24 +5,23 @@ using UnityEngine.UIElements;
 namespace TeamSlobodorum.UI.Scripts
 {
     [RequireComponent(typeof(WorldSpaceTracker))]
-    public class HealthBarUI: MonoBehaviour
+    public class HealthBarUI : MonoBehaviour
     {
-        private WorldSpaceTracker worldSpaceTracker;
+        private WorldSpaceTracker _worldSpaceTracker;
         [SerializeField] private LivingEntity entity;
+
         void Start()
         {
-            worldSpaceTracker = GetComponent<WorldSpaceTracker>();
-            entity.Damaged += UpdateHitPoints;
-            worldSpaceTracker.OnComponentReady += UpdateHitPoints;
+            _worldSpaceTracker = GetComponent<WorldSpaceTracker>();
+            entity.HealthManager.Damaged += UpdateHitPoints;
+            _worldSpaceTracker.OnComponentReady += UpdateHitPoints;
         }
 
-        
+
         private void UpdateHitPoints()
-        {   
-            ProgressBar _healthBar = worldSpaceTracker.VisualElement.Q<ProgressBar>("HealthBar");
-
-            _healthBar.value = entity.HitPoints / entity.maxHitPoints;
+        {
+            var healthBar = _worldSpaceTracker.VisualElement.Q<ProgressBar>("HealthBar");
+            healthBar.value = entity.HealthManager.HitPoints / entity.HealthManager.maxHitPoints;
         }
-
     }
 }

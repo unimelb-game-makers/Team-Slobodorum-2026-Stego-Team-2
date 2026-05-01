@@ -28,6 +28,7 @@ namespace TeamSlobodorum.UI.Scripts
         public Color activateColor;
         public Color deactivateColor;
         private VisualElement _announcementBox;
+
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -50,7 +51,7 @@ namespace TeamSlobodorum.UI.Scripts
             _playerEntity = playerObject.GetComponent<PlayerEntity>();
             _spellcaster = playerObject.GetComponent<PlayerSpellCaster>();
             _spellManager = playerObject.GetComponent<PlayerSpellManager>();
-            _playerEntity.Damaged += UpdateHitPoints;
+            _playerEntity.HealthManager.Damaged += UpdateHitPoints;
             _spellcaster.SelectedSpellChanged += UpdateSelectedSpell;
 
             _spellManager.OnSpellEquipped += RefreshEquippedSlots;
@@ -64,7 +65,6 @@ namespace TeamSlobodorum.UI.Scripts
             Cursor.lockState = CursorLockMode.Locked;
 
             _spellManager.OnSpellObtained += ShowSpellAnnouncement;
-
         }
 
         private void Update()
@@ -78,26 +78,27 @@ namespace TeamSlobodorum.UI.Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+
             UpdateManaPoints();
         }
 
         private void UpdateSelectedSpell()
         {
-            Debug.Log($"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}") ;
+            Debug.Log($"CurrentSpell: {_spellcaster.SelectedSpell?.DisplayName}");
             RefreshEquippedSlots();
         }
 
         private void UpdateHitPoints()
         {
-            _healthBar.title = $"{(int)_playerEntity.HitPoints} / {(int)_playerEntity.maxHitPoints}";
-            _healthBar.value = _playerEntity.HitPoints / _playerEntity.maxHitPoints;
+            _healthBar.title =
+                $"{(int)_playerEntity.HealthManager.HitPoints} / {(int)_playerEntity.HealthManager.maxHitPoints}";
+            _healthBar.value = _playerEntity.HealthManager.HitPoints / _playerEntity.HealthManager.maxHitPoints;
         }
 
         private void UpdateManaPoints()
         {
             _manaBar.title = $"{(int)_spellcaster.CurrentMana} / {(int)_spellcaster.TotalMana}";
             _manaBar.value = _spellcaster.CurrentMana / _spellcaster.TotalMana;
-
         }
 
         public void HideHUD()
@@ -108,7 +109,6 @@ namespace TeamSlobodorum.UI.Scripts
         public void ShowHUD()
         {
             root.style.display = DisplayStyle.Flex;
-
         }
 
         private void RefreshEquippedSlots(SpellDefinition changedSpell = null)
@@ -119,7 +119,8 @@ namespace TeamSlobodorum.UI.Scripts
                 if (i < _spellManager.EquippedSpells.Count)
                 {
                     // If the slot has a spell, display the icon
-                    equippedSlotButtons[i].iconImage = Background.FromTexture2D(_spellManager.EquippedSpells[i].Icon.texture);
+                    equippedSlotButtons[i].iconImage =
+                        Background.FromTexture2D(_spellManager.EquippedSpells[i].Icon.texture);
                     if (_spellManager.EquippedSpells[i] == _spellcaster.SelectedSpell)
                     {
                         _equippedSlotsContainer[i].style.backgroundColor = activateColor;
@@ -127,9 +128,7 @@ namespace TeamSlobodorum.UI.Scripts
                     else
                     {
                         _equippedSlotsContainer[i].style.backgroundColor = deactivateColor;
-
                     }
-
                 }
                 else
                 {
@@ -139,6 +138,7 @@ namespace TeamSlobodorum.UI.Scripts
                 }
             }
         }
+
         private void OnDestroy()
         {
             if (_spellManager != null)
@@ -146,13 +146,12 @@ namespace TeamSlobodorum.UI.Scripts
                 _spellManager.OnSpellEquipped -= RefreshEquippedSlots;
                 _spellManager.OnSpellUnequipped -= RefreshEquippedSlots;
                 _spellManager.OnSpellObtained -= RefreshEquippedSlots;
+            }
 
-            } 
             if (_spellcaster != null)
             {
                 _spellcaster.SelectedSpellChanged -= UpdateSelectedSpell;
             }
-
         }
 
         public void ShowSpellAnnouncement(SpellDefinition definition)
@@ -162,25 +161,22 @@ namespace TeamSlobodorum.UI.Scripts
             Sequence announcementSequence = DOTween.Sequence();
 
             announcementSequence.Append(
-                DOTween.To(() => -125f, 
-                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
-                    0f, 0.6f)
-                .SetEase(Ease.OutBack)
+                DOTween.To(() => -125f,
+                        x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
+                        0f, 0.6f)
+                    .SetEase(Ease.OutBack)
             );
 
             announcementSequence.AppendInterval(5.0f);
 
             announcementSequence.Append(
-                DOTween.To(() => 0f, 
-                    x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
-                    -125f, 0.6f)
-                .SetEase(Ease.InBack) 
+                DOTween.To(() => 0f,
+                        x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
+                        -125f, 0.6f)
+                    .SetEase(Ease.InBack)
             );
 
-            announcementSequence.OnComplete(() => {
-                _announcementBox.style.display = DisplayStyle.None;
-            });
+            announcementSequence.OnComplete(() => { _announcementBox.style.display = DisplayStyle.None; });
         }
     }
-
 }

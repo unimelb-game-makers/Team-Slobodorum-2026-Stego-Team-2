@@ -173,6 +173,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2215580909226103493, guid: e28b9248eba8545908242aa23285889f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8927686121352585950}
+    - targetCorrespondingSourceObject: {fileID: 2215580909226103493, guid: e28b9248eba8545908242aa23285889f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4737185154163589524}
   m_SourcePrefab: {fileID: 100100000, guid: e28b9248eba8545908242aa23285889f, type: 3}
 --- !u!4 &99154818465614115 stripped
 Transform:
@@ -196,8 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4dccc72746478d88b23a22baa0f67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.HostileRobot.HostileRobotEntity
-  maxHitPoints: 100
-  invincibleTime: 0
   voidThreshold: -500
   meleeAttackRange: 1
 --- !u!114 &532631307497401827
@@ -304,3 +305,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HealthBarUI
   entity: {fileID: 691059295098349890}
+--- !u!114 &4737185154163589524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7375766517198352053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a84c7b5fcd14038a3eec5405b186adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Damage.HealthManager
+  maxHitPoints: 100
+  invincibleTime: 1

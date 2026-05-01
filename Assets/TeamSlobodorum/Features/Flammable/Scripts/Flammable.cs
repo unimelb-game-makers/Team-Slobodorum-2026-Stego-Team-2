@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using TeamSlobodorum.Core;
-using TeamSlobodorum.Damage;
+using TeamSlobodorum.Health;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -62,7 +62,7 @@ namespace TeamSlobodorum.Flammable
         [SerializeField] private bool produceSmoke;
         
         [Header("Damage")]
-        [SerializeField, Tooltip("The damage caused per second. Only work if the object is damageable.")]
+        [SerializeField, Tooltip("The damage caused per second. Only work if the object has HealthManager.")]
         private float damage;
 
         [Header("Voxel and Bounds")]
@@ -83,7 +83,7 @@ namespace TeamSlobodorum.Flammable
         private MeshRenderer _meshRenderer;
         private MeshFilter _meshFilter;
         [CanBeNull] private Material _materialInstance;
-        private IDamageable _damageable;
+        private HealthManager _healthManager;
 
         private Dictionary<Vector3Int, VoxelData> _voxelMap;
 
@@ -121,7 +121,7 @@ namespace TeamSlobodorum.Flammable
         {
             TryGetComponent(out _meshRenderer);
             TryGetComponent(out _meshFilter);
-            TryGetComponent(out _damageable);
+            TryGetComponent(out _healthManager);
             
             StartBurning += OnStartBurning;
             StopBurning += OnStopBurning;
@@ -146,7 +146,7 @@ namespace TeamSlobodorum.Flammable
                     _spreadCounter = spreadInterval;
                 }
                 
-                _damageable?.TakeDamage(damage * Time.deltaTime);
+                _healthManager?.TakeDamage(damage * Time.deltaTime, DamageType.Fire);
             }
         }
 

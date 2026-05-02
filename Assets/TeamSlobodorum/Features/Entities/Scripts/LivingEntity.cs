@@ -6,6 +6,7 @@ namespace TeamSlobodorum.Entities
     [RequireComponent(typeof(HealthManager))]
     public class LivingEntity : Entity
     {
+        public Transform eyes;
         [SerializeField] private float voidThreshold = -500f;
 
         public HealthManager HealthManager { get; private set; }
@@ -16,6 +17,7 @@ namespace TeamSlobodorum.Entities
             base.Awake();
             // put in awake to ensure it get initialised before call
             HealthManager = GetComponent<HealthManager>();
+            HealthManager.Died += OnDied;
         }
         
         protected virtual void Start()
@@ -34,6 +36,8 @@ namespace TeamSlobodorum.Entities
                 HealthManager.Kill();
             }
         }
+        
+        protected virtual void OnDied() {}
 
         private void OnStopBurning()
         {

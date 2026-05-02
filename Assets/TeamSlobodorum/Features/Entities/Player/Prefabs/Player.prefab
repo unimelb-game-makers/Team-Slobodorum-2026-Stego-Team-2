@@ -47,6 +47,37 @@ MonoBehaviour:
   playerRotation: 0
   rotationDamping: 0.2
   aimSensitivity: 1
+--- !u!1 &4037110105842939356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4288885643139032}
+  m_Layer: 6
+  m_Name: Eyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4288885643139032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037110105842939356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.55, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3696110474417863077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5390759982334692598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,6 +159,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8756382238816712019, guid: e28b9248eba8545908242aa23285889f, type: 3}
       insertIndex: 1
       addedObject: {fileID: 7727940341425425716}
+    - targetCorrespondingSourceObject: {fileID: 8756382238816712019, guid: e28b9248eba8545908242aa23285889f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4288885643139032}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2215580909226103493, guid: e28b9248eba8545908242aa23285889f, type: 3}
       insertIndex: -1
@@ -203,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23e457925354d5e97a3124a7cc53dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Entities.Player.PlayerEntity
+  eyes: {fileID: 4288885643139032}
   voidThreshold: -500
 --- !u!114 &5752489115668645689
 MonoBehaviour:
@@ -299,7 +334,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Damage.HealthManager
   maxHitPoints: 100
-  invincibleTime: 1
 --- !u!1001 &9027204932530480728
 PrefabInstance:
   m_ObjectHideFlags: 0

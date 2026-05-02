@@ -17,10 +17,9 @@ namespace TeamSlobodorum.Entities.HostileRobot
             base.Awake();
 
             _movement = GetComponent<HumanoidMovement>();
-            HealthManager.Died += OnDied;
         }
 
-        private void OnDied()
+        protected override void OnDied()
         {
             Destroy(gameObject);
         }

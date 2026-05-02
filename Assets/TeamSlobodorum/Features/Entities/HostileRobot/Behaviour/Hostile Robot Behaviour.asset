@@ -72,8 +72,8 @@ MonoBehaviour:
           rid: 4462400247469965463
         BlackboardGroupReferences: []
         Root:
-          rid: 4462400410596409403
-        m_VersionTimestamp: 639127737975068700
+          rid: 6705858775880302838
+        m_VersionTimestamp: 639132854722383950
     - rid: 4462400247469965463
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -102,7 +102,7 @@ MonoBehaviour:
           m_Value1: 3431831344855784967
         Name: PlayerEntity
         m_Value: {fileID: 0}
-    - rid: 4462400410596409395
+    - rid: 6705858775880302718
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -110,7 +110,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 4462400410596409403
+    - rid: 6705858775880302838
       type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -121,36 +121,10 @@ MonoBehaviour:
         m_Parent:
           rid: -2
         m_Child:
-          rid: 4462400410596409404
+          rid: 6705858775880302839
         Repeat: 0
         AllowMultipleRepeatsPerTick: 0
-    - rid: 4462400410596409404
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 4599584951925059636
-          m_Value1: 3211975345475804474
-        Graph:
-          rid: 4462400247469965462
-        m_Parent:
-          rid: 4462400410596409403
-        m_Children:
-        - rid: 4462400410596409405
-        - rid: 4462400410596409406
-        m_RegisteredObservers: []
-    - rid: 4462400410596409405
-      type: {class: FindPlayerEntityAction, ns: TeamSlobodorum.Core.Behaviour.Actions, asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 4599584951925059636
-          m_Value1: 3211975345475804474
-        Graph:
-          rid: 4462400247469965462
-        m_Parent:
-          rid: 4462400410596409404
-        playerEntity:
-          rid: 4462400269921813130
-    - rid: 4462400410596409406
+    - rid: 6705858775880302839
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -159,12 +133,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409404
+          rid: 6705858775880302838
         m_Children:
-        - rid: 4462400410596409407
-        - rid: 4462400410596409408
+        - rid: 6705858775880302840
+        - rid: 6705858775880302841
         m_RegisteredObservers: []
-    - rid: 4462400410596409407
+    - rid: 6705858775880302840
       type: {class: SetSprintModeAction, ns: TeamSlobodorum.Entities.Behaviour.Actions, asm: Assembly-CSharp}
       data:
         ID:
@@ -173,12 +147,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409406
+          rid: 6705858775880302839
         movement:
-          rid: 4462400410596409409
+          rid: 6705858775880302842
         sprintMode:
-          rid: 4462400410596409395
-    - rid: 4462400410596409408
+          rid: 6705858775880302718
+    - rid: 6705858775880302841
       type: {class: RepeaterModifier, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -187,11 +161,11 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409406
+          rid: 6705858775880302839
         m_Child:
-          rid: 4462400410596409410
+          rid: 6705858775880302843
         m_AllowMultipleRepeatsPerTick: 0
-    - rid: 4462400410596409409
+    - rid: 6705858775880302842
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[TeamSlobodorum.Entities.Movement, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -201,7 +175,21 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813129
-    - rid: 4462400410596409410
+    - rid: 6705858775880302843
+      type: {class: PlayerInSightModifier, ns: TeamSlobodorum.Entities.Behaviour.Modifiers, asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 15437964228024714090
+          m_Value1: 2236014544373733458
+        Graph:
+          rid: 4462400247469965462
+        m_Parent:
+          rid: 6705858775880302841
+        m_Child:
+          rid: 6705858775880302844
+        playerEntity:
+          rid: 6705858775880302845
+    - rid: 6705858775880302844
       type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -210,12 +198,22 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409408
+          rid: 6705858775880302843
         m_Children:
-        - rid: 4462400410596409411
-        - rid: 4462400410596409412
+        - rid: 6705858775880302846
+        - rid: 6705858775880302847
         m_RegisteredObservers: []
-    - rid: 4462400410596409411
+    - rid: 6705858775880302845
+      type: {class: 'ComponentToComponentBlackboardVariable`2[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp],[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+        m_LinkedVariable:
+          rid: 4462400269921813130
+    - rid: 6705858775880302846
       type: {class: InAttackRangeModifier, ns: TeamSlobodorum.Entities.Behaviour.Modifiers, asm: Assembly-CSharp}
       data:
         ID:
@@ -224,14 +222,14 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409410
+          rid: 6705858775880302844
         m_Child:
-          rid: 4462400410596409413
+          rid: 6705858775880302848
         targetEntity:
-          rid: 4462400410596409414
+          rid: 6705858775880302849
         entity:
-          rid: 4462400410596409415
-    - rid: 4462400410596409412
+          rid: 6705858775880302850
+    - rid: 6705858775880302847
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -240,12 +238,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409410
+          rid: 6705858775880302844
         m_Children:
-        - rid: 4462400410596409416
-        - rid: 4462400410596409417
+        - rid: 6705858775880302851
+        - rid: 6705858775880302852
         m_RegisteredObservers: []
-    - rid: 4462400410596409413
+    - rid: 6705858775880302848
       type: {class: AttackAction, ns: TeamSlobodorum.Entities.Behaviour.Actions, asm: Assembly-CSharp}
       data:
         ID:
@@ -254,12 +252,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409411
+          rid: 6705858775880302846
         entity:
-          rid: 4462400410596409418
+          rid: 6705858775880302853
         targetEntity:
-          rid: 4462400410596409419
-    - rid: 4462400410596409414
+          rid: 6705858775880302854
+    - rid: 6705858775880302849
       type: {class: 'ComponentToComponentBlackboardVariable`2[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp],[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -269,7 +267,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813130
-    - rid: 4462400410596409415
+    - rid: 6705858775880302850
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -279,7 +277,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813129
-    - rid: 4462400410596409416
+    - rid: 6705858775880302851
       type: {class: StartMovingUntilCanAttackAction, ns: TeamSlobodorum.Entities.Behaviour.Actions, asm: Assembly-CSharp}
       data:
         ID:
@@ -288,12 +286,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409412
+          rid: 6705858775880302847
         entity:
-          rid: 4462400410596409420
+          rid: 6705858775880302855
         target:
-          rid: 4462400410596409421
-    - rid: 4462400410596409417
+          rid: 6705858775880302856
+    - rid: 6705858775880302852
       type: {class: LookAtEntityAction, ns: TeamSlobodorum.Entities.Behaviour.Actions, asm: Assembly-CSharp}
       data:
         ID:
@@ -302,12 +300,12 @@ MonoBehaviour:
         Graph:
           rid: 4462400247469965462
         m_Parent:
-          rid: 4462400410596409412
+          rid: 6705858775880302847
         entity:
-          rid: 4462400410596409422
+          rid: 6705858775880302857
         transform:
-          rid: 4462400410596409423
-    - rid: 4462400410596409418
+          rid: 6705858775880302858
+    - rid: 6705858775880302853
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -317,7 +315,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813129
-    - rid: 4462400410596409419
+    - rid: 6705858775880302854
       type: {class: 'ComponentToComponentBlackboardVariable`2[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp],[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -327,7 +325,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813130
-    - rid: 4462400410596409420
+    - rid: 6705858775880302855
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -337,7 +335,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813129
-    - rid: 4462400410596409421
+    - rid: 6705858775880302856
       type: {class: 'ComponentToComponentBlackboardVariable`2[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp],[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -347,7 +345,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813130
-    - rid: 4462400410596409422
+    - rid: 6705858775880302857
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -357,7 +355,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 4462400269921813129
-    - rid: 4462400410596409423
+    - rid: 6705858775880302858
       type: {class: 'ComponentToComponentBlackboardVariable`2[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp],[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -441,7 +439,6 @@ MonoBehaviour:
   m_Description: 
   m_Nodes:
   - rid: 4462400247469965468
-  - rid: 4462400247469965482
   - rid: 4462400247469965518
   - rid: 4462400247469965752
   - rid: 4462400269921812508
@@ -449,7 +446,8 @@ MonoBehaviour:
   - rid: 4462400402587910446
   - rid: 4462400402587910657
   - rid: 4462400402587910939
-  m_VersionTimestamp: 639127737975068700
+  - rid: 6705858775880302686
+  m_VersionTimestamp: 639132854722383950
   m_SerializedVersion: 2
   m_DebugInfo: {fileID: -1663700031424359888}
   m_RuntimeGraph: {fileID: -5233566641077421908}
@@ -469,21 +467,6 @@ MonoBehaviour:
       m_Value0: 3335272451348827663
       m_Value1: 11549843281177505721
     Variables: []
-    NamedChildren: []
-    IsPlaceholder: 0
-  - Name: Find Player Entity
-    Story: Find the [PlayerEntity] in the current scene
-    RuntimeTypeString: TeamSlobodorum.Core.Behaviour.Actions.FindPlayerEntityAction,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    RuntimeTypeID:
-      m_Value0: 18363127059605834265
-      m_Value1: 17103645691614291631
-    Variables:
-    - Name: playerEntity
-      Type:
-        m_SerializableType: TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      Tooltip: 
     NamedChildren: []
     IsPlaceholder: 0
   - Name: Set Sprint Mode
@@ -606,6 +589,21 @@ MonoBehaviour:
     Variables: []
     NamedChildren: []
     IsPlaceholder: 0
+  - Name: Player In Sight
+    Story: If [PlayerEntity] is in sight
+    RuntimeTypeString: TeamSlobodorum.Entities.Behaviour.Modifiers.PlayerInSightModifier,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 7226039323395418384
+      m_Value1: 2643935822516645012
+    Variables:
+    - Name: playerEntity
+      Type:
+        m_SerializableType: TeamSlobodorum.Entities.Entity, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: -214525246429720967}
   m_CommandBuffer:
@@ -647,75 +645,7 @@ MonoBehaviour:
         m_NodeModel:
           rid: 4462400247469965468
         m_Connections:
-        - rid: 4462400247469965483
-    - rid: 4462400247469965482
-      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
-      data:
-        Position: {x: 0.123393, y: 98.370026}
-        ID:
-          m_Value0: 4599584951925059636
-          m_Value1: 3211975345475804474
-        Parents: []
-        PortModels:
-        - rid: 4462400247469965483
-        - rid: 4462400247469965484
-        NodeType:
-          m_SerializableType: TeamSlobodorum.Core.Behaviour.Actions.FindPlayerEntityAction,
-            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        NodeTypeID:
-          m_Value0: 18363127059605834265
-          m_Value1: 17103645691614291631
-        m_FieldValues:
-        - rid: 4462400247469965485
-    - rid: 4462400247469965483
-      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        m_Name: InputPort
-        m_PortDataFlowType: 0
-        m_IsFloating: 0
-        m_NodeModel:
-          rid: 4462400247469965482
-        m_Connections:
-        - rid: 4462400247469965469
-    - rid: 4462400247469965484
-      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        m_Name: OutputPort
-        m_PortDataFlowType: 1
-        m_IsFloating: 0
-        m_NodeModel:
-          rid: 4462400247469965482
-        m_Connections:
         - rid: 4462400247469965519
-    - rid: 4462400247469965485
-      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
-      data:
-        FieldName: playerEntity
-        Type:
-          m_SerializableType: TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        LocalValue:
-          rid: 4462400247469965486
-        LinkedVariable:
-          rid: 4462400247469965493
-    - rid: 4462400247469965486
-      type: {class: 'BlackboardVariable`1[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: {fileID: 0}
-    - rid: 4462400247469965493
-      type: {class: 'TypedVariableModel`1[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 2377561458005274716
-          m_Value1: 3431831344855784967
-        Name: PlayerEntity
-        IsExposed: 0
-        m_IsShared: 0
-        m_Value: {fileID: 0}
     - rid: 4462400247469965518
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -745,7 +675,7 @@ MonoBehaviour:
         m_NodeModel:
           rid: 4462400247469965518
         m_Connections:
-        - rid: 4462400247469965484
+        - rid: 4462400247469965469
     - rid: 4462400247469965520
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -848,11 +778,11 @@ MonoBehaviour:
         m_NodeModel:
           rid: 4462400247469965752
         m_Connections:
-        - rid: 4462400402587910940
+        - rid: 6705858775880302687
     - rid: 4462400269921812508
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -190.94887, y: 552.36914}
+        Position: {x: -190.94887, y: 650.83606}
         ID:
           m_Value0: 12306890312637284397
           m_Value1: 10582726562405686158
@@ -920,7 +850,7 @@ MonoBehaviour:
     - rid: 4462400269921812958
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 236.55347, y: 448.6887}
+        Position: {x: 205.72002, y: 546.73596}
         ID:
           m_Value0: 9200534683976018115
           m_Value1: 9442807177904572414
@@ -1047,7 +977,7 @@ MonoBehaviour:
     - rid: 4462400402587910446
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 237.03644, y: 537.6726}
+        Position: {x: 206.20299, y: 635.7199}
         ID:
           m_Value0: 349930840163950883
           m_Value1: 449787779718373797
@@ -1144,7 +1074,7 @@ MonoBehaviour:
     - rid: 4462400402587910657
       type: {class: ModifierNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -191.73949, y: 449.396}
+        Position: {x: -191.73949, y: 547.86285}
         ID:
           m_Value0: 1426483589440570275
           m_Value1: 2819496608897152316
@@ -1242,7 +1172,7 @@ MonoBehaviour:
     - rid: 4462400402587910939
       type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -1.0874287, y: 348.50125}
+        Position: {x: -1.0874289, y: 446.968}
         ID:
           m_Value0: 5443500921362211365
           m_Value1: 9240328077284223626
@@ -1266,7 +1196,7 @@ MonoBehaviour:
         m_NodeModel:
           rid: 4462400402587910939
         m_Connections:
-        - rid: 4462400247469965754
+        - rid: 6705858775880302688
     - rid: 4462400402587910941
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -1278,3 +1208,71 @@ MonoBehaviour:
         m_Connections:
         - rid: 4462400402587910658
         - rid: 4462400269921812959
+    - rid: 6705858775880302686
+      type: {class: ModifierNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -0.6813396, y: 342.36298}
+        ID:
+          m_Value0: 15437964228024714090
+          m_Value1: 2236014544373733458
+        Parents: []
+        PortModels:
+        - rid: 6705858775880302687
+        - rid: 6705858775880302688
+        NodeType:
+          m_SerializableType: TeamSlobodorum.Entities.Behaviour.Modifiers.PlayerInSightModifier,
+            Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 7226039323395418384
+          m_Value1: 2643935822516645012
+        m_FieldValues:
+        - rid: 6705858775880302710
+    - rid: 6705858775880302687
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 6705858775880302686
+        m_Connections:
+        - rid: 4462400247469965754
+    - rid: 6705858775880302688
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 6705858775880302686
+        m_Connections:
+        - rid: 4462400402587910940
+    - rid: 6705858775880302710
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: playerEntity
+        Type:
+          m_SerializableType: TeamSlobodorum.Entities.Entity, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 6705858775880302711
+        LinkedVariable:
+          rid: 6705858775880302759
+    - rid: 6705858775880302711
+      type: {class: 'BlackboardVariable`1[[TeamSlobodorum.Entities.Entity, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 6705858775880302759
+      type: {class: 'TypedVariableModel`1[[TeamSlobodorum.Entities.Player.PlayerEntity, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 2377561458005274716
+          m_Value1: 3431831344855784967
+        Name: PlayerEntity
+        IsExposed: 0
+        m_IsShared: 0
+        m_Value: {fileID: 0}

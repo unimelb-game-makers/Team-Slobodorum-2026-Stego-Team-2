@@ -20,26 +20,26 @@ namespace TeamSlobodorum.AI
         [SerializeField] private bool debug;
         [SerializeField] private List<DebugMemoryModule> debugMemory;
 #endif
-        private readonly Dictionary<int, object> _memory = new();
+        private readonly Dictionary<IMemoryModuleType, object> _memory = new();
 
         public void AddMemoryModule<T>(MemoryModuleType<T> type)
         {
-            _memory[type.Id] = null;
+            _memory[type] = null;
         }
 
         public T GetMemoryValue<T>(MemoryModuleType<T> type)
         {
-            return (T)_memory[type.Id];
+            return (T)_memory[type];
         }
 
         public T GetMemoryValueOrDefault<T>(MemoryModuleType<T> type)
         {
-            return (T)_memory.GetValueOrDefault(type.Id);
+            return (T)_memory.GetValueOrDefault(type);
         }
 
         public void RememberMemoryValue<T>(MemoryModuleType<T> type, T value)
         {
-            _memory[type.Id] = value;
+            _memory[type] = value;
 #if UNITY_EDITOR
             if (debug) RefreshDebugMemory();
 #endif
@@ -47,7 +47,7 @@ namespace TeamSlobodorum.AI
 
         public void ForgetMemoryValue<T>(MemoryModuleType<T> type)
         {
-            _memory.Remove(type.Id);
+            _memory.Remove(type);
 #if UNITY_EDITOR
             if (debug) RefreshDebugMemory();
 #endif
@@ -79,11 +79,11 @@ namespace TeamSlobodorum.AI
         private void RefreshDebugMemory()
         {
             debugMemory.Clear();
-            foreach (var (id, value) in _memory)
+            foreach (var (type, value) in _memory)
             {
                 debugMemory.Add(new DebugMemoryModule()
                 {
-                    name = MemoryModuleTypeRegistry.MemoryModuleName(id),
+                    name = type.Name,
                     value = value.ToString(),
                 });
             }

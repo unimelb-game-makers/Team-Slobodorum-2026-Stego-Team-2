@@ -1,13 +1,35 @@
 namespace TeamSlobodorum.AI.Memory
 {
-    public class MemoryModuleType<T>
+    public interface IMemoryModuleType
     {
-        public readonly int Id;
-        public readonly string Name;
-        
+        public int Id { get; }
+        public string Name { get; }
+    }
+
+    public class MemoryModuleType<T> : IMemoryModuleType
+    {
+        public int Id { get; }
+        public string Name { get; }
+
         public MemoryModuleType(int id, string name)
         {
             Id = id;
+            Name = name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is IMemoryModuleType other)
+            {
+                return Id.Equals(other.Id);
+            }
+
+            return false;
         }
     }
 }

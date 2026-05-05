@@ -28,6 +28,8 @@ namespace TeamSlobodorum.UI.Scripts
         public Color activateColor;
         public Color deactivateColor;
         private VisualElement _announcementBox;
+        private Label _annoucementTitle;
+        private Label _annoucementDescription;
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -36,6 +38,9 @@ namespace TeamSlobodorum.UI.Scripts
             _manaBar = root.Q<ProgressBar>("ManaBar");
             _healthBar = root.Q<ProgressBar>("HealthBar");
             _announcementBox = root.Q<VisualElement>("Annoucement");
+            _annoucementTitle = root.Q<Label>("AnnoucementTitle");
+            _annoucementDescription = root.Q<Label>("AnnoucementDescription");
+
         }
 
         private void Start()
@@ -154,13 +159,12 @@ namespace TeamSlobodorum.UI.Scripts
             }
 
         }
-
-        public void ShowSpellAnnouncement(SpellDefinition definition)
+        public  void showAnnoucement(string title = null, string description = null)
         {
             _announcementBox.style.display = DisplayStyle.Flex;
-
+            _annoucementTitle.text = title ?? _annoucementTitle.text;
+            _annoucementDescription.text = description ?? _annoucementDescription.text;
             Sequence announcementSequence = DOTween.Sequence();
-
             announcementSequence.Append(
                 DOTween.To(() => -125f, 
                     x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)), 
@@ -180,6 +184,12 @@ namespace TeamSlobodorum.UI.Scripts
             announcementSequence.OnComplete(() => {
                 _announcementBox.style.display = DisplayStyle.None;
             });
+
+        }
+        public void ShowSpellAnnouncement(SpellDefinition definition)
+        {
+            showAnnoucement("New spell collected", "Press tab to open spell menu");
+
         }
     }
 

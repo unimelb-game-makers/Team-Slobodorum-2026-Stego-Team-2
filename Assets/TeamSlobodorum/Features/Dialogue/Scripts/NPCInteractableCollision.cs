@@ -1,23 +1,14 @@
-using System;
 using System.Collections.Generic;
-using DG.Tweening;
-using TeamSlobodorum.Spells.Core;
-using TeamSlobodorum.Spells.Player;
+using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.UI.Scripts;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-namespace TeamSlobodorum.Spells.Collectibles
+namespace TeamSlobodorum.Dialogue
 {
-    public class SpellCollectibles: MonoBehaviour
+    public class NPCInteractableCollision : NPCInteractable
     {
         [SerializeField] private List<WorldSpaceTracker> trackers;
-        [SerializeField] private SpellDefinition spellDefinition;
-
-        public SpellDefinition SpellDefinition => spellDefinition;        
         private bool onCollision = false;
-
         
         private void RegisterTrackers()
         {
@@ -39,7 +30,7 @@ namespace TeamSlobodorum.Spells.Collectibles
             {   
                 RegisterTrackers();
                 onCollision = true;
-                other.GetComponent<PlayerSpellManager>().collectibles.Add(this);
+                other.GetComponent<PlayerDialogueInteraction>()?.interactables.Add(this);
             }
         }
 
@@ -48,18 +39,9 @@ namespace TeamSlobodorum.Spells.Collectibles
             {   
                 UnregisterTrackers();
                 onCollision = false;
-                other.GetComponent<PlayerSpellManager>().collectibles.Remove(this);
+                other.GetComponent<PlayerDialogueInteraction>()?.interactables.Remove(this);
 
             }
-        }
-        public void Collected()
-        {
-            UnregisterTrackers();
-            transform.DOScale(Vector3.zero, 1f)
-                    .SetEase(Ease.InQuad) 
-                    .OnComplete(() => {
-                        Destroy(gameObject);
-                    });
         }
     }
 }

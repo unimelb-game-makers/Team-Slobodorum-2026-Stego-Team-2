@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/Dialogue.uss?fileID=7433441132597879392&amp;guid=a68f9c025a92351448a4ee7b2e57c188&amp;type=3#Dialogue"/>
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: center; width: 100%; height: 100%;">
+        <ui:VisualElement name="ChoicePanel" style="flex-grow: 1; position: absolute; top: 53%; bottom: 20%; left: 32%; right: 32%; flex-direction: row;">
+            <ui:VisualElement name="ChoiceSpeakerNameContainer" style="flex-grow: 1; background-color: rgb(27, 27, 27); width: 25%; height: 20%;">
+                <ui:Label text="Label" name="ChoiceSpeakerNameLabel" style="color: rgb(244, 237, 209); -unity-text-generator: advanced; -unity-text-auto-size: best-fit 10px 100px; margin-top: 3%; margin-right: 5%; margin-bottom: 3%; margin-left: 5%; -unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Bold.otf?fileID=12800000&amp;guid=2ea35af805adeb141a2d173daf6b5813&amp;type=3#Cinzel-Bold&quot;);"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="ChoicesContainer" style="flex-grow: 1; width: 65%; background-color: rgba(27, 27, 27, 0);">
+                <ui:VisualElement class="choice-active" style="flex-grow: 1;">
+                    <ui:Label text="Label" class="choice-text-active"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="Label" name="DialogueTextLabel" style="-unity-text-auto-size: none; color: rgb(244, 237, 209); -unity-text-generator: advanced; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Cormorant_Garamond/static/CormorantGaramond-Bold.ttf?fileID=12800000&amp;guid=cb6f63c55d3f0634bb4f053a981a70b0&amp;type=3#CormorantGaramond-Bold&quot;); margin-bottom: 0.5%; font-size: 40%; top: 90%; bottom: 5%; -unity-text-outline-color: rgb(27, 27, 27); -unity-text-outline-width: 1.6px;"/>
+    </ui:VisualElement>
+</ui:UXML>

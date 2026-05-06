@@ -15,6 +15,7 @@ namespace TeamSlobodorum.Dialogue
         private Story story;
 
         public event Action<string, string> OnLineRead; // Sends: (Dialogue Text, Speaker Name)
+        public event Action OnDialogueStarted;
         public event Action<List<Choice>> OnChoicesReady; // Sends: List of available choices
         public event Action OnDialogueEnded; // Fired when the conversation is over
 
@@ -38,7 +39,7 @@ namespace TeamSlobodorum.Dialogue
             {
                 story.ChoosePathString(knotName);
             }
-
+            OnDialogueStarted?.Invoke();
             ContinueStory();
         }
 

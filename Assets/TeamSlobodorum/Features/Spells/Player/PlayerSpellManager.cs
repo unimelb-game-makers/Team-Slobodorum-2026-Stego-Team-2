@@ -25,7 +25,7 @@ namespace TeamSlobodorum.Spells.Player
         public event Action<SpellDefinition> OnSpellUnequipped;
 
         public InputActionReference pickupAction;
-        [HideInInspector] public SpellCollectibles collectible = null;
+        [HideInInspector] public List<SpellCollectibles> collectibles = new List<SpellCollectibles>();
 
         public void Start()
         {
@@ -33,11 +33,11 @@ namespace TeamSlobodorum.Spells.Player
         }
         private void TryPickupSpell(InputAction.CallbackContext context)
         {
-            if (collectible != null) {
-                if (ObtainSpell(collectible.SpellDefinition))
+            if (collectibles.Count != 0 ) {
+                if (ObtainSpell(collectibles[0].SpellDefinition))
                 {
-                    collectible.Collected();
-                    collectible = null;
+                    collectibles[0].Collected();
+                    collectibles.RemoveAt(0);
                 }
 
             }
@@ -103,6 +103,13 @@ namespace TeamSlobodorum.Spells.Player
             
             OnSpellUnequipped?.Invoke(spellToUnequip);
             return true;
+        }
+
+
+        public void OnDestroy()
+        {
+            pickupAction.action.performed -= TryPickupSpell;
+
         }
     }
 }

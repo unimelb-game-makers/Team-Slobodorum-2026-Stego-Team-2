@@ -40,3 +40,7 @@
     -unity-text-auto-size: best-fit 10px 100px;
     -unity-font-definition: url("project://database/Assets/Fonts/Cormorant_Garamond/static/CormorantGaramond-Medium.ttf?fileID=12800000&guid=b38e250e5f3c05c4f9e89ff33502cd7b&type=3#CormorantGaramond-Medium");
 }
+
+.dialogue {
+    
+}

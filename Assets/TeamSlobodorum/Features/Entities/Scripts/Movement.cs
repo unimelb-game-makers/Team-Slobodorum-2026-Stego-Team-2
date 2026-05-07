@@ -51,6 +51,8 @@ namespace TeamSlobodorum.Entities
             }
         }
 
-        public abstract void StartMovingTo(Vector3 destination, float stoppingDistance = 0);
+        public abstract void StartMovingTo(Vector3 destination);
+        
+        public abstract void StartMovingTo(Vector3 destination, float stoppingDistance);
     }
 }

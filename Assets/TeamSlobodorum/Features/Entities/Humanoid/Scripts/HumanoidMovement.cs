@@ -78,6 +78,7 @@ namespace TeamSlobodorum.Entities.Humanoid
         private float _timeLastGrounded;
         private float _timeLastMoved;
         private Vector3 _ledgePosition;
+        private float _defaultStoppingDistance;
 
         public bool IsFalling { get; set; }
         public bool IsJumping { get; set; }
@@ -99,6 +100,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             Rigidbody = GetComponent<Rigidbody>();
             NavMeshAgent = GetComponent<NavMeshAgent>();
             Humanoid = GetComponent<Humanoid>();
+            _defaultStoppingDistance = NavMeshAgent.stoppingDistance;
         }
 
         protected virtual void OnValidate()
@@ -318,8 +320,13 @@ namespace TeamSlobodorum.Entities.Humanoid
                 _animationParams.ClimbTriggered = false;
             }
         }
+        
+        public override void StartMovingTo(Vector3 destination)
+        {
+            StartMovingTo(destination, _defaultStoppingDistance);
+        }
 
-        public override void StartMovingTo(Vector3 destination, float stoppingDistance = 0)
+        public override void StartMovingTo(Vector3 destination, float stoppingDistance)
         {
             NavMeshAgent.destination = destination;
             NavMeshAgent.stoppingDistance = stoppingDistance;

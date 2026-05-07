@@ -347,6 +347,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HealthBarUI
   entity: {fileID: 691059295098349890}
+  alertIcon: {fileID: 2800000, guid: 0239ba33e37bb45c190d5eac3df8748b, type: 3}
+  searchIcon: {fileID: 2800000, guid: c79112021ffce4a5c9fbb5f11b054235, type: 3}
+  attackIcon: {fileID: 2800000, guid: b4fdba414b17f492dab59d8d7aea718c, type: 3}
 --- !u!114 &4737185154163589524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,4 +377,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.AI.Brain
   sensors:
   - {fileID: 11400000, guid: 808369c45d19d4bd6843b88d236d39d0, type: 2}
+  debug: 0
   debugMemory: []

@@ -1,3 +1,4 @@
+using TeamSlobodorum.Entities.Enemy;
 using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Health;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace TeamSlobodorum.Entities.HostileRobot
 {
-    public class HostileRobotEntity : LivingEntity, IAttackable
+    public class HostileRobotEntity : EnemyEntity, IAttackable
     {
         [SerializeField] private float meleeAttackRange = 1f;
 

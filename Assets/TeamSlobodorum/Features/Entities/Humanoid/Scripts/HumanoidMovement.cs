@@ -150,7 +150,7 @@ namespace TeamSlobodorum.Entities.Humanoid
             }
 
             IsForwardObstructed = Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
-                out _, 0.5f);
+                out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
 
             HandleNavigationMovement();
             UpdateAnimationState();
@@ -217,14 +217,15 @@ namespace TeamSlobodorum.Entities.Humanoid
             if (!IsClimbing)
             {
                 if ((Physics.Raycast(Humanoid.climbRayLower.transform.position, transform.forward,
-                         out _, 0.5f) ||
+                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore) ||
                      Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
-                         out _, 0.5f)) &&
+                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) &&
                     !Physics.Raycast(Humanoid.climbRayUpper.transform.position, transform.forward,
-                        out _, 0.5f))
+                        out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
                 {
                     var originDown = Humanoid.climbRayUpper.transform.position + transform.forward * 0.5f;
-                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f))
+                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f, Physics.DefaultRaycastLayers,
+                            QueryTriggerInteraction.Ignore))
                     {
                         _ledgePosition = ledgeHit.point;
                         IsClimbing = true;
@@ -320,7 +321,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                 _animationParams.ClimbTriggered = false;
             }
         }
-        
+
         public override void StartMovingTo(Vector3 destination)
         {
             StartMovingTo(destination, _defaultStoppingDistance);
@@ -336,10 +337,10 @@ namespace TeamSlobodorum.Entities.Humanoid
         private bool TryStepUp(Vector3 direction)
         {
             if (Physics.Raycast(Humanoid.stepRayLower.transform.position, direction,
-                    out _, 0.5f))
+                    out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
             {
                 if (!Physics.Raycast(Humanoid.stepRayUpper.transform.position, direction,
-                        out _, 0.5f))
+                        out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
                 {
                     Rigidbody.position -= new Vector3(0f, -stepAmount * Time.deltaTime, 0f);
                     return true;

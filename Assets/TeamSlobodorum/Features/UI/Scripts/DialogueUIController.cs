@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using Ink.Runtime;
 using TeamSlobodorum.Dialogue;
-using TeamSlobodorum.UI.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
+using DG.Tweening; // Required for DOTween
+
 namespace TeamSlobodorum.UI.Scripts
 {
-
     public class DialogueUIController : MonoBehaviour
     {
         public class Dialogue
@@ -17,25 +16,35 @@ namespace TeamSlobodorum.UI.Scripts
             string speaker;
             string text;
         }
+        
         [SerializeField] private string playerName = "Witch";
+        [Header("Animation & Timing")]
+        [SerializeField] private float fadeDuration = 0.3f;
+        [SerializeField] private float timePerCharacter = 0.02f;
+        [SerializeField] private float minCooldown = 0.5f;
 
-        private UIDocument _uiDocument;
-        private VisualElement root;
         public InputActionAsset actions;
         public InputActionReference continueAction;
         public InputActionReference scrollUpAction;
         public InputActionReference scrollDownAction;
 
         private UIDocument uiDoc;
+        private VisualElement root;
         private Label speakerName;
         private Label dialogueText;
         private VisualElement choicesContainer;
         private VisualElement choicesPanel;
-        private Dialogue lastDialogue;
+        
         private List<Choice> lastChoices;
         private int activeChoice = -1;
-
         private string lastPersonSpeakTo;
+
+        private bool canContinue = false;
+        private Tween cooldownTween;
+        private Tween rootFadeTween;
+        private Tween textFadeTween;
+        private Tween choicesFadeTween;
+
         private void Awake()
         {
             uiDoc = GetComponent<UIDocument>();
@@ -44,26 +53,26 @@ namespace TeamSlobodorum.UI.Scripts
             speakerName = root.Q<Label>("ChoiceSpeakerNameLabel");
             dialogueText = root.Q<Label>("DialogueTextLabel");
             choicesContainer = root.Q<VisualElement>("ChoicesContainer");
+            
             continueAction.action.performed += OnContinueClicked;
             scrollUpAction.action.performed += OnScrollUp;
             scrollDownAction.action.performed += OnScrollDown;
+            
             if (root != null) root.style.display = DisplayStyle.None;
-
         }
 
         private void Start()
         {
-
             DialogueManager.Instance.OnLineRead += HandleLineRead;
             DialogueManager.Instance.OnChoicesReady += HandleChoicesReady;
             actions.FindActionMap("Dialogue").Disable();
-
         }
-
-
 
         private void HandleLineRead(string text, string speaker)
         {
+            canContinue = false;
+            cooldownTween?.Kill();
+
             dialogueText.text = $"{speaker}: {text}";
             if (speaker != playerName)
             {
@@ -72,16 +81,33 @@ namespace TeamSlobodorum.UI.Scripts
             choicesContainer.Clear();
             choicesPanel.style.display = DisplayStyle.None;
             activeChoice = -1;
+
+            // Fade in text
+            textFadeTween?.Kill();
+            dialogueText.style.opacity = 0f;
+            textFadeTween = DOTween.To(() => dialogueText.style.opacity.value, x => dialogueText.style.opacity = x, 1f, fadeDuration);
+
+            // Calculate dynamic cooldown
+            float calculatedDelay = Mathf.Max(minCooldown, text.Length * timePerCharacter);
+            cooldownTween = DOVirtual.DelayedCall(calculatedDelay, () => canContinue = true);
         }
 
         private void HandleChoicesReady(List<Choice> choices)
         {
+            canContinue = false;
+            cooldownTween?.Kill();
+
             choicesPanel.style.display = DisplayStyle.Flex;
             lastChoices = choices;
             activeChoice = 0;
             RefreshChoice();
-        }
 
+            // Fade in choices
+            choicesFadeTween?.Kill();
+            choicesContainer.style.opacity = 0f;
+            choicesFadeTween = DOTween.To(() => choicesContainer.style.opacity.value, x => choicesContainer.style.opacity = x, 1f, fadeDuration)
+                .OnComplete(() => canContinue = true); 
+        }
 
         private void RefreshChoice()
         {
@@ -121,13 +147,10 @@ namespace TeamSlobodorum.UI.Scripts
             }
         }
 
-
         private void OnContinueClicked(InputAction.CallbackContext context)
         {   
-            if (root.style.display == DisplayStyle.None)
-            {
-                return;
-            }
+            if (root.style.display == DisplayStyle.None || !canContinue) return;
+
             if (activeChoice == -1)
             {   
                 DialogueManager.Instance.ContinueStory();
@@ -140,40 +163,31 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void OnScrollUp(InputAction.CallbackContext context)
         {
+            if (root.style.display == DisplayStyle.None || !canContinue) return;
 
-            if (activeChoice != -1)
+            if (activeChoice > 0)
             {
-
-                if (activeChoice > 0)
-                {
-                    activeChoice -= 1;
-                }
-
+                activeChoice -= 1;
+                RefreshChoice();
             }
-            RefreshChoice();
-
         }
 
         private void OnScrollDown(InputAction.CallbackContext context)
         {
+            if (root.style.display == DisplayStyle.None || !canContinue) return;
 
-            if (activeChoice != -1)
+            if (activeChoice != -1 && activeChoice < lastChoices.Count - 1)
             {
-                if (activeChoice < lastChoices.Count - 1)
-                {
-                    activeChoice += 1;
-                }
+                activeChoice += 1;
+                RefreshChoice();
             }
-            RefreshChoice();
-
         }
+
         public void HideUI()
         {
-            root.style.display = DisplayStyle.None;
             actions.FindActionMap("Dialogue")?.Disable();
             actions.FindActionMap("Player")?.Enable();
             Cursor.lockState = CursorLockMode.Locked;
-
 
         }
 
@@ -183,13 +197,21 @@ namespace TeamSlobodorum.UI.Scripts
             Cursor.lockState = CursorLockMode.None;
             actions.FindActionMap("Player")?.Disable();
             actions.FindActionMap("Dialogue")?.Enable();
-
         }
+
         private void OnDestroy()
         {
+            // Clean up tweens to prevent memory leaks
+            cooldownTween?.Kill();
+            rootFadeTween?.Kill();
+            textFadeTween?.Kill();
+            choicesFadeTween?.Kill();
 
-            DialogueManager.Instance.OnLineRead -= HandleLineRead;
-            DialogueManager.Instance.OnChoicesReady -= HandleChoicesReady;
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.OnLineRead -= HandleLineRead;
+                DialogueManager.Instance.OnChoicesReady -= HandleChoicesReady;
+            }
         }
     }
 }

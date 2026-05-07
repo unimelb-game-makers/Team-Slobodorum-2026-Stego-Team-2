@@ -44,7 +44,7 @@ namespace TeamSlobodorum.UI.Scripts
         private Tween rootFadeTween;
         private Tween textFadeTween;
         private Tween choicesFadeTween;
-
+        private bool dialogueOpened = false;
         private void Awake()
         {
             uiDoc = GetComponent<UIDocument>();
@@ -149,7 +149,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void OnContinueClicked(InputAction.CallbackContext context)
         {   
-            if (root.style.display == DisplayStyle.None || !canContinue) return;
+            if (!dialogueOpened || !canContinue) return;
 
             if (activeChoice == -1)
             {   
@@ -163,7 +163,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void OnScrollUp(InputAction.CallbackContext context)
         {
-            if (root.style.display == DisplayStyle.None || !canContinue) return;
+            if (!dialogueOpened || !canContinue) return;
 
             if (activeChoice > 0)
             {
@@ -174,7 +174,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void OnScrollDown(InputAction.CallbackContext context)
         {
-            if (root.style.display == DisplayStyle.None || !canContinue) return;
+            if (!dialogueOpened || !canContinue) return;
 
             if (activeChoice != -1 && activeChoice < lastChoices.Count - 1)
             {
@@ -185,6 +185,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         public void HideUI()
         {
+            dialogueOpened = false;
             actions.FindActionMap("Dialogue")?.Disable();
             actions.FindActionMap("Player")?.Enable();
             Cursor.lockState = CursorLockMode.Locked;
@@ -194,11 +195,15 @@ namespace TeamSlobodorum.UI.Scripts
         }
 
         public void ShowUI()
-        {
+        {   
+            dialogueOpened = true;
             root.style.display = DisplayStyle.Flex;
             Cursor.lockState = CursorLockMode.None;
             actions.FindActionMap("Player")?.Disable();
             actions.FindActionMap("Dialogue")?.Enable();
+            rootFadeTween?.Kill();
+            root.style.opacity = 0f;
+            rootFadeTween = DOTween.To(() => root.style.opacity.value, x => root.style.opacity = x, 1f, fadeDuration);
         }
 
         private void OnDestroy()

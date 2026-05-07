@@ -351,6 +351,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7554611901844255571, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
+--- !u!114 &62586480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6523793065533338274, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 722613714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f274a6b351643c181ad5010676ead1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HUDController
 --- !u!1 &80191685 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1817651763653154297, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
@@ -2196,6 +2207,22 @@ PrefabInstance:
       value: HideUI
       objectReference: {fileID: 0}
     - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2085000777}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 62586480}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: HideHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: OnGameWin.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: TeamSlobodorum.UI.Scripts.EndScreenController, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -2218,6 +2245,14 @@ PrefabInstance:
     - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: OnGameOver.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: TeamSlobodorum.UI.Scripts.ManagementMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DialogueUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TeamSlobodorum.UI.Scripts.HUDController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4766284729842555455, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: m_IsActive
@@ -8648,6 +8683,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6703233006581805696, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
+--- !u!114 &2085000777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 653351563154299390, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+  m_PrefabInstance: {fileID: 722613714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c854a02fd89c7974fa401683f085fd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueUIController
 --- !u!1 &2094733980
 GameObject:
   m_ObjectHideFlags: 0
@@ -8985,7 +9031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.23024
+      value: 13.576
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8993,7 +9039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -44.904
+      value: -44.456
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalRotation.w

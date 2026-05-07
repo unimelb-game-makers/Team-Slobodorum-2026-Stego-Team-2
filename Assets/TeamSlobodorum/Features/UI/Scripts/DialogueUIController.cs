@@ -188,7 +188,9 @@ namespace TeamSlobodorum.UI.Scripts
             actions.FindActionMap("Dialogue")?.Disable();
             actions.FindActionMap("Player")?.Enable();
             Cursor.lockState = CursorLockMode.Locked;
-
+            rootFadeTween?.Kill();
+            rootFadeTween = DOTween.To(() => root.style.opacity.value, x => root.style.opacity = x, 0f, fadeDuration)
+                .OnComplete(() => root.style.display = DisplayStyle.None);
         }
 
         public void ShowUI()

@@ -15,7 +15,8 @@ public class DialogueCameraController : MonoBehaviour
     public List<DialogueCamera> dialogueCameras;
 
     private void Start()
-    {   
+    {       
+        ResetCameras();
         DialogueManager.Instance.OnDialogueStarted += InitializeCamera;
         DialogueManager.Instance.OnDialogueEnded += ResetCameras;
     }
@@ -53,7 +54,7 @@ public class DialogueCameraController : MonoBehaviour
     }
 
     private void ResetCameras()
-    {
+    { 
         foreach (var cam in dialogueCameras)
         {
             cam.vCam.gameObject.SetActive(false);

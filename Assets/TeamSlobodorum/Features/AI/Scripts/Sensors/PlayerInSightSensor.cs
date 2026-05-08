@@ -32,6 +32,7 @@ namespace TeamSlobodorum.AI.Sensors
                 brain.RememberMemoryValue(AllMemoryModuleTypes.PlayerInSight, _playerEntity);
                 brain.RememberMemoryValue(AllMemoryModuleTypes.LastKnownPlayerPosition,
                     _playerEntity.transform.position);
+                brain.RememberMemoryValue(AllMemoryModuleTypes.TimeLastSawPlayer, Time.time);
             }
             else
             {

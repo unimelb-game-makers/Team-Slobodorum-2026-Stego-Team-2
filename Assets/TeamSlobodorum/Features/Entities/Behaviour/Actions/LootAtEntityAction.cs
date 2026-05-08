@@ -10,7 +10,7 @@ namespace TeamSlobodorum.Entities.Behaviour.Actions
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Look At Entity",
         story:
-        "[Entity] looks at [Transform] with [Duration]",
+        "[Entity] looks at [Transform]",
         category: "Action/Entity", id: "9f3e6de3441f4f1ca38f9fcf0130ae23")]
     public partial class LookAtEntityAction : Action
     {
@@ -33,14 +33,14 @@ namespace TeamSlobodorum.Entities.Behaviour.Actions
             var direction = transform.Value.position - rigidbody.position;
             direction.y = 0;
             direction.Normalize();
-            
+
             if (direction == Vector3.zero)
             {
                 return Status.Success;
             }
-            
+
             var targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            
+
             if (Quaternion.Angle(rigidbody.rotation, targetRotation) > Threshold)
             {
                 rigidbody.MoveRotation(Quaternion.Slerp(rigidbody.rotation, targetRotation,

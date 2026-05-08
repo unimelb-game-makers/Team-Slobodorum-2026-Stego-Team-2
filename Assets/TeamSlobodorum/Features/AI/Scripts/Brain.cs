@@ -32,6 +32,13 @@ namespace TeamSlobodorum.AI
             return (T)_memory[type];
         }
 
+        public bool TryGetMemoryValue<T>(MemoryModuleType<T> type, out T value)
+        {
+            var result = _memory.TryGetValue(type, out var output);
+            value = result ? (T)output : default;
+            return result;
+        }
+
         public T GetMemoryValueOrDefault<T>(MemoryModuleType<T> type)
         {
             return (T)_memory.GetValueOrDefault(type);

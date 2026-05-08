@@ -3580,6 +3580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hostile Robot (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7375766517198352053, guid: 9e634cb46a40c470eaee8617778f2ab3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

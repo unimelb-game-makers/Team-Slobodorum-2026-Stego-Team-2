@@ -51,7 +51,8 @@ namespace TeamSlobodorum.AI.Sensors
             if (Vector3.Angle(_livingEntity.eyes.forward, directionToPlayer) > viewAngle / 2) return false;
 
             // Line of Sight (Raycast) Check
-            if (Physics.Raycast(_livingEntity.eyes.position, directionToPlayer, distanceToPlayer, layersToHit))
+            if (Physics.Raycast(_livingEntity.eyes.position, directionToPlayer, distanceToPlayer, layersToHit,
+                    QueryTriggerInteraction.Ignore))
             {
                 return false; // Something is in the way
             }

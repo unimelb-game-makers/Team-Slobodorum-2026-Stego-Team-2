@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
+using TeamSlobodorum.Dialogue;
 
 namespace TeamSlobodorum.UI.Scripts
 {
@@ -12,16 +13,18 @@ namespace TeamSlobodorum.UI.Scripts
         [Header("UI Input")]
         public InputActionReference openMenuAction;
         public InputActionReference closeMenuAction;
-
+        
         public UnityEvent OnMenuOpened;
         public UnityEvent OnMenuClosed;
         public UnityEvent OnGameOver;
         public UnityEvent OnGameWin;
 
+        public UnityEvent OnDialogueOpened;
+        public UnityEvent OnDialogueClosed;
         public bool IsMenuOpen { get; private set; } = false;
 
         public WorldSpaceUIController worldSpaceUIController;
-        
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -32,23 +35,12 @@ namespace TeamSlobodorum.UI.Scripts
             Instance = this;
         }
 
-        private void OnEnable()
-        {   
-            openMenuAction.action.performed+=OpenMenu;
-            closeMenuAction.action.performed+=CloseMenu;
-        }
-
-        private void OnDisable()
+        private void Start()
         {
-            openMenuAction.action.performed-=OpenMenu;
-            closeMenuAction.action.performed-=CloseMenu;
-
-            var playerMap = InputSystem.actions.FindActionMap("Player");
-            if (playerMap != null && !playerMap.enabled)
-            {
-                InputSystem.actions.FindActionMap("UI")?.Disable();
-                playerMap.Enable();
-            }
+            openMenuAction.action.performed += OpenMenu;
+            closeMenuAction.action.performed += CloseMenu;
+            DialogueManager.Instance.OnDialogueStarted +=  OnDialogueOpened.Invoke;
+            DialogueManager.Instance.OnDialogueEnded += OnDialogueClosed.Invoke;
         }
 
         public void OpenMenu(InputAction.CallbackContext context)
@@ -56,7 +48,7 @@ namespace TeamSlobodorum.UI.Scripts
             if (IsMenuOpen) return;
 
             IsMenuOpen = true;
-            
+
 
             OnMenuOpened?.Invoke();
         }
@@ -69,5 +61,13 @@ namespace TeamSlobodorum.UI.Scripts
 
             OnMenuClosed?.Invoke();
         }
+
+        public void OnDestroy()
+        {
+            openMenuAction.action.performed -= OpenMenu;
+            closeMenuAction.action.performed -= CloseMenu;
+            DialogueManager.Instance.OnDialogueStarted -= OnDialogueOpened.Invoke;
+        }
+
     }
 }

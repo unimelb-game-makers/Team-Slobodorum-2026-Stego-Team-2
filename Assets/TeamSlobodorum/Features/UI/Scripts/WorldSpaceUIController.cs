@@ -60,6 +60,15 @@ namespace TeamSlobodorum.UI.Scripts
                 removalQueue.Add(entry);
             }
         }
+        public void ShowUI()
+        {
+            worldUIDocument.rootVisualElement.style.display = DisplayStyle.Flex;
+        }
+
+        public void HideUI()
+        {
+            worldUIDocument.rootVisualElement.style.display = DisplayStyle.None;
+        }
 
         private void LateUpdate()
         {
@@ -82,7 +91,7 @@ namespace TeamSlobodorum.UI.Scripts
             // Process removals after the loop to avoid collection modification errors
             CleanUpTrackers();
         }
-
+    
         private void UpdateElementPosition(TrackerEntry tracker)
         {
             Vector3 targetPos = tracker.Target.position + tracker.Offset;

@@ -1,0 +1,46 @@
+:root {
+}
+
+.choice-active {
+    color: rgba(0, 0, 0, 0);
+    max-height: 20%;
+    background-color: rgb(244, 237, 209);
+    -unity-text-generator: standard;
+    -unity-text-auto-size: none;
+    height: 20%;
+}
+
+.choice-text-active {
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    color: rgb(27, 27, 27);
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 10px 100px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Cormorant_Garamond/static/CormorantGaramond-Medium.ttf?fileID=12800000&guid=b38e250e5f3c05c4f9e89ff33502cd7b&type=3#CormorantGaramond-Medium");
+}
+
+.choice-inactive {
+    color: rgb(0, 0, 0);
+    max-height: 20%;
+    background-color: rgba(244, 237, 209, 0.78);
+    -unity-text-generator: standard;
+    -unity-text-auto-size: none;
+    height: 20%;
+}
+
+.choice-text-inactive {
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    color: rgba(27, 27, 27, 0.78);
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 10px 100px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Cormorant_Garamond/static/CormorantGaramond-Medium.ttf?fileID=12800000&guid=b38e250e5f3c05c4f9e89ff33502cd7b&type=3#CormorantGaramond-Medium");
+}
+
+.dialogue {
+    
+}

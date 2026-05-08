@@ -3,14 +3,14 @@
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; justify-content: center; height: 20%;">
         <ui:Image source="" scale-mode="ScaleToFit" name="Crosshair" style="position: absolute; width: auto; height: 8%; align-self: center;"/>
         <ui:VisualElement name="Debuginfo" style="flex-grow: 1;">
-            <ui:ProgressBar value="0.5" title="20/100" name="HealthBar" high-value="1" class="health_bar" style="margin-top: 3%; margin-right: 5%; margin-bottom: 1%; margin-left: 5%; width: 30%;"/>
-            <ui:ProgressBar value="0.5" title="100/100" name="ManaBar" high-value="1" class="mana_bar" style="margin-top: 1%; margin-right: 5%; margin-bottom: 2%; margin-left: 5%; width: 20%;"/>
+            <ui:ProgressBar value="0.5" title="20/100" name="HealthBar" high-value="1" class="health_bar" style="margin-top: 3%; margin-right: 5%; margin-bottom: 1%; margin-left: 5%; width: 30%; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Bold.otf?fileID=12800000&amp;guid=2ea35af805adeb141a2d173daf6b5813&amp;type=3#Cinzel-Bold&quot;);"/>
+            <ui:ProgressBar value="0.5" title="100/100" name="ManaBar" high-value="1" class="mana_bar" style="margin-top: 1%; margin-right: 5%; margin-bottom: 2%; margin-left: 5%; width: 20%; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Bold.otf?fileID=12800000&amp;guid=2ea35af805adeb141a2d173daf6b5813&amp;type=3#Cinzel-Bold&quot;);"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="flex-grow: 1; height: 60%;">
-        <ui:VisualElement name="Annoucement" style="flex-grow: 0; width: 20%; height: 20%; flex-shrink: 0; margin-right: 0%; margin-left: 5%; margin-top: 0%; margin-bottom: 0%; background-color: rgb(215, 209, 185); transform-origin: center; translate: -125% 0;">
-            <ui:Label text="New spell collected" name="Label" style="font-size: 32px; margin-left: 5%; margin-top: 4%; color: rgb(46, 46, 46);"/>
-            <ui:Label text="Press tab to open spell menu" style="margin-left: 5%; color: rgb(46, 46, 46);"/>
+        <ui:VisualElement name="Annoucement" style="flex-grow: 0; width: 20%; height: 25%; flex-shrink: 0; margin-right: 0%; margin-left: 5%; margin-top: 0%; margin-bottom: 0%; background-color: rgb(215, 209, 185); transform-origin: center; translate: -125% 0; font-size: 100%; white-space: pre-wrap; text-overflow: clip;">
+            <ui:Label text="" name="AnnoucementTitle" style="font-size: 32%; margin-left: 7%; margin-top: 6%; color: rgb(46, 46, 46); margin-right: 7%; margin-bottom: 1%; -unity-text-auto-size: best-fit 10px 60px; -unity-text-generator: advanced; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Regular.otf?fileID=12800000&amp;guid=1e1d71a23cc2d5c4d8271ad0868f745b&amp;type=3#Cinzel-Regular&quot;);"/>
+            <ui:Label text="Press tab to open spell menu" name="AnnoucementDescription" style="margin-left: 7%; color: rgb(46, 46, 46); font-size: 14%; -unity-text-auto-size: best-fit 2px 30px; -unity-text-generator: advanced; margin-right: 7%; margin-bottom: 3%; margin-top: 1%; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Regular.otf?fileID=12800000&amp;guid=1e1d71a23cc2d5c4d8271ad0868f745b&amp;type=3#Cinzel-Regular&quot;);"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="EquippedSlotsContainer" style="flex-grow: 1; height: 20%; flex-direction: row; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-self: auto; align-content: auto; margin-left: 5%;">

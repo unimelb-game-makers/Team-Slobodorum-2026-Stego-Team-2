@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace TeamSlobodorum.UI.Scripts
 {
     [RequireComponent(typeof(WorldSpaceTracker))]
-    public class HealthBarUI : MonoBehaviour
+    public class HealthBarComponent: MonoBehaviour
     {
         private WorldSpaceTracker _worldSpaceTracker;
         [SerializeField] private LivingEntity entity;

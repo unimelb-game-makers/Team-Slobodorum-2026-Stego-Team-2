@@ -39,7 +39,7 @@ namespace TeamSlobodorum.Spells.Collectibles
             {   
                 RegisterTrackers();
                 onCollision = true;
-                other.GetComponent<PlayerSpellManager>().collectible = this;
+                other.GetComponent<PlayerSpellManager>().collectibles.Add(this);
             }
         }
 
@@ -48,7 +48,7 @@ namespace TeamSlobodorum.Spells.Collectibles
             {   
                 UnregisterTrackers();
                 onCollision = false;
-                other.GetComponent<PlayerSpellManager>().collectible = null;
+                other.GetComponent<PlayerSpellManager>().collectibles.Remove(this);
 
             }
         }

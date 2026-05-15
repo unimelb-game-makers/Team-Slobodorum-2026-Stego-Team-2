@@ -48,7 +48,7 @@ namespace TeamSlobodorum.UI.Scripts
             equippedSlotButtons = _equippedSlotsContainer.Query<Button>().ToList();
             for (int i = 0; i < equippedSlotButtons.Count; i++)
             {
-                int slotIndex = i; // Capture local variable for the Lambda expression
+                int slotIndex = i; 
 
                 equippedSlotButtons[i].RegisterCallback<PointerDownEvent>(
                         evt => OnEquippedSlotPointerDown(evt, slotIndex),
@@ -63,9 +63,8 @@ namespace TeamSlobodorum.UI.Scripts
                 _spellManager.OnSpellObtained += RefreshUI;
             }
 
-            // 4. Initialize UI state
             ClearDetailsPanel();
-            RefreshUI(); // Force an initial refresh on startup to populate data
+            RefreshUI(); 
         }
 
         private void OnDisable()
@@ -118,14 +117,12 @@ namespace TeamSlobodorum.UI.Scripts
             }
         }
 
-        // --- Refresh Mechanism ---
 
         private void RefreshUI(SpellDefinition changedSpell = null)
         {
             RefreshEquippedSlots();
             RefreshObtainedSlots();
 
-            // After refreshing, update the details panel if a spell is currently selected
             if (currentlySelectedSpell != null)
             {
                 SelectSpellToView(currentlySelectedSpell);
@@ -134,7 +131,6 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void RefreshEquippedSlots()
         {
-            // Loop through the 4 fixed slots
             for (int i = 0; i < 4; i++)
             {
                 if (i < _spellManager.EquippedSpells.Count)
@@ -155,10 +151,10 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void RefreshObtainedSlots()
         {
-            // 1. Clear all existing dynamic slots
+            // Clear all existing dynamic slots
             gridContent.Clear();
 
-            // 2. Loop through the obtained spells list and dynamically generate slots as needed
+            // Loop through the obtained spells list and dynamically generate slots as needed
             foreach (var spell in _spellManager.ObtainedSpells)
             {
                 // Create a new VisualElement as a slot

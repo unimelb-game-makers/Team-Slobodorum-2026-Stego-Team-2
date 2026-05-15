@@ -36,6 +36,7 @@ namespace TeamSlobodorum.UI.Scripts
             title.text = "GameOver";
             actions.FindActionMap("Player")?.Disable();
             root.style.display = DisplayStyle.Flex;
+            Cursor.lockState = CursorLockMode.None;
 
             Time.timeScale = 0;
         }
@@ -45,6 +46,8 @@ namespace TeamSlobodorum.UI.Scripts
             title.text = "Demo end";
             actions.FindActionMap("Player")?.Disable();
             root.style.display = DisplayStyle.Flex;
+            Cursor.lockState = CursorLockMode.None;
+
             Time.timeScale = 0 ;
         }
 

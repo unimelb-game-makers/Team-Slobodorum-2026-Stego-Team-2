@@ -24,11 +24,13 @@ namespace TeamSlobodorum.Entities.Humanoid
         [Tooltip("Transition duration (in seconds) when the entity changes velocity or rotation.")]
         public float damping = 0.5f;
 
-        [Header("IK and Step Up")]
-        [SerializeField] private float distanceToGround = 0.08f;
+        [Header("Step Up")]
+        public bool canClimb = true;
 
-        [SerializeField] private float stepAmount = 2f;
-        [SerializeField] private float ikSmooth = 15f;
+        public float stepAmount = 2f;
+
+        [Header("Navigation")]
+        public float linkJumpSpeed = 2.5f;
 
         [Header("Animation")]
         public Animator animator;
@@ -79,6 +81,10 @@ namespace TeamSlobodorum.Entities.Humanoid
         private float _timeLastMoved;
         private Vector3 _ledgePosition;
         private float _defaultStoppingDistance;
+        
+        private Vector3 _navmeshLinkStartPos;
+        private Vector3 _navmeshLinkEndPos;
+        private float _navmeshLinkProgress;
 
         public bool IsFalling { get; set; }
         public bool IsJumping { get; set; }
@@ -170,7 +176,8 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         private void HandleNavigationMovement()
         {
-            if (NavMeshAgent.enabled && IsMoving && NavMeshAgent.isOnNavMesh)
+            if (NavMeshAgent.enabled && NavMeshAgent.isOnOffMeshLink ||
+                (IsMoving && NavMeshAgent.isOnNavMesh))
             {
                 var pathFinished = !NavMeshAgent.pathPending &&
                                    NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
@@ -181,7 +188,37 @@ namespace TeamSlobodorum.Entities.Humanoid
                     return;
                 }
 
-                if (CanMove)
+                if (NavMeshAgent.isOnOffMeshLink)
+                {
+                    if (_navmeshLinkProgress == 0)
+                    {
+                        _navmeshLinkStartPos = Rigidbody.position;
+                        _navmeshLinkEndPos = NavMeshAgent.currentOffMeshLinkData.endPos;
+                        Rigidbody.isKinematic = true;
+
+                        IsJumping = true;
+                        _animationParams.JumpTriggered = true;
+                    }
+                        
+                    if (_navmeshLinkProgress < 1f)
+                    {
+                        var distance = Vector3.Distance(_navmeshLinkStartPos, _navmeshLinkEndPos);
+                        _navmeshLinkProgress += Time.fixedDeltaTime * (linkJumpSpeed / distance);
+                        var currentPos = Vector3.Lerp(_navmeshLinkStartPos, _navmeshLinkEndPos,
+                            _navmeshLinkProgress);
+                        var height = distance * 0.5f;
+                        var yOffset = Mathf.Sin(_navmeshLinkProgress * Mathf.PI) * height;
+                        currentPos.y += yOffset;
+                        transform.position = currentPos;
+                    }
+                    else
+                    {
+                        Rigidbody.isKinematic = false;
+                        NavMeshAgent.CompleteOffMeshLink();
+                        _navmeshLinkProgress = 0;
+                    }
+                }
+                else if (CanMove)
                 {
                     var moveDirection = NavMeshAgent.desiredVelocity;
                     moveDirection.y = 0;
@@ -191,7 +228,8 @@ namespace TeamSlobodorum.Entities.Humanoid
                         NotifyMovement();
                         moveDirection.Normalize();
                         var moveVelocity = moveDirection * (IsSprinting ? sprintSpeed : normalSpeed);
-                        Rigidbody.linearVelocity = moveVelocity;
+                        Rigidbody.linearVelocity =
+                            new Vector3(moveVelocity.x, Rigidbody.linearVelocity.y, moveVelocity.z);
 
                         // Rotate the entity to face movement direction
                         var qA = Rigidbody.rotation;
@@ -200,7 +238,19 @@ namespace TeamSlobodorum.Entities.Humanoid
                     }
                 }
 
+                if (Vector3.Distance(transform.position, NavMeshAgent.nextPosition) > 2f)
+                {
+                    SyncNavMeshAgentToTransform();
+                }
                 NavMeshAgent.nextPosition = Rigidbody.position;
+            }
+        }
+
+        public void SyncNavMeshAgentToTransform()
+        {
+            if (NavMesh.SamplePosition(transform.position, out var hit, 1f, NavMesh.AllAreas))
+            {
+                NavMeshAgent.Warp(hit.position);
             }
         }
 
@@ -208,13 +258,13 @@ namespace TeamSlobodorum.Entities.Humanoid
         {
             if (!PreventMovement)
             {
-                NavMeshAgent.Warp(Rigidbody.position);
+                SyncNavMeshAgentToTransform();
             }
         }
 
         public void Jump()
         {
-            if (!IsClimbing)
+            if (canClimb && !IsClimbing)
             {
                 if ((Physics.Raycast(Humanoid.climbRayLower.transform.position, transform.forward,
                          out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore) ||

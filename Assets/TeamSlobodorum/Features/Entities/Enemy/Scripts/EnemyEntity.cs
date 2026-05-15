@@ -1,3 +1,4 @@
+using TeamSlobodorum.AI;
 using TeamSlobodorum.Entities.HostileRobot.Behaviour;
 using Unity.Behavior;
 using Unity.Behavior.GraphFramework;
@@ -10,6 +11,7 @@ namespace TeamSlobodorum.Entities.Enemy
         public event Action EnemyStateChanged;
 
         public BehaviorGraphAgent BehaviorGraphAgent { get; private set; }
+        public Brain Brain { get; private set; }
 
         private SerializableGUID _enemyStateKey;
 
@@ -35,6 +37,7 @@ namespace TeamSlobodorum.Entities.Enemy
         {
             base.Awake();
             BehaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+            Brain = GetComponent<Brain>();
             BehaviorGraphAgent.GetVariableID("EnemyState", out _enemyStateKey);
         }
     }

@@ -260,9 +260,10 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
-  distanceToGround: 0.08
+  canClimb: 0
   stepAmount: 2
-  ikSmooth: 15
+  jumpHeight: 1
+  jumpSpeed: 2.5
   animator: {fileID: 3526751619339654693}
   maxSprintScale: 3
   jumpBaseScale: 1

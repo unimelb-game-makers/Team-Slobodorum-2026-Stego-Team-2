@@ -361,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20319409}
   - component: {fileID: 20319410}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3549,7 +3549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063158526}
   - component: {fileID: 1063158527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4569,7 +4569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1291882994}
   - component: {fileID: 1291882995}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7836,7 +7836,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1616995674}
   - component: {fileID: 1616995675}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8319,7 +8319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1733054315}
   - component: {fileID: 1733054316}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8571,7 +8571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798655338}
   - component: {fileID: 1798655339}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9800,7 +9800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066583237}
   - component: {fileID: 2066583238}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Collider (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10478,18 +10478,6 @@ PrefabInstance:
     - target: {fileID: 6084504647190208051, guid: 9c8bb25d0d28c45f4a78c0a7dfce7882, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6212555376593605081, guid: 9c8bb25d0d28c45f4a78c0a7dfce7882, type: 3}
-      propertyPath: _obtainedSpells.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6212555376593605081, guid: 9c8bb25d0d28c45f4a78c0a7dfce7882, type: 3}
-      propertyPath: '_obtainedSpells.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 5aa36f562954c1741b0d86de430dfb28, type: 2}
-    - target: {fileID: 6596796995105813351, guid: 9c8bb25d0d28c45f4a78c0a7dfce7882, type: 3}
-      propertyPath: voidThreshold
-      value: -100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

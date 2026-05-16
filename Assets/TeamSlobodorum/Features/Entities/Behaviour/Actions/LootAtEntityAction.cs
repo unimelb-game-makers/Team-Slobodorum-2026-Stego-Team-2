@@ -20,8 +20,6 @@ namespace TeamSlobodorum.Entities.Behaviour.Actions
         private const float Damping = 0.5f;
         private const float Threshold = 0.1f;
 
-        private float _counter;
-
         protected override Status OnStart()
         {
             return Status.Running;

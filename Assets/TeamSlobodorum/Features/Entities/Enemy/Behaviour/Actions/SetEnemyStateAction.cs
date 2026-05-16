@@ -12,9 +12,8 @@ namespace TeamSlobodorum.Entities.Enemy.Behaviour.Actions
         category: "Action/Entity", id: "b927a79026704947a7ebb78fea5d5b6a")]
     public partial class SetEnemyStateAction : Action
     {
-        [SerializeReference]
-        public BlackboardVariable<EnemyEntity> enemyEntity;
-        public BlackboardVariable<EnemyState> enemyState;
+        [SerializeReference] public BlackboardVariable<EnemyEntity> enemyEntity;
+        [SerializeReference] public BlackboardVariable<EnemyState> enemyState;
 
         protected override Status OnStart()
         {

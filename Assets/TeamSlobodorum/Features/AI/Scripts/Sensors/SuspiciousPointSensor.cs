@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace TeamSlobodorum.AI.Sensors
 {
-    [CreateAssetMenu(menuName = "Sensors/Suspicious Behaviour Sensor")]
-    public class SuspiciousBehaviourSensor : Sensor
+    [CreateAssetMenu(menuName = "Sensors/Suspicious Point Sensor")]
+    public class SuspiciousPointSensor : Sensor
     {
         public float viewRadius = 20f;
         public float viewAngle = 120f;

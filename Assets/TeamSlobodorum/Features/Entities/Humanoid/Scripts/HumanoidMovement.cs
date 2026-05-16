@@ -76,12 +76,12 @@ namespace TeamSlobodorum.Entities.Humanoid
         private const float DelayBeforeInferringFall = 0.3f;
         private const float DelayBeforeInferringMove = 0.3f;
         private const float FallingTime = 1.5f;
-        private const float AirControlTime = 0.5f;
+        private const float AirControlTime = 1.5f;
         private float _timeLastGrounded;
         private float _timeLastMoved;
         private Vector3 _ledgePosition;
         private float _defaultStoppingDistance;
-        
+
         private Vector3 _navmeshLinkStartPos;
         private Vector3 _navmeshLinkEndPos;
         private float _navmeshLinkProgress;
@@ -94,7 +94,10 @@ namespace TeamSlobodorum.Entities.Humanoid
 
         public override bool CanMove =>
             base.CanMove && !IsAttacking && !IsClimbing && !IsFalling &&
-            (!IsJumping || Time.fixedTime - _timeLastGrounded <= AirControlTime);
+            (!IsJumping || Time.time - _timeLastGrounded <= AirControlTime);
+
+        protected float AirControlMultiplier =>
+            IsGrounded ? 1 : 1 - Mathf.Pow(Mathf.Clamp01((Time.time - _timeLastGrounded) / AirControlTime), 3);
 
         public override bool CanPerformAction =>
             base.CanMove && !IsAttacking && !IsClimbing && !IsFalling && !IsJumping && IsGrounded;
@@ -199,7 +202,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                         IsJumping = true;
                         _animationParams.JumpTriggered = true;
                     }
-                        
+
                     if (_navmeshLinkProgress < 1f)
                     {
                         var distance = Vector3.Distance(_navmeshLinkStartPos, _navmeshLinkEndPos);
@@ -242,6 +245,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                 {
                     SyncNavMeshAgentToTransform();
                 }
+
                 NavMeshAgent.nextPosition = Rigidbody.position;
             }
         }

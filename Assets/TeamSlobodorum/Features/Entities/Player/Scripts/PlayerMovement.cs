@@ -71,15 +71,17 @@ namespace TeamSlobodorum.Entities.Player
                     {
                         var qA = Rigidbody.rotation;
                         var qB = Quaternion.LookRotation(targetDirection, Vector3.up);
-                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB, Damper.Damp(1, damping, Time.fixedDeltaTime)));
+                        Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB,
+                            Damper.Damp(1, damping, Time.fixedDeltaTime * AirControlMultiplier)));
                     }
 
-                    var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
+                    var desiredVelocity = targetDirection *
+                                          (AirControlMultiplier * (IsSprinting ? sprintSpeed : normalSpeed));
                     if (IsForwardObstructed)
                     {
                         desiredVelocity -= Vector3.Project(desiredVelocity, transform.forward);
                     }
-                    
+
                     Rigidbody.linearVelocity =
                         new Vector3(desiredVelocity.x, Rigidbody.linearVelocity.y, desiredVelocity.z);
                 }
@@ -89,7 +91,7 @@ namespace TeamSlobodorum.Entities.Player
                     Rigidbody.linearVelocity = new Vector3(0, Rigidbody.linearVelocity.y, 0);
                 }
             }
-            
+
             _lastRawInput = moveInput;
 
             base.FixedUpdate();

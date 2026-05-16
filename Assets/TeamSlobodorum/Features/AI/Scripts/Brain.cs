@@ -70,7 +70,7 @@ namespace TeamSlobodorum.AI
             for (var i = 0; i < sensors.Count; i++)
             {
                 sensors[i] = Instantiate(sensors[i]);
-                sensors[i].Initialize(this);
+                sensors[i].OnStart(this);
             }
         }
 
@@ -78,7 +78,7 @@ namespace TeamSlobodorum.AI
         {
             foreach (var sensor in sensors)
             {
-                sensor.Tick(this);
+                sensor.OnUpdate(this);
             }
         }
 

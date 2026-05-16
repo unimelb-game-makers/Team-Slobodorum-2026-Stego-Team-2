@@ -15,7 +15,7 @@ namespace TeamSlobodorum.AI.Sensors
         private LivingEntity _livingEntity;
         private PlayerEntity _playerEntity;
 
-        public override void Initialize(Brain brain)
+        public override void OnStart(Brain brain)
         {
             _livingEntity = brain.GetComponent<LivingEntity>();
             var player = GameObject.FindWithTag("Player");
@@ -25,7 +25,7 @@ namespace TeamSlobodorum.AI.Sensors
             }
         }
 
-        public override void Tick(Brain brain)
+        public override void OnUpdate(Brain brain)
         {
             if (CanSeePlayer(brain))
             {

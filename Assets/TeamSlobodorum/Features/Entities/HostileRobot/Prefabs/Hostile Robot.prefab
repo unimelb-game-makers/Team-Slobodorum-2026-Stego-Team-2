@@ -262,8 +262,7 @@ MonoBehaviour:
   damping: 0.5
   canClimb: 0
   stepAmount: 2
-  jumpHeight: 1
-  jumpSpeed: 2.5
+  linkJumpSpeed: 2.5
   animator: {fileID: 3526751619339654693}
   maxSprintScale: 3
   jumpBaseScale: 1
@@ -378,5 +377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.AI.Brain
   sensors:
   - {fileID: 11400000, guid: 808369c45d19d4bd6843b88d236d39d0, type: 2}
+  - {fileID: 11400000, guid: 618e50c019e554643862cd6742527840, type: 2}
   debug: 0
   debugMemory: []

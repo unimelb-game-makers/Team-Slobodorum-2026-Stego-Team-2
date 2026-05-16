@@ -191,7 +191,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                     return;
                 }
 
-                if (NavMeshAgent.isOnOffMeshLink)
+                if (NavMeshAgent.isOnOffMeshLink || Rigidbody.isKinematic)
                 {
                     if (_navmeshLinkProgress == 0)
                     {

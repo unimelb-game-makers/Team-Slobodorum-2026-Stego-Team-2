@@ -10,7 +10,7 @@ namespace TeamSlobodorum.Entities.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Get Time Last Saw Player",
-        story: "Get the time last saw player [Time] of [Brain]",
+        story: "Get the time last saw player [Time] from [Brain]",
         category: "Action/Entity", id: "29f058a6bdc04199b3b61fa3aae3d9ff")]
     public partial class GetLastTimeSawPlayerPositionAction : Action
     {

@@ -4,5 +4,6 @@ namespace TeamSlobodorum.Health
     {
         Physical,
         Fire,
+        Void,
     }
 }

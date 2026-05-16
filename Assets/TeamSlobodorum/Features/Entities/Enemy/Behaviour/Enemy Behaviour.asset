@@ -2271,7 +2271,7 @@ MonoBehaviour:
   - rid: 6705858934069265149
   - rid: 6705858934446752360
   - rid: 6705859119913632214
-  m_VersionTimestamp: 639145699667000750
+  m_VersionTimestamp: 639145808819602800
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: -8673525010457797866}
@@ -2355,7 +2355,7 @@ MonoBehaviour:
           m_Value0: 11636438455486706179
           m_Value1: 13885435410650226949
         Name: SearchStartTime
-        IsExposed: 0
+        IsExposed: 1
         m_IsShared: 0
         m_Value: 0
     - rid: 6705859119913632214

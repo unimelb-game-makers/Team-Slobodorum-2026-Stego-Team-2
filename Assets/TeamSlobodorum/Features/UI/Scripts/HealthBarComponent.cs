@@ -24,7 +24,7 @@ namespace TeamSlobodorum.UI.Scripts
         {
             _worldSpaceTracker = GetComponent<WorldSpaceTracker>();
             
-            entity.HealthManager.Damaged += UpdateHitPoints;
+            entity.HealthManager.Damaged += _ => UpdateHitPoints();
             _worldSpaceTracker.OnComponentReady += UpdateHitPoints;
             if (TryGetComponent(out _enemyEntity))
             {

@@ -10,7 +10,7 @@ namespace TeamSlobodorum.Health
         private float _immuneToPhysicalAttackTime;
 
         public event Action Died;
-        public event Action Damaged;
+        public event Action<DamageType> Damaged;
 
         public float HitPoints { get; set; }
         public bool IsAlive => HitPoints > 0;
@@ -47,7 +47,7 @@ namespace TeamSlobodorum.Health
                 HitPoints = 0;
             }
 
-            Damaged?.Invoke();
+            Damaged?.Invoke(damageType);
 
             if (HitPoints == 0)
             {
@@ -60,7 +60,7 @@ namespace TeamSlobodorum.Health
             if (!IsAlive) return;
 
             HitPoints = 0;
-            Damaged?.Invoke();
+            Damaged?.Invoke(DamageType.Void);
             Died?.Invoke();
         }
     }

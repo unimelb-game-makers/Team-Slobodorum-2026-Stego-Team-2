@@ -1,7 +1,9 @@
 using TeamSlobodorum.AI;
 using TeamSlobodorum.Entities.HostileRobot.Behaviour;
+using TeamSlobodorum.Health;
 using Unity.Behavior;
 using Unity.Behavior.GraphFramework;
+using UnityEngine;
 using Action = System.Action;
 
 namespace TeamSlobodorum.Entities.Enemy
@@ -14,6 +16,7 @@ namespace TeamSlobodorum.Entities.Enemy
         public Brain Brain { get; private set; }
 
         private SerializableGUID _enemyStateKey;
+        private SerializableGUID _searchStartTimeKey;
 
         public EnemyState EnemyState
         {
@@ -38,7 +41,24 @@ namespace TeamSlobodorum.Entities.Enemy
             base.Awake();
             BehaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
             Brain = GetComponent<Brain>();
+            
             BehaviorGraphAgent.GetVariableID("EnemyState", out _enemyStateKey);
+            BehaviorGraphAgent.GetVariableID("SearchStartTime", out _searchStartTimeKey);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            HealthManager.Damaged += OnDamaged;
+        }
+
+        private void OnDamaged(DamageType damageType)
+        {
+            if (EnemyState < EnemyState.Search)
+            {
+                BehaviorGraphAgent.SetVariableValue(_searchStartTimeKey, Time.time);
+                EnemyState = EnemyState.Search;
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ namespace TeamSlobodorum.UI.Scripts
             _playerEntity = playerObject.GetComponent<PlayerEntity>();
             _spellcaster = playerObject.GetComponent<PlayerSpellCaster>();
             _spellManager = playerObject.GetComponent<PlayerSpellManager>();
-            _playerEntity.HealthManager.Damaged += UpdateHitPoints;
+            _playerEntity.HealthManager.Damaged += _ => UpdateHitPoints();
             _spellcaster.SelectedSpellChanged += UpdateSelectedSpell;
 
             _spellManager.OnSpellEquipped += RefreshEquippedSlots;

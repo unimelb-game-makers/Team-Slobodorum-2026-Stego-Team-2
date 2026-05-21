@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballDefinition
   Id:
     Value: 
-  DisplayName: FireballSpell
+  DisplayName: Fireball
   Description: Fireball shoots from your palm. Upon impact, the fireball violently
     ignites all nearby flammable items.
   Icon: {fileID: 21300000, guid: f1143e4d4332c3e4baf54d5ebe1de267, type: 3}

@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - Environment
   - Water
   - UI
   - Player
   - Player Projectiles
-  - Enemy
+  - Living Entity
   - 
   - 
   - 

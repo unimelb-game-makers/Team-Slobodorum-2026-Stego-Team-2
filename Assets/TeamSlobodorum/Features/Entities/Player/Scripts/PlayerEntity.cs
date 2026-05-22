@@ -4,13 +4,13 @@ namespace TeamSlobodorum.Entities.Player
 {
     public class PlayerEntity : LivingEntity
     {
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             if (UIManager.Instance != null)
             {
-                Died += UIManager.Instance.OnGameOver.Invoke;
+                HealthManager.Died += UIManager.Instance.OnGameOver.Invoke;
             }
         }
-
     }
 }

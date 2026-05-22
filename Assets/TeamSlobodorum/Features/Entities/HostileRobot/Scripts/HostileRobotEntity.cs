@@ -1,10 +1,12 @@
+using TeamSlobodorum.Entities.Enemy;
 using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Entities.Player;
+using TeamSlobodorum.Health;
 using UnityEngine;
 
 namespace TeamSlobodorum.Entities.HostileRobot
 {
-    public class HostileRobotEntity : LivingEntity, IAttackable
+    public class HostileRobotEntity : EnemyEntity, IAttackable
     {
         [SerializeField] private float meleeAttackRange = 1f;
 
@@ -44,7 +46,7 @@ namespace TeamSlobodorum.Entities.HostileRobot
                 if (Vector3.Dot(transform.forward, directionToObject) > 0)
                 {
                     var playerEntity = hitCollider.GetComponent<PlayerEntity>();
-                    playerEntity.TakeDamage(10);
+                    playerEntity.HealthManager.TakeDamage(10, DamageType.Physical);
                 }
             }
         }

@@ -7,7 +7,7 @@ using Action = Unity.Behavior.Action;
 namespace TeamSlobodorum.Entities.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "Set Sprint Mode", story: "Set sprint mode in [Movement] to [SprintMode]",
+    [NodeDescription(name: "Set Sprint Mode", story: "Set sprint mode of [Movement] to [SprintMode]",
         category: "Action/Movement", id: "c62796b0a525d0cc92e93042557e2eb4")]
     public partial class SetSprintModeAction : Action
     {

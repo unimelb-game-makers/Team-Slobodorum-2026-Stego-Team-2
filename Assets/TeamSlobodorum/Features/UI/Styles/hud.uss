@@ -1,5 +1,9 @@
 .health_bar .unity-progress-bar__progress {
-    background-color: rgb(215, 209, 185);
+    height: 20px;
+}
+
+.health_bar .unity-progress-bar__progress {
+    background-color: #DBF1F8;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
@@ -7,7 +11,8 @@
 }
 
 .health_bar .unity-progress-bar__background {
-    background-color: rgb(205, 102, 77);
+    background-color: transparent;
+    border-width: 0px;
 }
 
 .mana_bar .unity-progress-bar__progress {

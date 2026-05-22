@@ -12,6 +12,8 @@ namespace TeamSlobodorum.UI.Scripts
 {
     public class HUDController : MonoBehaviour
     {
+        [SerializeField] private float manaScrollSpeed = 10f;
+        
         private UIDocument _uiDocument;
 
         private InputAction _cancelAction;
@@ -19,8 +21,11 @@ namespace TeamSlobodorum.UI.Scripts
         private PlayerSpellCaster _spellcaster;
         private PlayerEntity _playerEntity;
         private PlayerSpellManager _spellManager;
-        private ProgressBar _manaBar;
         private ProgressBar _healthBar;
+        private VisualElement _healthShadowContainer;
+        private VisualElement _manaBar;
+        private VisualElement _manaShadowContainer;
+        private float _manaBarOffset;
 
         private VisualElement root;
         private List<Button> equippedSlotButtons;
@@ -36,12 +41,18 @@ namespace TeamSlobodorum.UI.Scripts
             _uiDocument = GetComponent<UIDocument>();
 
             root = _uiDocument.rootVisualElement;
-            _manaBar = root.Q<ProgressBar>("ManaBar");
+            _manaBar = root.Q<VisualElement>("ManaBar2");
+            _manaShadowContainer = root.Q<VisualElement>("ManaShadowContainer");
             _healthBar = root.Q<ProgressBar>("HealthBar");
+            _healthShadowContainer = root.Q<VisualElement>("HealthShadowContainer");
             _announcementBox = root.Q<VisualElement>("Annoucement");
             _annoucementTitle = root.Q<Label>("AnnoucementTitle");
             _annoucementDescription = root.Q<Label>("AnnoucementDescription");
+        }
 
+        private void OnEnable()
+        {
+            _manaBar.schedule.Execute(UpdateManaBackgroundPhysics).Every(0);
         }
 
         private void Start()
@@ -95,15 +106,25 @@ namespace TeamSlobodorum.UI.Scripts
 
         private void UpdateHitPoints()
         {
-            _healthBar.title =
-                $"{(int)_playerEntity.HealthManager.HitPoints} / {(int)_playerEntity.HealthManager.maxHitPoints}";
             _healthBar.value = _playerEntity.HealthManager.HitPoints / _playerEntity.HealthManager.maxHitPoints;
+            _healthShadowContainer.style.width = Length.Percent(100 * _playerEntity.HealthManager.HitPoints / _playerEntity.HealthManager.maxHitPoints);
         }
 
         private void UpdateManaPoints()
         {
-            _manaBar.title = $"{(int)_spellcaster.CurrentMana} / {(int)_spellcaster.TotalMana}";
-            _manaBar.value = _spellcaster.CurrentMana / _spellcaster.TotalMana;
+            var newWidth = Length.Percent(100 * _spellcaster.CurrentMana / _spellcaster.TotalMana);
+            _manaBar.style.width = newWidth;
+            _manaShadowContainer.style.width = newWidth;
+        }
+        
+        private void UpdateManaBackgroundPhysics(TimerState state)
+        {
+            _manaBarOffset += manaScrollSpeed * Time.deltaTime;
+
+            // Apply the offset as a pixel length to the background position
+            _manaBar.style.backgroundPositionX = new StyleBackgroundPosition(
+                new BackgroundPosition(BackgroundPositionKeyword.Left, Length.Percent(_manaBarOffset))
+            );
         }
 
         public void HideHUD()

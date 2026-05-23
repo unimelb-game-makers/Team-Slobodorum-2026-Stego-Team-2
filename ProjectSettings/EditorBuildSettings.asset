@@ -6,9 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/StartMenu.unity
+    guid: c5882e76221d98d42bbd2a7f2645cea0
+  - enabled: 1
     path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Demo.unity
     guid: 24fd1b4e8497f4dc39742d0336082eee
+  - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Level1.unity
+    guid: 7ce542049d3c0d84dadc56e11ed6a8a5
+  - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Level2.unity
+    guid: a47bec9e092926e4fa8184ff6de149bc
+  - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Level3.unity
+    guid: e35fa166f227ec1479ce99116078600d
+  - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Level4.unity
+    guid: 33f224f4c98d72843b39406e497f9e2b
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: e2e9358f8245ab149acf09a9bf180fb0, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

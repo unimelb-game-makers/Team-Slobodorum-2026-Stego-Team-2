@@ -5,10 +5,12 @@ namespace TeamSlobodorum.Spells.Core
 {
     public abstract class SpellDefinition : ScriptableObject
     {
+
+        [SerializeField, HideInInspector] private string _spellID;
         [Header("Identity")]
         public SpellId Id;
         public string DisplayName;
-        
+
         [Header("UI & Presentation")]
         [TextArea(3, 5)]
         public string Description;
@@ -32,5 +34,17 @@ namespace TeamSlobodorum.Spells.Core
         public virtual bool RetainHandleAfterCast => false;
 
         public abstract ISpellRuntime CreateRuntime();
+
+
+        private void OnValidate()
+        {
+#if UNITY_EDITOR
+            if (string.IsNullOrEmpty(_spellID))
+            {
+                _spellID = System.Guid.NewGuid().ToString();
+                UnityEditor.EditorUtility.SetDirty(this);
+            }
+#endif
+        }
     }
 }

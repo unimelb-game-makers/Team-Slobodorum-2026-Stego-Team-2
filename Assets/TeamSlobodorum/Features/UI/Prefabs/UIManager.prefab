@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d5124f1beee2d48ad18bbd29f6d9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinDetect
+  nextLevel: 
 --- !u!1 &2716982015153918901
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueUIController
   playerName: Witch
+  fadeDuration: 0.3
+  timePerCharacter: 0.01
+  minCooldown: 0.3
   actions: {fileID: -944628639613478452, guid: 935e70e647d164207858a267f815bd01, type: 3}
   continueAction: {fileID: 3318759439028596673, guid: 935e70e647d164207858a267f815bd01, type: 3}
   scrollUpAction: {fileID: 8327053108528295135, guid: 935e70e647d164207858a267f815bd01, type: 3}
@@ -202,7 +206,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 96a35edb8dcf26a4e81a37d27decfe4a, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 5f0e1d8d48ccb0a4e9f5a6315db472b9, type: 3}
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -210,6 +214,52 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!1 &4121637514947542488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9220693026323495799}
+  - component: {fileID: 7928900737076190418}
+  m_Layer: 0
+  m_Name: SystemMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9220693026323495799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121637514947542488}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 701811153743705051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7928900737076190418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121637514947542488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 407f6558a5fc44c47856e43b0c996614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.SystemMenuController
+  menuDocument: {fileID: 6954516175522406505}
+  SaveSlotTemplate: {fileID: 9197481963319205126, guid: e10fb4529b113fd459426a5f9b04dd06, type: 3}
 --- !u!1 &4766284729842555455
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +362,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 319986523446674594}
+  - {fileID: 9220693026323495799}
   m_Father: {fileID: 7305102895496933570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6954516175522406505
@@ -499,19 +550,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6232737213118995489}
-        m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.ManagementMenuController,
-          Assembly-CSharp
-        m_MethodName: HideUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1196696330953967478}
         m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.EndScreenController,
           Assembly-CSharp
@@ -553,19 +591,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6232737213118995489}
-        m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.ManagementMenuController,
-          Assembly-CSharp
-        m_MethodName: HideUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1196696330953967478}
         m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.EndScreenController,
           Assembly-CSharp
@@ -595,9 +620,9 @@ MonoBehaviour:
   OnDialogueOpened:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6523793065533338274}
-        m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.HUDController, Assembly-CSharp
-        m_MethodName: HideHUD
+      - m_Target: {fileID: 653351563154299390}
+        m_TargetAssemblyTypeName: DialogueUIController, Assembly-CSharp
+        m_MethodName: ShowUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -607,9 +632,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 653351563154299390}
-        m_TargetAssemblyTypeName: DialogueUIController, Assembly-CSharp
-        m_MethodName: ShowUI
+      - m_Target: {fileID: 6523793065533338274}
+        m_TargetAssemblyTypeName: TeamSlobodorum.UI.Scripts.HUDController, Assembly-CSharp
+        m_MethodName: HideHUD
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -178,7 +178,7 @@ namespace TeamSlobodorum.UI.Scripts
                 {
                     newSlot.style.backgroundColor = deactivateColor;
                 }
-            }
+            }   
         }
 
         public void SelectSpellToView(SpellDefinition spell)

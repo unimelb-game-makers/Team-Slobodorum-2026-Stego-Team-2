@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="SlotTab" style="flex-grow: 1; height: 150px; background-color: rgb(43, 43, 43); margin-top: 1%; margin-right: 0%; margin-bottom: 1%; margin-left: 0%; flex-direction: row;">
+        <ui:Label text="Label" name="SaveSlotName" style="font-size: 45px; color: rgb(244, 237, 209); margin-top: 2%; margin-right: 2%; margin-bottom: 2%; margin-left: 2%; width: 60%;"/>
+        <ui:Label text="" name="LastPlayedDate" style="font-size: 25px; color: rgb(244, 237, 209); margin-top: 2%; margin-right: 2%; margin-bottom: 2%; margin-left: 2%; width: auto; align-self: flex-end; align-content: flex-end; align-items: flex-end;"/>
+    </ui:VisualElement>
+</ui:UXML>

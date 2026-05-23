@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 62703392307095326}
   - component: {fileID: 3520830726184513329}
   - component: {fileID: 6523793065533338274}
+  - component: {fileID: 6182542129496251075}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -135,9 +136,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.HUDController
   manaScrollSpeed: 10
-  _attackAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
-  activateColor: {r: 0.95686275, g: 0.92941177, b: 0.81960785, a: 1}
-  deactivateColor: {r: 0.7058824, g: 0.6862745, b: 0.6039216, a: 1}
+  spellSlotTemplate: {fileID: 9197481963319205126, guid: 689d13b103395414f94c92ab95fc4434, type: 3}
+  cancelAction: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  attackAction: {fileID: 1120369429361536294, guid: 935e70e647d164207858a267f815bd01, type: 3}
+--- !u!114 &6182542129496251075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2716982015153918901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a849af3cf7f5d0648bdd2c898a538311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIDocumentBlur
+  targetCamera: {fileID: 0}
+  kawaseShader: {fileID: 4800000, guid: 24abec75881d70044b848b6e0a1e854a, type: 3}
+  dualKawaseShader: {fileID: 4800000, guid: a5c93426b3ef6e4448cc674a770479a1, type: 3}
+  gaussianShader: {fileID: 4800000, guid: ccab013a00cfded46b394e2d00127344, type: 3}
+  blurType: 1
+  blurClassName: blur
+  kawaseIterations: 4
+  dualKawasePasses: 3
+  gaussianIterations: 3
+  gaussianBlurSize: 4
+  downsample: 2
+  updateInterval: 1
+  onlyUpdateWhenVisible: 1
 --- !u!1 &2722190339949572630
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +321,7 @@ GameObject:
   - component: {fileID: 701811153743705051}
   - component: {fileID: 6954516175522406505}
   - component: {fileID: 6232737213118995489}
+  - component: {fileID: 4598444901918178322}
   m_Layer: 0
   m_Name: ManagementMenu
   m_TagString: Untagged
@@ -354,6 +381,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.ManagementMenuController
   actions: {fileID: -944628639613478452, guid: 935e70e647d164207858a267f815bd01, type: 3}
+--- !u!114 &4598444901918178322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458847662473859590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a849af3cf7f5d0648bdd2c898a538311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIDocumentBlur
+  targetCamera: {fileID: 0}
+  kawaseShader: {fileID: 4800000, guid: 24abec75881d70044b848b6e0a1e854a, type: 3}
+  dualKawaseShader: {fileID: 4800000, guid: a5c93426b3ef6e4448cc674a770479a1, type: 3}
+  gaussianShader: {fileID: 4800000, guid: ccab013a00cfded46b394e2d00127344, type: 3}
+  blurType: 1
+  blurClassName: blur
+  kawaseIterations: 4
+  dualKawasePasses: 3
+  gaussianIterations: 3
+  gaussianBlurSize: 4
+  downsample: 2
+  updateInterval: 3
+  onlyUpdateWhenVisible: 1
 --- !u!1 &6277431394095836015
 GameObject:
   m_ObjectHideFlags: 0

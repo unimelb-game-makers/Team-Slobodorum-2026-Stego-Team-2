@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/SpellSlot.uss?fileID=7433441132597879392&amp;guid=fba38229d10d4e85a6bdb406aca5333b&amp;type=3#SpellSlot"/>
+    <ui:VisualElement picking-mode="Position" name="" class="spell_slot">
+        <ui:VisualElement class="selected-corner" style="flex-grow: 1; position: absolute; top: -8px; left: -8px; width: 15px; height: 15px; border-top-width: 2px; border-left-width: 2px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);"/>
+        <ui:VisualElement class="selected-corner" style="flex-grow: 1; position: absolute; top: -8px; left: auto; width: 15px; height: 15px; border-top-width: 2px; border-left-width: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); right: -8px; border-right-width: 2px;"/>
+        <ui:VisualElement class="selected-corner" style="flex-grow: 1; position: absolute; top: auto; left: -8px; width: 15px; height: 15px; border-top-width: 0; border-left-width: 2px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); bottom: -8px; border-bottom-width: 2px;"/>
+        <ui:VisualElement class="selected-corner" style="flex-grow: 1; position: absolute; top: auto; left: auto; width: 15px; height: 15px; border-top-width: 0; border-left-width: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); bottom: -8px; right: -8px; border-bottom-width: 2px; border-right-width: 2px;"/>
+        <ui:VisualElement class="blur" style="flex-grow: 1;">
+            <ui:Button text="" icon-image="project://database/Assets/TeamSlobodorum/Features/Spells/SpellAssets/grab.png?fileID=21300000&amp;guid=93f6f67fc0e4ec24bb0d6877d1d4d10d&amp;type=3#grab"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

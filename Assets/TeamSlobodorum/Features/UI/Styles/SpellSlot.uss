@@ -1,0 +1,60 @@
+.spell_slot {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    margin-right: 20px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgba(255, 255, 255, 0.5);
+    border-right-color: rgba(255, 255, 255, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.5);
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+    transition-property: scale;
+    transition-timing-function: ease-in-out;
+    transition-duration: 300s;
+}
+
+.spell_slot > .blur {
+    margin: 3px;
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+.spell_slot Button {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.spell_slot .selected-corner {
+    display: none;
+}
+
+.selected .selected-corner {
+    display: flex;
+}
+
+.selected .spell_slot {
+    transition-property: scale;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}
+
+.selected .spell_slot Button {
+    background-color: rgb(255, 255, 255);
+}
+
+.candidate .spell_slot {
+    scale: 0.8;
+    transition-property: scale, opacity;
+    transition-duration: 300ms, 300s;
+    transition-timing-function: ease-in-out, ease-in-out;
+}
+
+.hidden .spell_slot {
+    opacity: 0;
+}

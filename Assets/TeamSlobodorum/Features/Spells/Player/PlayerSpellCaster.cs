@@ -31,7 +31,8 @@ namespace TeamSlobodorum.Spells.Player
         private float currentMana;
         public float CurrentMana => currentMana;
         public float TotalMana => totalMana;
-        public event Action SelectedSpellChanged;
+        public event Action BeforeSelectNextSpell;
+        public event Action BeforeSelectPreviousSpell;
 
         private SpellCoordinator _coordinator;
         private Transform _aimTarget;
@@ -130,12 +131,12 @@ namespace TeamSlobodorum.Spells.Player
                 return;
 
             CancelActiveSpellIfAny();
+            BeforeSelectPreviousSpell?.Invoke();
 
             _selectedSpellIndex--;
             if (_selectedSpellIndex < 0)
                 _selectedSpellIndex = spellDefinitions.Count - 1;
 
-            SelectedSpellChanged?.Invoke();
             Debug.Log($"Selected spell: {GetSelectedSpellName()}");
         }
 
@@ -145,12 +146,12 @@ namespace TeamSlobodorum.Spells.Player
                 return;
 
             CancelActiveSpellIfAny();
+            BeforeSelectNextSpell?.Invoke();
 
             _selectedSpellIndex++;
             if (_selectedSpellIndex >= spellDefinitions.Count)
                 _selectedSpellIndex = 0;
 
-            SelectedSpellChanged?.Invoke();
             Debug.Log($"Selected spell: {GetSelectedSpellName()}");
         }
 
@@ -298,7 +299,6 @@ namespace TeamSlobodorum.Spells.Player
             if (spellDefinitions.Count == 1)
             {
                 _selectedSpellIndex = 0;
-                SelectedSpellChanged?.Invoke();
                 Debug.Log($"Auto-selected newly equipped spell: {GetSelectedSpellName()}");
             }
         }
@@ -324,8 +324,52 @@ namespace TeamSlobodorum.Spells.Player
             }
 
             // 3. Announce that the selection has updated (so the HUD can redraw the icons)
-            SelectedSpellChanged?.Invoke();
             Debug.Log($"Spell unequipped. New selection: {GetSelectedSpellName()}");
+        }
+        
+        public List<SpellDefinition> GetNextNEquippedSpells(int n)
+        {
+            var equippedSpells = spellDefinitions;
+            if (equippedSpells.Count <= 1)
+            {
+                return new List<SpellDefinition>();
+            }
+
+            var result = new List<SpellDefinition>();
+
+            // We want n elements, but we cannot return more elements than 
+            // exist besides the one at the starting index.
+            var totalToTake = Math.Min(n, equippedSpells.Count - 1);
+
+            for (var i = 1; i <= totalToTake; i++)
+            {
+                // Calculate the next index using modulo for wrap-around
+                var nextIndex = (_selectedSpellIndex + i) % equippedSpells.Count;
+                result.Add(equippedSpells[nextIndex]);
+            }
+
+            return result;
+        }
+        
+        public List<SpellDefinition> GetPreviousNEquippedSpells(int n)
+        {
+            var equippedSpells = spellDefinitions;
+            if (equippedSpells.Count <= 1)
+            {
+                return new List<SpellDefinition>();
+            }
+
+            var result = new List<SpellDefinition>();
+            var totalToTake = Math.Min(n, equippedSpells.Count - 1);
+
+            for (var i = 1; i <= totalToTake; i++)
+            {
+                // Calculate the next index using modulo for wrap-around
+                var prevIndex = (_selectedSpellIndex - i + equippedSpells.Count) % equippedSpells.Count;
+                result.Add(equippedSpells[prevIndex]);
+            }
+
+            return result;
         }
     }
 }

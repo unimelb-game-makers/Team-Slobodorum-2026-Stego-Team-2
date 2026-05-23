@@ -13,32 +13,38 @@ namespace TeamSlobodorum.DataPersistence
             this.dataFileName = dataFileName;
         }
 
-        public GameData Load()
+        public T Load<T>() where T : class
         {
             string fullPath = Path.Combine(dataDirPath, dataFileName);
-            GameData loadedData = null;
+            T loadedData = null;
             if (File.Exists(fullPath))
             {
                 try
                 {
                     string dataToLoad = File.ReadAllText(fullPath);
-                    loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                    loadedData = JsonUtility.FromJson<T>(dataToLoad);
                 }
-                catch (System.Exception e) { Debug.LogError("Error loading data: " + e); }
+                catch (System.Exception e)
+                {
+                    Debug.LogError("Error loading data to path: " + fullPath + "\n" + e);
+                }
             }
             return loadedData;
         }
 
-        public void Save(GameData data)
+        public void Save<T>(T data)
         {
             string fullPath = Path.Combine(dataDirPath, dataFileName);
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                string dataToStore = JsonUtility.ToJson(data, true);
+                string dataToStore = JsonUtility.ToJson(data, true); // true = format nicely
                 File.WriteAllText(fullPath, dataToStore);
             }
-            catch (System.Exception e) { Debug.LogError("Error saving data: " + e); }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Error saving data to path: " + fullPath + "\n" + e);
+            }
         }
     }
 }

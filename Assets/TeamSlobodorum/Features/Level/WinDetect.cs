@@ -1,13 +1,23 @@
+using TeamSlobodorum.DataPersistence;
 using TeamSlobodorum.UI.Scripts;
 using UnityEngine;
 
 public class WinDetect : MonoBehaviour
 {
-        private void OnTriggerEnter(Collider other)
+    [SerializeField] private string nextLevel = "";
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
+            if (nextLevel == "")
             {
                 UIManager.Instance.OnGameWin?.Invoke();
             }
+            else
+            {
+                SaveManager.instance?.LoadLevelAsync(nextLevel);
+            }
         }
+    }
 }

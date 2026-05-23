@@ -11,7 +11,8 @@ namespace TeamSlobodorum.UI.Scripts
         private UIDocument _uiDocument;
         private VisualElement root;
         public InputActionAsset actions;
-
+        private VisualElement spellComponent;
+        private VisualElement systemComponent;
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -19,12 +20,21 @@ namespace TeamSlobodorum.UI.Scripts
             root = _uiDocument.rootVisualElement;
 
             if (root != null) root.style.display = DisplayStyle.None;
+            Label spellTitle = root.Q<Label>("SpellTitle");
+            Label systemTitle = root.Q<Label>("SystemTitle");
+            spellComponent = root.Q<VisualElement>("SpellManagementComponent");
+            systemComponent = root.Q<VisualElement>("SystemComponent");
 
+            spellTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(spellComponent));
+            systemTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(systemComponent));
         }
-        private void Start()
-        {
 
-        
+        private void SwitchToTab(VisualElement activeComponent)
+        {
+            spellComponent.style.display = DisplayStyle.None;
+            systemComponent.style.display = DisplayStyle.None;
+
+            activeComponent.style.display = DisplayStyle.Flex;
         }
         public void HideUI()
         {

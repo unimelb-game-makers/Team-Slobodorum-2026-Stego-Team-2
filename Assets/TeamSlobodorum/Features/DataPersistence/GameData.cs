@@ -9,9 +9,9 @@ namespace TeamSlobodorum.DataPersistence
     [System.Serializable]
     public class GameData
     {
-        public string currentLevel = "Level_01";
+        public string currentLevel = "Level1";
         public Vector3 playerPosition = Vector3.zero;
-        public Vector3 SpawnPoint = Vector3.zero;
+        public bool hasSavedPosition = false;
         public List<SpellSaveData> spells = new List<SpellSaveData>();
     }
 
@@ -24,7 +24,24 @@ namespace TeamSlobodorum.DataPersistence
     [System.Serializable]
     public struct SpellSaveData 
     {
-        public SpellId spell;
+        public string spellID;
         public bool isCollected;
+        public bool isEquipped;
+    }
+
+    [System.Serializable]
+    public class SaveSlotMeta
+    {
+        public string profileId;
+        public string currentLevel;
+        public float playTimeSeconds;
+        public string lastPlayedDate;
+        
+    }
+
+    [System.Serializable]
+    public class SaveManifest
+    {
+        public List<SaveSlotMeta> slots = new List<SaveSlotMeta>();
     }
 }

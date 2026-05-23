@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="SpellSlot" src="project://database/Assets/TeamSlobodorum/Features/UI/Components/SpellSlot.uxml?fileID=9197481963319205126&amp;guid=689d13b103395414f94c92ab95fc4434&amp;type=3#SpellSlot"/>
     <Style src="project://database/Assets/TeamSlobodorum/Features/UI/Styles/Hud.uss?fileID=7433441132597879392&amp;guid=2b87f580097f8d5498323833970fd3b4&amp;type=3#Hud"/>
-    <ui:VisualElement name="Top" style="flex-grow: 1; align-items: stretch; justify-content: center; height: 20%;">
+    <ui:VisualElement name="Top" style="flex-grow: 0; align-items: stretch; justify-content: center; flex-shrink: 0;">
         <ui:VisualElement name="Indicator" style="flex-grow: 1; padding-top: 30px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px;">
             <ui:VisualElement name="HealthIndicator" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; width: 300px;">
                 <ui:VisualElement name="HealthShadowContainer" style="flex-grow: 1; position: absolute; top: 0; bottom: 0; width: 100%;">
@@ -23,13 +23,15 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement style="flex-grow: 1; height: 60%;">
-        <ui:VisualElement name="Annoucement" style="flex-grow: 0; width: 20%; height: 25%; flex-shrink: 0; margin-right: 0%; margin-left: 5%; margin-top: 0%; margin-bottom: 0%; background-color: rgb(215, 209, 185); transform-origin: center; translate: -125% 0; font-size: 100%; white-space: pre-wrap; text-overflow: clip;">
-            <ui:Label text="" name="AnnoucementTitle" style="font-size: 32%; margin-left: 7%; margin-top: 6%; color: rgb(46, 46, 46); margin-right: 7%; margin-bottom: 1%; -unity-text-auto-size: best-fit 10px 60px; -unity-text-generator: advanced; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Regular.otf?fileID=12800000&amp;guid=1e1d71a23cc2d5c4d8271ad0868f745b&amp;type=3#Cinzel-Regular&quot;);"/>
-            <ui:Label text="Press tab to open spell menu" name="AnnoucementDescription" style="margin-left: 7%; color: rgb(46, 46, 46); font-size: 14%; -unity-text-auto-size: best-fit 2px 30px; -unity-text-generator: advanced; margin-right: 7%; margin-bottom: 3%; margin-top: 1%; -unity-font-definition: url(&quot;project://database/Assets/Fonts/cinzel/Cinzel-Regular.otf?fileID=12800000&amp;guid=1e1d71a23cc2d5c4d8271ad0868f745b&amp;type=3#Cinzel-Regular&quot;);"/>
+    <ui:VisualElement name="Centre" style="flex-grow: 1;">
+        <ui:VisualElement name="Toast" class="blur" style="flex-grow: 0; width: 300px; height: auto; flex-shrink: 0; margin-right: 0; margin-left: 20px; margin-top: 0; margin-bottom: 0; transform-origin: center; translate: -125% 0; white-space: pre-wrap; text-overflow: clip;">
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.8); padding-top: 20px; padding-right: 30px; padding-bottom: 20px; padding-left: 30px;">
+                <ui:Label text="" name="ToastTitle" style="font-size: 24px; margin-left: 0; margin-top: 0; color: rgb(46, 46, 46); margin-right: 0; margin-bottom: 30px; -unity-text-auto-size: best-fit 10px 60px; -unity-text-generator: advanced; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Ancizar_Serif/AncizarSerif-Bold.ttf?fileID=12800000&amp;guid=6cbf42c98351043aeba29f9b52e4668c&amp;type=3#AncizarSerif-Bold&quot;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+                <ui:Label text="Press tab to open spell menu" name="ToastDescription" style="margin-left: 0; color: rgb(46, 46, 46); font-size: 18px; -unity-text-auto-size: best-fit 2px 30px; -unity-text-generator: advanced; margin-right: 0; margin-bottom: 0; margin-top: 0; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Ancizar_Serif/AncizarSerif-Regular.ttf?fileID=12800000&amp;guid=3a4a635987980445295ff1cf5efb0b72&amp;type=3#AncizarSerif-Regular&quot;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Bottom" style="flex-grow: 1; height: auto; flex-direction: row; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-self: auto; align-content: auto; margin-left: 30px; flex-shrink: 0; margin-top: 30px; margin-right: 30px; margin-bottom: 30px;">
+    <ui:VisualElement name="Bottom" style="flex-grow: 0; height: auto; flex-direction: row; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-self: auto; align-content: auto; margin-left: 30px; flex-shrink: 0; margin-top: 30px; margin-right: 30px; margin-bottom: 30px;">
         <ui:VisualElement name="Spells" style="flex-grow: 1; flex-direction: row; flex-shrink: 0; transition-property: translate; transition-duration: 300ms; transition-timing-function: ease-in-out;">
             <ui:Instance template="SpellSlot"/>
         </ui:VisualElement>

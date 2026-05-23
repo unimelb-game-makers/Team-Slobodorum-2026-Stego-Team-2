@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 6232737213118995489}
   - component: {fileID: 4598444901918178322}
   m_Layer: 0
-  m_Name: ManagementMenu
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,7 +428,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b55b8c410ef9b438a6a66c06f390ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.UI.Scripts.ManagementMenuController
-  actions: {fileID: -944628639613478452, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  playerActions: {fileID: -944628639613478452, guid: 935e70e647d164207858a267f815bd01, type: 3}
+  inactiveTabBackground: {fileID: 2800000, guid: f00499cb24ff44fd9a8e819c4581c66f, type: 3}
+  activeTabBackground: {fileID: 2800000, guid: ca564d2dc9c424713b90a10cabf4bef7, type: 3}
 --- !u!114 &4598444901918178322
 MonoBehaviour:
   m_ObjectHideFlags: 0

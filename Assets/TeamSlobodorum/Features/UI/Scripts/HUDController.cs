@@ -34,7 +34,7 @@ namespace TeamSlobodorum.UI.Scripts
 
         private VisualElement _root;
         private VisualElement _spellsContainer;
-        private VisualElement _announcementBox;
+        private VisualElement _toastBox;
         private Label _toastTitle;
         private Label _toastDescription;
         
@@ -56,9 +56,9 @@ namespace TeamSlobodorum.UI.Scripts
             _manaShadowContainer = _root.Q<VisualElement>("ManaShadowContainer");
             _healthBar = _root.Q<ProgressBar>("HealthBar");
             _healthShadowContainer = _root.Q<VisualElement>("HealthShadowContainer");
-            _announcementBox = _root.Q<VisualElement>("Annoucement");
-            _toastTitle = _root.Q<Label>("AnnoucementTitle");
-            _toastDescription = _root.Q<Label>("AnnoucementDescription");
+            _toastBox = _root.Q<VisualElement>("Toast");
+            _toastTitle = _root.Q<Label>("ToastTitle");
+            _toastDescription = _root.Q<Label>("ToastDescription");
             _spellsContainer = _root.Q<VisualElement>("Spells");
         }
 
@@ -370,27 +370,27 @@ namespace TeamSlobodorum.UI.Scripts
 
         public void MakeToastMessage(string title = null, string description = null)
         {
-            _announcementBox.style.display = DisplayStyle.Flex;
+            _toastBox.style.display = DisplayStyle.Flex;
             _toastTitle.text = title ?? _toastTitle.text;
             _toastDescription.text = description ?? _toastDescription.text;
-            Sequence announcementSequence = DOTween.Sequence();
-            announcementSequence.Append(
+            Sequence toastSequence = DOTween.Sequence();
+            toastSequence.Append(
                 DOTween.To(() => -125f,
-                        x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
+                        x => _toastBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
                         0f, 0.6f)
                     .SetEase(Ease.OutBack)
             );
 
-            announcementSequence.AppendInterval(5.0f);
+            toastSequence.AppendInterval(5.0f);
 
-            announcementSequence.Append(
+            toastSequence.Append(
                 DOTween.To(() => 0f,
-                        x => _announcementBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
+                        x => _toastBox.style.translate = new StyleTranslate(new Translate(Length.Percent(x), 0)),
                         -125f, 0.6f)
                     .SetEase(Ease.InBack)
             );
 
-            announcementSequence.OnComplete(() => { _announcementBox.style.display = DisplayStyle.None; });
+            toastSequence.OnComplete(() => { _toastBox.style.display = DisplayStyle.None; });
         }
 
         public void ShowSpellAnnouncement(SpellDefinition definition)

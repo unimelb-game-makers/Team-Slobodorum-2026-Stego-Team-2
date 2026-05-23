@@ -1,5 +1,9 @@
 .health_bar .unity-progress-bar__progress {
-    background-color: rgb(215, 209, 185);
+    height: 20px;
+}
+
+.health_bar .unity-progress-bar__progress {
+    background-color: rgb(219, 241, 248);
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
@@ -7,19 +11,8 @@
 }
 
 .health_bar .unity-progress-bar__background {
-    background-color: rgb(205, 102, 77);
-}
-
-.mana_bar .unity-progress-bar__progress {
-    background-color: rgb(215, 209, 185);
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-}
-
-.mana_bar .unity-progress-bar__background {
-    background-color: rgb(77, 108, 205);
+    background-color: transparent;
+    border-width: 0;
 }
 
 .enemy_health_bar .unity-progress-bar__progress {

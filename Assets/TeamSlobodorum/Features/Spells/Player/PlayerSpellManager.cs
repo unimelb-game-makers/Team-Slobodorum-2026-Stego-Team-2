@@ -13,17 +13,12 @@ namespace TeamSlobodorum.Spells.Player
 {
     public class PlayerSpellManager : MonoBehaviour, IDataPersistence
     {
-
         [Header("State")]
-        [SerializeField] private List<SpellDefinition> _obtainedSpells = new();
-        [SerializeField] private List<SpellDefinition> _equippedSpells = new();
+        [SerializeField] private List<SpellDefinition> obtainedSpells = new();
+        [SerializeField] private List<SpellDefinition> equippedSpells = new();
 
-        [Header("Configuration")]
-        [SerializeField, Min(0)]
-        private int maxEquippedSpells = 4;
-
-        public IReadOnlyList<SpellDefinition> ObtainedSpells => _obtainedSpells;
-        public IReadOnlyList<SpellDefinition> EquippedSpells => _equippedSpells;
+        public IReadOnlyList<SpellDefinition> ObtainedSpells => obtainedSpells;
+        public IReadOnlyList<SpellDefinition> EquippedSpells => equippedSpells;
         public event Action<SpellDefinition> OnSpellObtained;
         public event Action<SpellDefinition> OnSpellEquipped;
         public event Action<SpellDefinition> OnSpellUnequipped;
@@ -44,6 +39,7 @@ namespace TeamSlobodorum.Spells.Player
         {
             pickupAction.action.performed += TryPickupSpell;
         }
+
         private void TryPickupSpell(InputAction.CallbackContext context)
         {
             if (collectibles.Count != 0)
@@ -53,24 +49,23 @@ namespace TeamSlobodorum.Spells.Player
                     collectibles[0].Collected();
                     collectibles.RemoveAt(0);
                 }
-
             }
         }
 
         public void SaveData(GameData data)
         {
-            data.spells = _obtainedSpells.Select(spell => new SpellSaveData
+            data.spells = obtainedSpells.Select(spell => new SpellSaveData
             {
                 spellID = spell.name,
                 isCollected = true,
-                isEquipped = _equippedSpells.Contains(spell)
+                isEquipped = equippedSpells.Contains(spell)
             }).ToList();
         }
 
         public void LoadData(GameData data)
         {
-            _obtainedSpells.Clear();
-            _equippedSpells.Clear();
+            obtainedSpells.Clear();
+            equippedSpells.Clear();
             foreach (SpellSaveData spell in data.spells)
             {
 
@@ -98,15 +93,16 @@ namespace TeamSlobodorum.Spells.Player
         public bool ObtainSpell(SpellDefinition newSpell)
         {
             if (newSpell == null) return false;
-
-            if (_obtainedSpells.Contains(newSpell))
+            
+            if (obtainedSpells.Contains(newSpell))
             {
                 Debug.LogWarning($"Player already obtained spell: {newSpell.name}");
                 return true;
             }
 
-            _obtainedSpells.Add(newSpell);
-
+            obtainedSpells.Add(newSpell);
+            TryEquipSpell(newSpell);
+            
             OnSpellObtained?.Invoke(newSpell);
             return true;
         }
@@ -114,37 +110,31 @@ namespace TeamSlobodorum.Spells.Player
         public bool TryEquipSpell(SpellDefinition spellToEquip)
         {
             if (spellToEquip == null) return false;
-            if (!_obtainedSpells.Contains(spellToEquip))
+            if (!obtainedSpells.Contains(spellToEquip))
             {
                 Debug.LogWarning("Cannot equip a spell that hasn't been obtained!");
                 return false;
             }
 
-            if (_equippedSpells.Contains(spellToEquip))
+            if (equippedSpells.Contains(spellToEquip))
             {
                 Debug.Log("Spell is already equipped.");
                 return false;
             }
 
-            if (_equippedSpells.Count >= maxEquippedSpells)
-            {
-                Debug.LogWarning("Equip slots are full!");
-                return false;
-            }
-
-            _equippedSpells.Add(spellToEquip);
-
+            equippedSpells.Add(spellToEquip);
+            
             OnSpellEquipped?.Invoke(spellToEquip);
             return true;
         }
 
         public bool TryUnequipSpell(SpellDefinition spellToUnequip)
         {
-            if (spellToUnequip == null || !_equippedSpells.Contains(spellToUnequip))
+            if (spellToUnequip == null || !equippedSpells.Contains(spellToUnequip)) 
                 return false;
 
-            _equippedSpells.Remove(spellToUnequip);
-
+            equippedSpells.Remove(spellToUnequip);
+            
             OnSpellUnequipped?.Invoke(spellToUnequip);
             return true;
         }
@@ -161,6 +151,5 @@ namespace TeamSlobodorum.Spells.Player
             }
 
         }
-
     }
 }

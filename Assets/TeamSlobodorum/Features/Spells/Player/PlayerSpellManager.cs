@@ -54,18 +54,18 @@ namespace TeamSlobodorum.Spells.Player
 
         public void SaveData(GameData data)
         {
-            data.spells = _obtainedSpells.Select(spell => new SpellSaveData
+            data.spells = obtainedSpells.Select(spell => new SpellSaveData
             {
                 spellID = spell.name,
                 isCollected = true,
-                isEquipped = _equippedSpells.Contains(spell)
+                isEquipped = equippedSpells.Contains(spell)
             }).ToList();
         }
 
         public void LoadData(GameData data)
         {
-            _obtainedSpells.Clear();
-            _equippedSpells.Clear();
+            obtainedSpells.Clear();
+            equippedSpells.Clear();
             foreach (SpellSaveData spell in data.spells)
             {
 

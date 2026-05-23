@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Demo.unity
-    guid: 24fd1b4e8497f4dc39742d0336082eee
-  - enabled: 1
     path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/StartMenu.unity
     guid: c5882e76221d98d42bbd2a7f2645cea0
+  - enabled: 1
+    path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Demo.unity
+    guid: 24fd1b4e8497f4dc39742d0336082eee
   - enabled: 1
     path: Assets/TeamSlobodorum/Scenes/InternalDemoShowcase/Level1.unity
     guid: 7ce542049d3c0d84dadc56e11ed6a8a5

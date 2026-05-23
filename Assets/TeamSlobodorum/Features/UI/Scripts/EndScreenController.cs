@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TeamSlobodorum.DataPersistence;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Spells.Core;
 using TeamSlobodorum.Spells.Player;
@@ -29,6 +30,11 @@ namespace TeamSlobodorum.UI.Scripts
         {
 
             Time.timeScale = 1;
+            if (SaveManager.instance)
+            {
+                SaveManager.instance.LoadLevelAsync("StartMenu");
+                return;
+            }
             SceneManager.LoadScene(0);
         }
         public void GameOver()

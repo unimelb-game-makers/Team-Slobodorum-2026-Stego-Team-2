@@ -43,9 +43,7 @@ namespace TeamSlobodorum.DataPersistence
         {
             
             gameData = new GameData();
-            dataHandler.Save(gameData);
             GenerateNewProfileId();
-            UpdateManifestSlot();
         }
         public void AutoSave()
         {
@@ -131,12 +129,12 @@ namespace TeamSlobodorum.DataPersistence
             gameData = dataHandler.Load<GameData>() ?? new GameData();
             LoadLevelAsync(gameData.currentLevel);
         }
-        public void LoadLevelAsync(string sceneName)
+        public void LoadLevelAsync(string sceneName, bool useGameData = true)
         {
-            StartCoroutine(LoadLevelCoroutine(sceneName));
+            StartCoroutine(LoadLevelCoroutine(sceneName, useGameData));
         }
         
-        private IEnumerator LoadLevelCoroutine(string sceneName)
+        private IEnumerator LoadLevelCoroutine(string sceneName, bool useGameData = true)
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
@@ -144,8 +142,10 @@ namespace TeamSlobodorum.DataPersistence
             {
                 yield return null;
             }
-
-            LoadLevel();
+            if (useGameData)
+            {
+                LoadLevel();
+            }
         }
         private void LoadLevel()
         {
@@ -191,6 +191,11 @@ namespace TeamSlobodorum.DataPersistence
                 .ToList();
 
             return sortedList;
+        }
+
+        internal void LoadLevelAsync(string nextLevel, object value)
+        {
+            throw new NotImplementedException();
         }
     }
 

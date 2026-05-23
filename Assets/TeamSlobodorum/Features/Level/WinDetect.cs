@@ -16,7 +16,7 @@ public class WinDetect : MonoBehaviour
             }
             else
             {
-                SaveManager.instance?.LoadLevelAsync(nextLevel);
+                SaveManager.instance?.LoadLevelAsync(nextLevel, false);
             }
         }
     }

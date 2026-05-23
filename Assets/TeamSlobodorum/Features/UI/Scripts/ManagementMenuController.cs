@@ -13,6 +13,9 @@ namespace TeamSlobodorum.UI.Scripts
         public InputActionAsset actions;
         private VisualElement spellComponent;
         private VisualElement systemComponent;
+        private Label spellTitle;
+        private Label systemTitle;
+
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -20,21 +23,24 @@ namespace TeamSlobodorum.UI.Scripts
             root = _uiDocument.rootVisualElement;
 
             if (root != null) root.style.display = DisplayStyle.None;
-            Label spellTitle = root.Q<Label>("SpellTitle");
-            Label systemTitle = root.Q<Label>("SystemTitle");
+            spellTitle = root.Q<Label>("SpellTitle");
+            systemTitle = root.Q<Label>("SystemTitle");
             spellComponent = root.Q<VisualElement>("SpellManagementComponent");
             systemComponent = root.Q<VisualElement>("SystemComponent");
 
-            spellTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(spellComponent));
-            systemTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(systemComponent));
+            spellTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(spellComponent, spellTitle));
+            systemTitle.RegisterCallback<ClickEvent>(evt => SwitchToTab(systemComponent, systemTitle));
         }
 
-        private void SwitchToTab(VisualElement activeComponent)
+        private void SwitchToTab(VisualElement activeComponent, Label activeTitle)
         {
             spellComponent.style.display = DisplayStyle.None;
             systemComponent.style.display = DisplayStyle.None;
+            spellTitle.EnableInClassList("system-tab-active", false);
+            systemTitle.EnableInClassList("system-tab-active", false);
 
             activeComponent.style.display = DisplayStyle.Flex;
+            activeTitle.EnableInClassList("system-tab-active", true);;
         }
         public void HideUI()
         {
@@ -52,7 +58,7 @@ namespace TeamSlobodorum.UI.Scripts
             Cursor.lockState = CursorLockMode.None;
             actions.FindActionMap("Player")?.Disable();
             actions.FindActionMap("UI")?.Enable();
-
+            SwitchToTab(spellComponent, spellTitle);
         }
     }
 }

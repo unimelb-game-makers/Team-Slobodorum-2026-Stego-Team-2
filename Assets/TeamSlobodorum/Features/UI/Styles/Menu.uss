@@ -24,3 +24,13 @@
     color: rgb(0, 0, 0);
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
+
+.system-tab {
+    color: rgb(43, 43, 43);
+    background-color: rgba(255, 18, 18, 0);
+}
+
+.system-tab-active {
+    color: rgb(244, 237, 209);
+    background-color: rgb(43, 43, 43);
+}

@@ -17,14 +17,18 @@ namespace TeamSlobodorum.UI.Scripts
         [SerializeField] private VisualTreeAsset SaveSlotTemplate;    
         private ScrollView slotContainer;
         private VisualElement systemComponent;
+        private Label SaveButton;
+        private Label LoadButton;
         private void Awake()
         {
 
             root = menuDocument.rootVisualElement;
             systemComponent = root.Q<VisualElement>("SystemComponent");
             slotContainer = root.Q<ScrollView>("SlotComponent");
-            systemComponent.Q<VisualElement>("Save").RegisterCallback<ClickEvent>(evt => ToggleSave());
-            systemComponent.Q<VisualElement>("Load").RegisterCallback<ClickEvent>(evt => ToggleLoad());
+            SaveButton = systemComponent.Q<Label>("Save");
+            SaveButton.RegisterCallback<ClickEvent>(evt => ToggleSave());
+            LoadButton = systemComponent.Q<Label>("Load");
+            LoadButton.RegisterCallback<ClickEvent>(evt => ToggleLoad());
             systemComponent.Q<VisualElement>("Quit").RegisterCallback<ClickEvent>(evt => BackToStartMenu());
             
         }
@@ -42,11 +46,17 @@ namespace TeamSlobodorum.UI.Scripts
         private void ToggleSave()
         {
             status = SystemOperationStatus.Save;
+            SaveButton.EnableInClassList("system-tab-active", true);
+            LoadButton.EnableInClassList("system-tab-active", false);
+
             Refresh();
         }
 
         private void ToggleLoad()
         {
+            SaveButton.EnableInClassList("system-tab-active", false);
+            LoadButton.EnableInClassList("system-tab-active", true);
+
             status = SystemOperationStatus.Load;
             Refresh();
         }

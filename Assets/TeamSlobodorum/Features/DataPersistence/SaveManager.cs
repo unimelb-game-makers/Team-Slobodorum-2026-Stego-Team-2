@@ -13,7 +13,7 @@ namespace TeamSlobodorum.DataPersistence
 
         [Header("File Storage Config")]
         private string fileName = ".save";
-        private string selectedProfileId = "Slot_1";
+        private string selectedProfileId = "Save 1";
         private GameData gameData;
 
         public GameData GameData => gameData;
@@ -163,9 +163,9 @@ namespace TeamSlobodorum.DataPersistence
             {
                 foreach (var slot in currentManifest.slots)
                 {
-                    if (slot.profileId.StartsWith("Slot_"))
+                    if (slot.profileId.StartsWith("Save "))
                     {
-                        if (int.TryParse(slot.profileId.Replace("Slot_", ""), out int slotNum))
+                        if (int.TryParse(slot.profileId.Replace("Save ", ""), out int slotNum))
                         {
                             if (slotNum > highestSlot)
                             {
@@ -176,7 +176,7 @@ namespace TeamSlobodorum.DataPersistence
                 }
             }
 
-            string newProfileId = $"Slot_{highestSlot + 1}";
+            string newProfileId = $"Save {highestSlot + 1}";
             ChangeProfile(newProfileId);
             
         }

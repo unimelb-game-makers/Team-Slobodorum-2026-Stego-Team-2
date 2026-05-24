@@ -340,12 +340,12 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
-  distanceToGround: 0.08
+  canClimb: 1
   stepAmount: 2
-  ikSmooth: 15
+  linkJumpSpeed: 2.5
   animator: {fileID: 3499751781893920637}
   maxSprintScale: 3
-  jumpBaseScale: 1
+  jumpBaseScale: 1.3
 --- !u!114 &6212555376593605081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,9 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2cf278fe7bb5a4a92d0d078815ac43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.Player.PlayerSpellManager
-  _obtainedSpells: []
-  _equippedSpells: []
-  maxEquippedSpells: 4
+  obtainedSpells: []
+  equippedSpells: []
   pickupAction: {fileID: 3385720332682930555, guid: 935e70e647d164207858a267f815bd01, type: 3}
   collectibles: []
 --- !u!114 &8746095641988636031

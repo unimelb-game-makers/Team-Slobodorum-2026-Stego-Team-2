@@ -25,6 +25,7 @@ namespace TeamSlobodorum.Entities.Player
         private Vector2 _lastRawInput;
         private const float BlendTime = 2f;
         private Camera _mainCamera;
+        private Vector3 _jumpMomentum;
 
         private static readonly float RotateThreshold = Mathf.Cos(50f * Mathf.Deg2Rad);
         private static readonly Quaternion UpsideDown = Quaternion.AngleAxis(180, Vector3.left);
@@ -72,16 +73,17 @@ namespace TeamSlobodorum.Entities.Player
                         var qA = Rigidbody.rotation;
                         var qB = Quaternion.LookRotation(targetDirection, Vector3.up);
                         Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB,
-                            Damper.Damp(1, damping, Time.fixedDeltaTime * AirControlMultiplier)));
+                            Damper.Damp(1, damping, Time.fixedDeltaTime)));
                     }
 
-                    var desiredVelocity = targetDirection *
-                                          (AirControlMultiplier * (IsSprinting ? sprintSpeed : normalSpeed));
+                    var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
+                    _jumpMomentum = desiredVelocity / 2;
+                    
                     if (IsForwardObstructed)
                     {
                         desiredVelocity -= Vector3.Project(desiredVelocity, transform.forward);
                     }
-
+                    
                     Rigidbody.linearVelocity =
                         new Vector3(desiredVelocity.x, Rigidbody.linearVelocity.y, desiredVelocity.z);
                 }
@@ -93,6 +95,13 @@ namespace TeamSlobodorum.Entities.Player
             }
 
             _lastRawInput = moveInput;
+
+            if (IsJumping)
+            {
+                var deltaMomentum = _jumpMomentum * Time.fixedDeltaTime;
+                Rigidbody.AddForce(deltaMomentum, ForceMode.VelocityChange);
+                _jumpMomentum -= deltaMomentum;
+            }
 
             base.FixedUpdate();
         }

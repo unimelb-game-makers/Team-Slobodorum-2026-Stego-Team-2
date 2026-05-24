@@ -1,3 +1,5 @@
+
+-> room_c_fractured_witch
 === room_c_fractured_witch ===
 Fractured Witch: You absorbed the unstable fragments.
 Fractured Witch: That means the vessel is functioning.

@@ -1,6 +1,7 @@
 -> questions_room_a
 
 === questions_room_a ===
+    Child Witch: Here you come.
 *   [What is this place?]
     MC: What is this place?
     Child Witch: It’s where things stay.

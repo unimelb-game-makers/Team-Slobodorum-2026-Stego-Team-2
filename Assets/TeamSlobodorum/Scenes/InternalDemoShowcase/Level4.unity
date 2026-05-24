@@ -936,7 +936,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.083333336
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: ea63c12d822e37644a818307e03e70e6, type: 2}
   m_BuildHeightMesh: 0
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48562c2e5a57604459dc4f5db36a2301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Dialogue.DialogueManager
-  defaultInkJSON: {fileID: 4900000, guid: e05b56499a7db1544901e441dfb9a8cd, type: 3}
+  defaultInkJSON: {fileID: 4900000, guid: 2fd48bcb045493548985fc257ccab86e, type: 3}
 --- !u!114 &2094733983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1921,6 +1921,10 @@ PrefabInstance:
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061774174207660693, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
+      propertyPath: startingKnotName
+      value: room_d_final_witch
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

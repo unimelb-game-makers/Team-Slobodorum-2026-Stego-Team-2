@@ -345,7 +345,7 @@ MonoBehaviour:
   linkJumpSpeed: 2.5
   animator: {fileID: 3499751781893920637}
   maxSprintScale: 3
-  jumpBaseScale: 1.3
+  jumpBaseScale: 1
 --- !u!114 &6212555376593605081
 MonoBehaviour:
   m_ObjectHideFlags: 0

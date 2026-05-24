@@ -1,11 +1,20 @@
+using TeamSlobodorum.Spells.Core;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Spells/Graviton Surge")]
-public class GravitonSurgeDefinition
+namespace TeamSlobodorum.Spells
 {
-    public float PullForce = 2f;
-    public float PullInterval = 0.0f;
-    public float PullRadius = 3f;
-    public float Lifetime = 8f;
+    [CreateAssetMenu(menuName = "Spells/Gravity Surge")]
+    public sealed class GravitonSurgeDefinition : SpellDefinition
+    {
+        [Header("References")]
+        public GravityPulseAttractor surgePrefab;
 
+        [Header("Settings")]
+        public float activeDuration = 4f;
+
+        public override ISpellRuntime CreateRuntime()
+        {
+            return new GravitonSurgeRuntime();
+        }
+    }
 }

@@ -6,18 +6,16 @@ public class GravityPulseAttractor : MonoBehaviour
 {
     [Header("Pulse Area")]
     [SerializeField] private Transform center;
-    [SerializeField] private float radius = 3.2f;
-    [SerializeField] private float period = 1.1f;
+    [SerializeField] private float radius = 7f;
+    [SerializeField] private float pulseInterval = 0.5f;
     [SerializeField] private float startDelay = 0f;
 
     [Header("Pulse Pull")]
-    [SerializeField] private float pulseDuration = 0.25f;
+    [Tooltip("Velocity change applied once per pulse.")]
+    [SerializeField] private float pullVelocityPerPulse = 1.5f;
 
-    [Tooltip("Velocity change applied every FixedUpdate during the pulse.")]
-    [SerializeField] private float pullVelocityPerTick = 0.35f;
-
-    [SerializeField] private float maxInwardSpeed = 8f;
-    [SerializeField] private bool affectY = true;
+    [SerializeField] private float maxInwardSpeed = 50f;
+    [SerializeField] private bool affectY = false;
 
     [Tooltip("X = normalized distance from center, Y = pull multiplier.")]
     [SerializeField]
@@ -26,7 +24,7 @@ public class GravityPulseAttractor : MonoBehaviour
 
     [Header("Filtering")]
     [SerializeField] private LayerMask targetLayers = ~0;
-    [SerializeField] private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore;
+    [SerializeField] private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Collide;
     [SerializeField] private Transform ignoredRoot;
 
     [Header("Performance")]
@@ -38,10 +36,10 @@ public class GravityPulseAttractor : MonoBehaviour
 
     private void Awake()
     {
-        _hits = new Collider[maxColliders];
-
         if (center == null)
             center = transform;
+
+        _hits = new Collider[Mathf.Max(1, maxColliders)];
     }
 
     public void Initialize(Transform casterRoot)
@@ -71,12 +69,12 @@ public class GravityPulseAttractor : MonoBehaviour
         while (true)
         {
             CollectTargets();
+            ApplyPulseToTargets();
 
-            yield return PullTargetsForDuration(pulseDuration);
-
-            float wait = Mathf.Max(0f, period - pulseDuration);
-            if (wait > 0f)
-                yield return new WaitForSeconds(wait);
+            if (pulseInterval > 0f)
+                yield return new WaitForSeconds(pulseInterval);
+            else
+                yield return null;
         }
     }
 
@@ -97,12 +95,10 @@ public class GravityPulseAttractor : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Collider hit = _hits[i];
-
             if (hit == null)
                 continue;
 
             Rigidbody rb = hit.attachedRigidbody;
-
             if (rb == null || rb.isKinematic)
                 continue;
 
@@ -111,26 +107,19 @@ public class GravityPulseAttractor : MonoBehaviour
 
             _targets.Add(rb);
         }
+        Debug.Log("Targets collected: " +  _targets.Count);
     }
 
-    private IEnumerator PullTargetsForDuration(float duration)
+    private void ApplyPulseToTargets()
     {
-        float elapsed = 0f;
+        Vector3 pullCenter = GetCenter();
 
-        while (elapsed < duration)
+        foreach (Rigidbody rb in _targets)
         {
-            Vector3 pullCenter = GetCenter();
+            if (rb == null)
+                continue;
 
-            foreach (Rigidbody rb in _targets)
-            {
-                if (rb == null)
-                    continue;
-
-                ApplyPull(rb, pullCenter);
-            }
-
-            elapsed += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            ApplyPull(rb, pullCenter);
         }
     }
 
@@ -142,7 +131,6 @@ public class GravityPulseAttractor : MonoBehaviour
             toCenter.y = 0f;
 
         float distance = toCenter.magnitude;
-
         if (distance <= 0.001f)
             return;
 
@@ -150,19 +138,15 @@ public class GravityPulseAttractor : MonoBehaviour
         float strength = falloff.Evaluate(normalizedDistance);
 
         Vector3 direction = toCenter / distance;
-        Vector3 velocityChange = direction * pullVelocityPerTick * strength;
+        Vector3 velocityChange = direction * pullVelocityPerPulse * strength;
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
-
         ClampInwardSpeed(rb, direction);
     }
 
     private void ClampInwardSpeed(Rigidbody rb, Vector3 inwardDirection)
     {
-
         Vector3 velocity = rb.linearVelocity;
-
-
         float inwardSpeed = Vector3.Dot(velocity, inwardDirection);
 
         if (inwardSpeed <= maxInwardSpeed)
@@ -170,9 +154,7 @@ public class GravityPulseAttractor : MonoBehaviour
 
         Vector3 excess = inwardDirection * (inwardSpeed - maxInwardSpeed);
         velocity -= excess;
-
         rb.linearVelocity = velocity;
-
     }
 
     private Vector3 GetCenter()

@@ -47,14 +47,10 @@ namespace TeamSlobodorum.DataPersistence
         }
         public void AutoSave()
         {
-            if (gameData == null) return;
-
-            string previousProfile = selectedProfileId;
 
             ChangeProfile("AutoSave");
             SaveGame();
 
-            ChangeProfile(previousProfile);
         }
         public bool TryLoadMostRecentSave()
         {
@@ -116,7 +112,7 @@ namespace TeamSlobodorum.DataPersistence
 
         public void SaveGame()
         {
-            if (gameData == null) return;
+            if (gameData == null) gameData = new GameData();
 
             OnSaveRequested?.Invoke(gameData);
             gameData.currentLevel = SceneManager.GetActiveScene().name;

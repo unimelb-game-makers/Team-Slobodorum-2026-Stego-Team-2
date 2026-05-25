@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8df43e64083de5e47a975f6ad05a0083
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302248
+  packageName: Stylized Skyboxes | FREE
+  packageVersion: 1.0.0
+  assetPath: Packages/xyz.staggartcreations.skyboxes/Demo/Scripts/LightingPresetManager.cs
+  uploadId: 888032

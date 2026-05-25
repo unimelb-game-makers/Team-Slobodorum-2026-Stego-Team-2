@@ -8,12 +8,25 @@ namespace TeamSlobodorum.Entities.Player
 {
     public class PlayerMovement : HumanoidMovement
     {
+        [Header("Climbing")]
+        [SerializeField] public Transform climbRayUpper;
+        [SerializeField] public Transform climbRayLower;
+        
+        protected struct PlayerAnimationParams
+        {
+            public static readonly int ClimbKey = Animator.StringToHash("Climb");
+            
+            public bool ClimbTriggered;
+        }
+        private PlayerAnimationParams _playerAnimParams;
+        
         private PlayerInput _playerInput;
-
+        
         private InputAction _moveAction;
         private InputAction _sprintAction;
 
         public bool IsStrafeMode { get; set; }
+        public bool IsClimbing { get; set; }
 
         // These are part of a strategy to combat input gimbal lock when controlling an entity
         // that can move freely on surfaces that go upside-down relative to the camera.
@@ -25,9 +38,17 @@ namespace TeamSlobodorum.Entities.Player
         private Vector2 _lastRawInput;
         private const float BlendTime = 2f;
         private Camera _mainCamera;
+        private Vector3 _jumpMomentum;
+        private Vector3 _ledgePosition;
 
         private static readonly float RotateThreshold = Mathf.Cos(50f * Mathf.Deg2Rad);
         private static readonly Quaternion UpsideDown = Quaternion.AngleAxis(180, Vector3.left);
+        
+        public override bool CanMove => base.CanMove && !IsClimbing;
+
+        public override bool CanPerformAction => base.CanPerformAction && !IsClimbing;
+        
+        public bool IsForwardObstructed { get; private set; }
 
         protected override void Awake()
         {
@@ -45,6 +66,22 @@ namespace TeamSlobodorum.Entities.Player
         {
             base.Start();
             _mainCamera = Camera.main;
+        }
+
+        private void Update()
+        {
+            if (IsClimbing)
+            {
+                var stateInfo = Animator.GetCurrentAnimatorStateInfo(0);
+                var progress = stateInfo.normalizedTime;
+                if (progress < 0.35f)
+                {
+                    var yDiff = Humanoid.rightHand.position.y - _ledgePosition.y;
+                    var targetPosition = transform.position - new Vector3(0, yDiff, 0);
+                    transform.position = Vector3.Slerp(transform.position, targetPosition,
+                        Damper.Damp(1, damping, Time.fixedDeltaTime));
+                }
+            }
         }
 
         protected override void FixedUpdate()
@@ -72,16 +109,17 @@ namespace TeamSlobodorum.Entities.Player
                         var qA = Rigidbody.rotation;
                         var qB = Quaternion.LookRotation(targetDirection, Vector3.up);
                         Rigidbody.MoveRotation(Quaternion.Slerp(qA, qB,
-                            Damper.Damp(1, damping, Time.fixedDeltaTime * AirControlMultiplier)));
+                            Damper.Damp(1, damping, Time.fixedDeltaTime)));
                     }
 
-                    var desiredVelocity = targetDirection *
-                                          (AirControlMultiplier * (IsSprinting ? sprintSpeed : normalSpeed));
+                    var desiredVelocity = targetDirection * (IsSprinting ? sprintSpeed : normalSpeed);
+                    _jumpMomentum = desiredVelocity / 2;
+                    
                     if (IsForwardObstructed)
                     {
                         desiredVelocity -= Vector3.Project(desiredVelocity, transform.forward);
                     }
-
+                    
                     Rigidbody.linearVelocity =
                         new Vector3(desiredVelocity.x, Rigidbody.linearVelocity.y, desiredVelocity.z);
                 }
@@ -94,11 +132,42 @@ namespace TeamSlobodorum.Entities.Player
 
             _lastRawInput = moveInput;
 
+            if (IsJumping)
+            {
+                var deltaMomentum = _jumpMomentum * Time.fixedDeltaTime;
+                Rigidbody.AddForce(deltaMomentum, ForceMode.VelocityChange);
+                _jumpMomentum -= deltaMomentum;
+            }
+            
+            IsForwardObstructed = Physics.Raycast(stepRayUpper.transform.position, transform.forward,
+                out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+
             base.FixedUpdate();
         }
 
         private void OnJump()
         {
+            if (!IsClimbing)
+            {
+                if ((Physics.Raycast(climbRayLower.transform.position, transform.forward,
+                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore) ||
+                     Physics.Raycast(stepRayUpper.transform.position, transform.forward,
+                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) &&
+                    !Physics.Raycast(climbRayUpper.transform.position, transform.forward,
+                        out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                {
+                    var originDown = climbRayUpper.transform.position + transform.forward * 0.5f;
+                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f, Physics.DefaultRaycastLayers,
+                            QueryTriggerInteraction.Ignore))
+                    {
+                        _ledgePosition = ledgeHit.point;
+                        IsClimbing = true;
+                        _playerAnimParams.ClimbTriggered = true;
+                        return;
+                    }
+                }
+            }
+            
             Jump();
         }
 
@@ -168,6 +237,24 @@ namespace TeamSlobodorum.Entities.Player
             }
 
             return Quaternion.Slerp(frameA, frameB, _timeInHemisphere / BlendTime);
+        }
+
+        protected override void UpdateAnimation()
+        {
+            base.UpdateAnimation();
+            
+            if (_playerAnimParams.ClimbTriggered)
+            {
+                Animator.SetTrigger(PlayerAnimationParams.ClimbKey);
+                _playerAnimParams.ClimbTriggered = false;
+            }
+        }
+
+        protected override void OnDrawGizmosSelected()
+        {
+            base.OnDrawGizmosSelected();
+            Gizmos.DrawRay(climbRayUpper.transform.position, transform.forward * 0.5f);
+            Gizmos.DrawRay(climbRayLower.transform.position, transform.forward * 0.5f);
         }
     }
 }

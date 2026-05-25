@@ -1,0 +1,17 @@
+{
+  "name": "xyz.staggartcreations.skyboxes",
+  "displayName": "Stylized Skyboxes",
+  "description": "HDRI static skyboxes in 4x2K resolution for various times of day.",
+  "version": "1.0.0",
+  "keywords": [
+    "skybox",
+    "HDRI",
+    "Lighting"
+  ],
+  "author": {
+    "name": "Staggart Creations",
+    "url": "http://staggart.xyz/",
+    "email": "contact@staggart.xyz"
+  },
+  "hideInEditor": false
+}

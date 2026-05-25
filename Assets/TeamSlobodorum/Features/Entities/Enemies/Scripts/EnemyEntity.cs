@@ -1,13 +1,13 @@
 using TeamSlobodorum.AI;
-using TeamSlobodorum.Entities.HostileRobot.Behaviour;
 using TeamSlobodorum.Health;
 using Unity.Behavior;
 using Unity.Behavior.GraphFramework;
 using UnityEngine;
 using Action = System.Action;
 
-namespace TeamSlobodorum.Entities.Enemy
+namespace TeamSlobodorum.Entities.Enemies
 {
+    [RequireComponent(typeof(BehaviorGraphAgent), typeof(Brain))]
     public abstract class EnemyEntity : LivingEntity
     {
         public event Action EnemyStateChanged;

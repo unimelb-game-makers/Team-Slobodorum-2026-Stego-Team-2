@@ -4,7 +4,7 @@ using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 
-namespace TeamSlobodorum.Entities.Enemy.Behaviour.Actions
+namespace TeamSlobodorum.Entities.Enemies.Behaviour.Actions
 {
     [BlackboardEnum]
     public enum AlertProgressOperation

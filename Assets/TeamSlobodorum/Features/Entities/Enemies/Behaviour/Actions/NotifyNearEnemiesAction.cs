@@ -1,12 +1,11 @@
 using System;
 using TeamSlobodorum.AI.Memory;
-using TeamSlobodorum.Entities.HostileRobot.Behaviour;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 
-namespace TeamSlobodorum.Entities.Enemy.Behaviour.Actions
+namespace TeamSlobodorum.Entities.Enemies.Behaviour.Actions
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Notify Near Enemies", story: "[EnemyEntity] notifies near enemies within a radius of [Radius]",

@@ -1,37 +1,39 @@
-using TeamSlobodorum.Entities.Enemies;
-using TeamSlobodorum.Entities.Humanoid;
+using System;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Health;
 using UnityEngine;
 
-namespace TeamSlobodorum.Entities.HostileRobot
+namespace TeamSlobodorum.Entities.Enemies
 {
-    public class HostileRobotEntity : EnemyEntity, IAttackable
+    public class PawnEntity : EnemyEntity, IAttackable
     {
         [SerializeField] private float meleeAttackRange = 1f;
 
-        private HumanoidMovement _movement;
+        private ChessPieceMovement _movement;
         private readonly Collider[] _hitColliders = new Collider[5];
+        
+        public float AttackRange => meleeAttackRange;
 
         protected override void Awake()
         {
             base.Awake();
-
-            _movement = GetComponent<HumanoidMovement>();
+            _movement = GetComponent<ChessPieceMovement>();
         }
-
-        protected override void OnDied()
-        {
-            Destroy(gameObject);
-        }
-
-        public float AttackRange => meleeAttackRange;
 
         public void Attack(Entity target)
         {
             _movement.StartMeleeAttack();
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                var playerEntity = collision.gameObject.GetComponent<PlayerEntity>();
+                playerEntity.HealthManager.TakeDamage(10f, DamageType.Physical);
+            }
+        }
+        
         private void CauseDamage()
         {
             var size = Physics.OverlapSphereNonAlloc(transform.position, meleeAttackRange, _hitColliders,

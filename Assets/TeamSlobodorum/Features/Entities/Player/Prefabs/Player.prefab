@@ -272,12 +272,12 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
-  canClimb: 1
-  stepAmount: 2
-  linkJumpSpeed: 2.5
-  animator: {fileID: 3499751781893920637}
   maxSprintScale: 3
   jumpBaseScale: 1
+  stepAmount: 2
+  stepRayUpper: {fileID: 6783057920483949414}
+  stepRayLower: {fileID: 3135679450107058308}
+  linkTraversalSpeed: 2.5
   climbRayUpper: {fileID: 8774111863106281978}
   climbRayLower: {fileID: 2185357366465575144}
 --- !u!114 &6212555376593605081

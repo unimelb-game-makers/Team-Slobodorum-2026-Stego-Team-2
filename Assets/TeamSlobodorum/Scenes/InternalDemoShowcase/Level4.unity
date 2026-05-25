@@ -15754,6 +15754,14 @@ PrefabInstance:
       propertyPath: timePerCharacter
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1197089282548238055, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197089282548238055, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.45
+      objectReference: {fileID: 0}
     - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: OnGameWin.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -15853,6 +15861,10 @@ PrefabInstance:
     - target: {fileID: 1990180606756565696, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: OnDialogueOpened.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: TeamSlobodorum.UI.Scripts.HUDController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518201628823461259, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: m_Size.z
+      value: 16.13
       objectReference: {fileID: 0}
     - target: {fileID: 4766284729842555455, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
       propertyPath: m_IsActive
@@ -39838,10 +39850,22 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -665548395752457453, guid: 1b30e50cdf479ec4c8311d39e3e23479, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ab40288b7746ed4fb7f1217e7ad2ca8, type: 2}
     - target: {fileID: 919132149155446097, guid: 1b30e50cdf479ec4c8311d39e3e23479, type: 3}
       propertyPath: m_Name
       value: level4
       objectReference: {fileID: 0}
+    - target: {fileID: 1700357386350707541, guid: 1b30e50cdf479ec4c8311d39e3e23479, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700357386350707541, guid: 1b30e50cdf479ec4c8311d39e3e23479, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ab40288b7746ed4fb7f1217e7ad2ca8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -67360,15 +67384,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.45
+      value: 3.93
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.49
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.85
+      value: 13.09
       objectReference: {fileID: 0}
     - target: {fileID: 5801051025340956326, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
       propertyPath: m_LocalRotation.w

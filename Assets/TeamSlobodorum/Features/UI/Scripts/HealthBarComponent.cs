@@ -1,6 +1,5 @@
 using TeamSlobodorum.Entities;
-using TeamSlobodorum.Entities.Enemy;
-using TeamSlobodorum.Entities.HostileRobot.Behaviour;
+using TeamSlobodorum.Entities.Enemies;
 using UnityEngine;
 using UnityEngine.UIElements;
 

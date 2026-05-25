@@ -1,6 +1,6 @@
 using Unity.Behavior;
 
-namespace TeamSlobodorum.Entities.HostileRobot.Behaviour
+namespace TeamSlobodorum.Entities.Enemies
 {
     [BlackboardEnum]
     public enum EnemyState

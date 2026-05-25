@@ -141,8 +141,11 @@ namespace TeamSlobodorum.UI.Scripts
                 _cleanupFn();
             }
             
-            var previousNewSpell = _spellcaster.GetPreviousNEquippedSpells(1).Last();
-            _activeTask = StartCoroutine(AsyncSelectPreviousSpell(previousNewSpell));
+            var previousOneSpell = _spellcaster.GetPreviousNEquippedSpells(1);
+            if (previousOneSpell.Count > 0)
+            {
+                _activeTask = StartCoroutine(AsyncSelectPreviousSpell(previousOneSpell[0]));
+            }
         }
         
         private IEnumerator AsyncSelectPreviousSpell(SpellDefinition previousNewSpell)

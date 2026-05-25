@@ -1,49 +1,12 @@
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace TeamSlobodorum.Entities.Humanoid
 {
     [RequireComponent(typeof(Rigidbody))]
     public class HumanoidMovement : Movement
     {
-        [Header("Movement")]
-        [Tooltip("Ground speed when walking")]
-        public float normalSpeed = 2f;
-
-        [Tooltip("Ground speed when sprinting")]
-        public float sprintSpeed = 6f;
-
-        [Tooltip("Initial vertical speed when jumping")]
-        public float normalJumpForce = 350f;
-
-        [Tooltip("Initial vertical speed when sprint-jumping")]
-        public float sprintJumpForce = 380f;
-
-        [Tooltip("Transition duration (in seconds) when the entity changes velocity or rotation.")]
-        public float damping = 0.5f;
-
-        [Header("Step Up")]
-        public bool canClimb = true;
-
-        public float stepAmount = 2f;
-
-        [Header("Navigation")]
-        public float linkJumpSpeed = 2.5f;
-
-        [Header("Animation")]
-        public Animator animator;
-
-        [Tooltip("Never speed up the sprint animation more than this, to avoid absurdly fast movement")]
-        public float maxSprintScale = 3f;
-
-        [Tooltip("Scale factor for the overall speed of the jump animation")]
-        public float jumpBaseScale = 1f;
-
-        public event Action Landed;
-
-        protected struct AnimationParams
+        protected struct HumanoidAnimationParams
         {
             public static readonly int MovingKey = Animator.StringToHash("Moving");
             public static readonly int ForwardKey = Animator.StringToHash("Forward");
@@ -53,128 +16,45 @@ namespace TeamSlobodorum.Entities.Humanoid
             public static readonly int FallKey = Animator.StringToHash("Fall");
             public static readonly int MeleeKey = Animator.StringToHash("Melee");
             public static readonly int JumpKey = Animator.StringToHash("Jump");
-            public static readonly int ClimbKey = Animator.StringToHash("Climb");
             public static readonly int GroundedKey = Animator.StringToHash("Grounded");
 
             public bool IsRunning;
             public bool FallTriggered;
             public bool MeleeTriggered;
             public bool JumpTriggered;
-            public bool ClimbTriggered;
             public Vector3 Direction; // normalized direction of motion
             public float MotionScale; // scale factor for the animation speed
             public float JumpScale; // scale factor for the jump animation
         }
 
-        public Rigidbody Rigidbody { get; private set; }
-        protected NavMeshAgent NavMeshAgent { get; private set; }
         protected Humanoid Humanoid { get; private set; }
 
-        private AnimationParams _animationParams;
+        private HumanoidAnimationParams _animationParams;
         private const float IdleThreshold = 0.2f;
-
-        private const float DelayBeforeInferringFall = 0.3f;
-        private const float DelayBeforeInferringMove = 0.3f;
-        private const float FallingTime = 1.5f;
-        private const float AirControlTime = 1.5f;
-        private float _timeLastGrounded;
-        private float _timeLastMoved;
-        private Vector3 _ledgePosition;
-        private float _defaultStoppingDistance;
 
         private Vector3 _navmeshLinkStartPos;
         private Vector3 _navmeshLinkEndPos;
         private float _navmeshLinkProgress;
-
-        public bool IsFalling { get; set; }
+        
         public bool IsJumping { get; set; }
-        public bool IsAttacking { get; set; }
-        public bool IsClimbing { get; set; }
-        public bool IsForwardObstructed { get; private set; }
 
-        public override bool CanMove =>
-            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling &&
-            (!IsJumping || Time.time - _timeLastGrounded <= AirControlTime);
+        public override bool CanMove => base.CanMove && !IsAttacking && !IsJumping;
+        public override bool CanPerformAction => base.CanPerformAction && !IsAttacking && !IsJumping;
 
-        protected float AirControlMultiplier =>
-            IsGrounded ? 1 : 1 - Mathf.Pow(Mathf.Clamp01((Time.time - _timeLastGrounded) / AirControlTime), 3);
-
-        public override bool CanPerformAction =>
-            base.CanMove && !IsAttacking && !IsClimbing && !IsFalling && !IsJumping && IsGrounded;
-
-        public bool IsGrounded { get; private set; }
-
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            Rigidbody = GetComponent<Rigidbody>();
-            NavMeshAgent = GetComponent<NavMeshAgent>();
+            base.Awake();
             Humanoid = GetComponent<Humanoid>();
-            _defaultStoppingDistance = NavMeshAgent.stoppingDistance;
+            
+            FallTriggered += () => _animationParams.FallTriggered = true;
         }
 
-        protected virtual void OnValidate()
+        protected override void FixedUpdate()
         {
-            Humanoid = GetComponent<Humanoid>();
-        }
-
-        protected virtual void Start()
-        {
-            NavMeshAgent.updatePosition = false;
-            NavMeshAgent.updateRotation = false;
-            PreventMovementChanged += OnPreventMovementChanged;
-        }
-
-        protected virtual void Update()
-        {
-            if (IsClimbing)
-            {
-                var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                var progress = stateInfo.normalizedTime;
-                if (progress < 0.35f)
-                {
-                    var yDiff = Humanoid.rightHand.position.y - _ledgePosition.y;
-                    var targetPosition = transform.position - new Vector3(0, yDiff, 0);
-                    transform.position = Vector3.Slerp(transform.position, targetPosition,
-                        Damper.Damp(1, damping, Time.fixedDeltaTime));
-                }
-            }
-        }
-
-        protected virtual void FixedUpdate()
-        {
-            var now = Time.fixedTime;
-            if (IsGrounded && now - _timeLastGrounded > DelayBeforeInferringFall)
-            {
-                _timeLastGrounded = now;
-
-                if (IsFalling || IsJumping)
-                {
-                    Landed?.Invoke();
-                }
-            }
-            else if (!IsFalling && now - _timeLastGrounded > FallingTime)
-            {
-                IsFalling = true;
-                _animationParams.FallTriggered = true;
-            }
-
-            IsForwardObstructed = Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
-                out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
-
             HandleNavigationMovement();
             UpdateAnimationState();
 
-            if (!CanMove && now - _timeLastMoved > DelayBeforeInferringMove)
-            {
-                IsMoving = false;
-            }
-
-            if (IsMoving)
-            {
-                _ = TryStepUp(transform.forward) ||
-                    TryStepUp(transform.TransformDirection(0.5f, 0, 1)) ||
-                    TryStepUp(transform.TransformDirection(-0.5f, 0, 1));
-            }
+            base.FixedUpdate();
         }
 
         private void HandleNavigationMovement()
@@ -206,7 +86,7 @@ namespace TeamSlobodorum.Entities.Humanoid
                     if (_navmeshLinkProgress < 1f)
                     {
                         var distance = Vector3.Distance(_navmeshLinkStartPos, _navmeshLinkEndPos);
-                        _navmeshLinkProgress += Time.fixedDeltaTime * (linkJumpSpeed / distance);
+                        _navmeshLinkProgress += Time.fixedDeltaTime * (linkTraversalSpeed / distance);
                         var currentPos = Vector3.Lerp(_navmeshLinkStartPos, _navmeshLinkEndPos,
                             _navmeshLinkProgress);
                         var height = distance * 0.5f;
@@ -250,45 +130,8 @@ namespace TeamSlobodorum.Entities.Humanoid
             }
         }
 
-        public void SyncNavMeshAgentToTransform()
-        {
-            if (NavMesh.SamplePosition(transform.position, out var hit, 1f, NavMesh.AllAreas))
-            {
-                NavMeshAgent.Warp(hit.position);
-            }
-        }
-
-        private void OnPreventMovementChanged()
-        {
-            if (!PreventMovement)
-            {
-                SyncNavMeshAgentToTransform();
-            }
-        }
-
         public void Jump()
         {
-            if (canClimb && !IsClimbing)
-            {
-                if ((Physics.Raycast(Humanoid.climbRayLower.transform.position, transform.forward,
-                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore) ||
-                     Physics.Raycast(Humanoid.stepRayUpper.transform.position, transform.forward,
-                         out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) &&
-                    !Physics.Raycast(Humanoid.climbRayUpper.transform.position, transform.forward,
-                        out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                {
-                    var originDown = Humanoid.climbRayUpper.transform.position + transform.forward * 0.5f;
-                    if (Physics.Raycast(originDown, Vector3.down, out var ledgeHit, 1.3f, Physics.DefaultRaycastLayers,
-                            QueryTriggerInteraction.Ignore))
-                    {
-                        _ledgePosition = ledgeHit.point;
-                        IsClimbing = true;
-                        _animationParams.ClimbTriggered = true;
-                        return;
-                    }
-                }
-            }
-
             if (CanPerformAction)
             {
                 IsJumping = true;
@@ -296,11 +139,6 @@ namespace TeamSlobodorum.Entities.Humanoid
                 Rigidbody.AddForce(transform.up * (IsSprinting ? sprintJumpForce : normalJumpForce),
                     ForceMode.Impulse);
             }
-        }
-
-        protected void NotifyMovement()
-        {
-            _timeLastMoved = Time.fixedTime;
         }
 
         public void StartMeleeAttack()
@@ -342,101 +180,32 @@ namespace TeamSlobodorum.Entities.Humanoid
             UpdateAnimation();
         }
 
-        private void UpdateAnimation()
+        protected virtual void UpdateAnimation()
         {
-            animator.SetBool(AnimationParams.MovingKey, IsMoving);
-            animator.SetFloat(AnimationParams.ForwardKey, _animationParams.Direction.z);
-            animator.SetFloat(AnimationParams.StrafeKey, _animationParams.Direction.x);
-            animator.SetFloat(AnimationParams.MotionScaleKey, _animationParams.MotionScale);
-            animator.SetFloat(AnimationParams.JumpScaleKey, _animationParams.JumpScale);
-            animator.SetBool(AnimationParams.GroundedKey, IsGrounded);
+            Animator.SetBool(HumanoidAnimationParams.MovingKey, IsMoving);
+            Animator.SetFloat(HumanoidAnimationParams.ForwardKey, _animationParams.Direction.z);
+            Animator.SetFloat(HumanoidAnimationParams.StrafeKey, _animationParams.Direction.x);
+            Animator.SetFloat(HumanoidAnimationParams.MotionScaleKey, _animationParams.MotionScale);
+            Animator.SetFloat(HumanoidAnimationParams.JumpScaleKey, _animationParams.JumpScale);
+            Animator.SetBool(HumanoidAnimationParams.GroundedKey, IsGrounded);
 
             if (_animationParams.FallTriggered)
             {
-                animator.SetTrigger(AnimationParams.FallKey);
+                Animator.SetTrigger(HumanoidAnimationParams.FallKey);
                 _animationParams.FallTriggered = false;
             }
 
             if (_animationParams.MeleeTriggered)
             {
-                animator.SetTrigger(AnimationParams.MeleeKey);
+                Animator.SetTrigger(HumanoidAnimationParams.MeleeKey);
                 _animationParams.MeleeTriggered = false;
             }
 
             if (_animationParams.JumpTriggered)
             {
-                animator.SetTrigger(AnimationParams.JumpKey);
+                Animator.SetTrigger(HumanoidAnimationParams.JumpKey);
                 _animationParams.JumpTriggered = false;
             }
-
-            if (_animationParams.ClimbTriggered)
-            {
-                animator.SetTrigger(AnimationParams.ClimbKey);
-                _animationParams.ClimbTriggered = false;
-            }
-        }
-
-        public override void StartMovingTo(Vector3 destination)
-        {
-            StartMovingTo(destination, _defaultStoppingDistance);
-        }
-
-        public override void StartMovingTo(Vector3 destination, float stoppingDistance)
-        {
-            NavMeshAgent.destination = destination;
-            NavMeshAgent.stoppingDistance = stoppingDistance;
-            IsMoving = true;
-        }
-
-        private bool TryStepUp(Vector3 direction)
-        {
-            if (Physics.Raycast(Humanoid.stepRayLower.transform.position, direction,
-                    out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-            {
-                if (!Physics.Raycast(Humanoid.stepRayUpper.transform.position, direction,
-                        out _, 0.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                {
-                    Rigidbody.position -= new Vector3(0f, -stepAmount * Time.deltaTime, 0f);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        protected virtual void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(Humanoid.climbRayUpper.transform.position, transform.forward * 0.5f);
-            Gizmos.DrawRay(Humanoid.climbRayLower.transform.position, transform.forward * 0.5f);
-            DrawStepUpRays(transform.forward);
-            DrawStepUpRays(transform.TransformDirection(0.5f, 0, 1));
-            DrawStepUpRays(transform.TransformDirection(-0.5f, 0, 1));
-        }
-
-        private void DrawStepUpRays(Vector3 direction)
-        {
-            Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.5f);
-            Gizmos.DrawRay(Humanoid.stepRayUpper.transform.position, direction * 0.5f);
-        }
-
-        private void OnCollisionStay(Collision collision)
-        {
-            foreach (var contact in collision.contacts)
-            {
-                // Cos(70 degree) = 0.34
-                if (contact.normal.y > 0.34f)
-                {
-                    Debug.DrawLine(contact.point, contact.point + contact.normal, Color.purple);
-                    IsGrounded = true;
-                    break;
-                }
-            }
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            IsGrounded = false;
         }
     }
 }

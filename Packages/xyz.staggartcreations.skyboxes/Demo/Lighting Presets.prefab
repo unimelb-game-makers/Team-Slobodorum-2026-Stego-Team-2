@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4288117891185016830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4469705720280731953}
+  - component: {fileID: 7157093637974684325}
+  m_Layer: 0
+  m_Name: Lighting Presets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4469705720280731953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288117891185016830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3715748040206550186}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7157093637974684325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288117891185016830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df43e64083de5e47a975f6ad05a0083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeIndex: 5
+  presets:
+  - name: Sunrise
+    skybox: {fileID: 2100000, guid: 20e9447248ad6a64abb1020067bbd4fc, type: 2}
+    sunAngle: 10
+    sunRotation: 0
+    intensity: 2.2
+    tint: {r: 1, g: 0.60784316, b: 0, a: 0}
+    ambientColor: {r: 0.3093926, g: 0.45400003, b: 0.44054815, a: 0}
+    fogColor: {r: 1, g: 0.71049154, b: 0.411, a: 0}
+    fogDensity: 0.00178
+  - name: Noon
+    skybox: {fileID: 2100000, guid: 9aa9efb342e8ba148a24cf58765b8e22, type: 2}
+    sunAngle: 55
+    sunRotation: 0
+    intensity: 2.2
+    tint: {r: 1, g: 0.9989158, b: 0.9198113, a: 0}
+    ambientColor: {r: 0.38285, g: 0.5301, b: 0.589, a: 0}
+    fogColor: {r: 0.9103774, g: 0.9850629, b: 1, a: 0}
+    fogDensity: 0.00139
+  - name: Noon (Cloudy)
+    skybox: {fileID: 2100000, guid: 5fb2c903d94dea6409b63aa1a30b3e92, type: 2}
+    sunAngle: 55
+    sunRotation: 0
+    intensity: 2.2
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    ambientColor: {r: 0.7317106, g: 0.75526214, b: 0.764151, a: 0}
+    fogColor: {r: 0.73333335, g: 0.7568628, b: 0.76470596, a: 0}
+    fogDensity: 0.0001
+  - name: Noon (Overcast)
+    skybox: {fileID: 2100000, guid: 5c171a495e30306418570cfc2e869b87, type: 2}
+    sunAngle: 65
+    sunRotation: 0
+    intensity: 0.06
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    ambientColor: {r: 0.645, g: 0.645, b: 0.645, a: 0}
+    fogColor: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 0}
+    fogDensity: 0.00129
+  - name: Sunset
+    skybox: {fileID: 2100000, guid: 247b3e3eb34f57e4e884d153aacac481, type: 2}
+    sunAngle: 10
+    sunRotation: 0
+    intensity: 2.2
+    tint: {r: 1, g: 0.65485877, b: 0.25943398, a: 0}
+    ambientColor: {r: 0.1970452, g: 0.33962262, b: 0.33211854, a: 0}
+    fogColor: {r: 1, g: 0.654902, b: 0.25882354, a: 0}
+    fogDensity: 0.00133
+  - name: Dusk
+    skybox: {fileID: 2100000, guid: 02cf0fc3a01ccef47a417906875d0db7, type: 2}
+    sunAngle: 0
+    sunRotation: 0
+    intensity: 0
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    ambientColor: {r: 0.48963898, g: 0.5948834, b: 0.681, a: 0}
+    fogColor: {r: 0.2756764, g: 0.3301887, b: 0.3301887, a: 0}
+    fogDensity: 0.00034
+  - name: Night
+    skybox: {fileID: 2100000, guid: b897f59fbfa2f374c9fc435d72d297c7, type: 2}
+    sunAngle: 31.6
+    sunRotation: 0
+    intensity: 0.29
+    tint: {r: 0.9386792, g: 0.989789, b: 1, a: 0}
+    ambientColor: {r: 0.39382398, g: 0.42788267, b: 0.496, a: 0}
+    fogColor: {r: 0.098039225, g: 0.14901961, b: 0.21568629, a: 0}
+    fogDensity: 0.00735
+  - name: Night (Galaxy)
+    skybox: {fileID: 2100000, guid: a08eb8b0e2fc6f1418c609272923c08c, type: 2}
+    sunAngle: 19.6
+    sunRotation: 0
+    intensity: 0
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    ambientColor: {r: 0.262, g: 0.262, b: 0.262, a: 0}
+    fogColor: {r: 0.098039225, g: 0.1137255, b: 0.1137255, a: 0}
+    fogDensity: 0.00048
+  - name: Aurora
+    skybox: {fileID: 2100000, guid: 34faa4566c3148744bab3a82ab58a887, type: 2}
+    sunAngle: 19.6
+    sunRotation: 0
+    intensity: 0
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    ambientColor: {r: 0.20784314, g: 0.25490198, b: 0.23681208, a: 0}
+    fogColor: {r: 0.14783636, g: 0.173, b: 0.15439327, a: 0}
+    fogDensity: 0.00033
+  reflectionProbe: {fileID: 8226232381953227287}
+  realtimeReflectionProbesDisabled: 1
+  globalVolume: {fileID: 0}
+--- !u!1 &7608858739481610350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3715748040206550186}
+  - component: {fileID: 8226232381953227287}
+  m_Layer: 0
+  m_Name: Global Reflection Probe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3715748040206550186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608858739481610350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4469705720280731953}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!215 &8226232381953227287
+ReflectionProbe:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608858739481610350}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 1
+  m_RefreshMode: 0
+  m_TimeSlicingMode: 0
+  m_Resolution: 512
+  m_UpdateFrequency: 0
+  m_BoxSize: {x: 10000, y: 10000, z: 10000}
+  m_BoxOffset: {x: 0, y: 0, z: 0}
+  m_NearClip: 0.3
+  m_FarClip: 1000
+  m_ShadowDistance: 0
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 39
+  m_IntensityMultiplier: 1
+  m_BlendDistance: 1
+  m_HDR: 1
+  m_BoxProjection: 0
+  m_RenderDynamicObjects: 0
+  m_UseOcclusionCulling: 0
+  m_Importance: 1
+  m_CustomBakedTexture: {fileID: 0}

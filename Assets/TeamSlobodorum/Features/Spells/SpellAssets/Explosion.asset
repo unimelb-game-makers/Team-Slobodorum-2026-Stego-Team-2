@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb95e3501f9ea7448e646b86de117c8, type: 3}
+  m_Name: Explosion
+  m_EditorClassIdentifier: Assembly-CSharp::TeamSlobodorum.Spells.ExplosionDefinition
+  Id:
+    Value: 
+  DisplayName: 
+  Description: 
+  Icon: {fileID: 0}
+  ManaCost: 10
+  Category: 4
+  Tags: 4
+  CastTime: 0
+  Cooldown: 0
+  RecoveryTime: 0
+  OccupiedChannels: 0
+  explosionVfxPrefab: {fileID: 5426934653393282159, guid: 1ee25f7b1d9a0864a9c91ce07f8723a6, type: 3}
+  radius: 5
+  force: 10
+  upwardsModifier: 0.25
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  triggerInteraction: 2
+  affectCaster: 0
+  maxColliders: 128

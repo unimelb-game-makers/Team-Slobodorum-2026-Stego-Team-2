@@ -1,4 +1,4 @@
-using TeamSlobodorum.Entities.Enemy;
+using TeamSlobodorum.Entities.Enemies;
 using TeamSlobodorum.Entities.Humanoid;
 using TeamSlobodorum.Entities.Player;
 using TeamSlobodorum.Health;

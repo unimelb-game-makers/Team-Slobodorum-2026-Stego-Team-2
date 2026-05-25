@@ -223,6 +223,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8756382238816712019, guid: e28b9248eba8545908242aa23285889f, type: 3}
   m_PrefabInstance: {fileID: 8711280580213144688}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1850794678886082562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7010970459905512562, guid: e28b9248eba8545908242aa23285889f, type: 3}
+  m_PrefabInstance: {fileID: 8711280580213144688}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7375766517198352053 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2215580909226103493, guid: e28b9248eba8545908242aa23285889f, type: 3}
@@ -260,8 +265,9 @@ MonoBehaviour:
   normalJumpForce: 350
   sprintJumpForce: 380
   damping: 0.5
-  canClimb: 0
   stepAmount: 2
+  stepRayUpper: {fileID: 7784822774802402272}
+  stepRayLower: {fileID: 1850794678886082562}
   linkJumpSpeed: 2.5
   animator: {fileID: 3526751619339654693}
   maxSprintScale: 3
@@ -380,3 +386,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 618e50c019e554643862cd6742527840, type: 2}
   debug: 0
   debugMemory: []
+--- !u!4 &7784822774802402272 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1508020440955303824, guid: e28b9248eba8545908242aa23285889f, type: 3}
+  m_PrefabInstance: {fileID: 8711280580213144688}
+  m_PrefabAsset: {fileID: 0}

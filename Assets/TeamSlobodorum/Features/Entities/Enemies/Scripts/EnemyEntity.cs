@@ -60,5 +60,10 @@ namespace TeamSlobodorum.Entities.Enemies
                 EnemyState = EnemyState.Search;
             }
         }
+
+        protected override void OnDied()
+        {
+            Destroy(gameObject);
+        }
     }
 }

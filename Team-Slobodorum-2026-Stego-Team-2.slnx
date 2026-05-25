@@ -1,7 +1,10 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Ink-Libraries.csproj" />
+  <Project Path="Unity.RenderPipelines.Core.Samples.Runtime.csproj" />
   <Project Path="InkEditor.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="Unity.RenderPipelines.Core.Samples.Editor.csproj" />
+  <Project Path="sc.skyboxes.demo.runtime.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

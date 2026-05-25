@@ -1387,6 +1387,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3254172671998092864, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
+--- !u!114 &233129341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4530345148459372337, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
+  m_PrefabInstance: {fileID: 1386479745412628867}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &248673466 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5971815868931167655, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
@@ -1558,7 +1569,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 295909100}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1667,17 +1678,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2151102645198139472, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
---- !u!114 &501716426 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7754933700793989608, guid: 9c8bb25d0d28c45f4a78c0a7dfce7882, type: 3}
-  m_PrefabInstance: {fileID: 7242683768505733106}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &526486303 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1931980339197230771, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
@@ -2168,6 +2168,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9129328276264729458, guid: d5b73a0f4e4625f40a459c0ea4698532, type: 3}
+      propertyPath: occlusionLayerMask.m_Bits
+      value: 24
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2372,6 +2376,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 733751305697248771, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
+--- !u!1 &993384247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 993384248}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &993384248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993384247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.70014, y: -12.7855, z: -43.92378}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1024282298 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8942804985968714799, guid: 0c0d07eec5958446ca72a7e426730484, type: 3}
@@ -8698,7 +8733,7 @@ GameObject:
   - component: {fileID: 2094733981}
   - component: {fileID: 2094733982}
   - component: {fileID: 2094733983}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Dialogue Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8747,7 +8782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCameraController
   dialogueCameras:
   - cameraID: DefaultCamera
-    vCam: {fileID: 501716426}
+    vCam: {fileID: 233129341}
 --- !u!1 &2101560885
 GameObject:
   m_ObjectHideFlags: 0
@@ -9062,10 +9097,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6061774174207660693, guid: c0ee9d3e48248f64db209c3d8ad44181, type: 3}
-      propertyPath: startingKnotName
-      value: questions_room_a
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9289,3 +9320,4 @@ SceneRoots:
   - {fileID: 1284868852}
   - {fileID: 1210473586}
   - {fileID: 1240565104}
+  - {fileID: 993384248}
